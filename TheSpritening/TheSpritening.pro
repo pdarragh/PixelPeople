@@ -14,16 +14,9 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-<<<<<<< HEAD
-    graphicsscene.cpp
-
-HEADERS  += mainwindow.h \
-    graphicsscene.h
-=======
     cell.cpp
 
 HEADERS  += mainwindow.h \
     cell.h
->>>>>>> 3efd9c7a58ba5630d19f75ad8e95d9f90f39ca60
 
 FORMS    += mainwindow.ui

@@ -3,8 +3,6 @@
 
 #include <QMainWindow>
 
-#include "graphicsscene.h"
-
 namespace Ui {
 class MainWindow;
 }
@@ -15,7 +13,6 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
-    GraphicsScene * scene;
     ~MainWindow();
 
 private:
