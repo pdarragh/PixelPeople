@@ -8,6 +8,9 @@
 #ifndef CELL_H
 #define CELL_H
 
+#include <QColor>
+#include <QPoint>
+
 class Cell 
 {
 public:
