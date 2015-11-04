@@ -28,7 +28,9 @@ Frame::Frame(int length)
     init(length, QColor(0, 0, 0, 0));
 }
 
-Frame::Frame(int length, QColor color)
+Frame::Frame(
+    int     length,
+    QColor  color   )
 {
     init(length, color);
 }
@@ -43,7 +45,9 @@ Frame::Frame(int length, QColor color)
  * Since each Cell has its own position, we must construct them one-by-one.
  * Therefore we use a nested `for` loop structure to iterate over the 2D array.
  */
-void Frame::init(int length, QColor color)
+void Frame::init(
+    int     length,
+    QColor  color   )
 {
     cells = CELL_MATRIX;
     for (int y = 0; y < length; ++y)

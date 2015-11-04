@@ -23,7 +23,9 @@ Cell::Cell(QPoint _position)
     color    = QColor(0, 0, 0, 0);  // black
 }
 
-Cell::Cell(QPoint _position, QColor _color)
+Cell::Cell(
+    QPoint  _position,
+    QColor  _color  )
 {
     position = _position;
     color    = _color;
