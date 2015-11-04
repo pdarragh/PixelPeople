@@ -1,4 +1,4 @@
-/*
+/****
  * frame.h
  *
  * The header for the Frame class. The Frame is responsible for keeping track
@@ -13,7 +13,8 @@
 #include <vector>
 #include <QColor>
 
-typedef std::vector< std::vector<Cell> > CELL_MATRIX;
+typedef std::vector<Cell> CELL_ROW;
+typedef std::vector< CELL_ROW > CELL_MATRIX;
 
 class Frame
 {
@@ -25,6 +26,10 @@ public:
     // Methods.
     CELL_MATRIX getCells();
 private:
+    // Methods.
+    void init(int length, QColor color);
+    // Attributes.
+    static int DEFAULT_LENGTH;
     CELL_MATRIX cells;
 };
 

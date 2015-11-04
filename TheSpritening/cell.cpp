@@ -1,4 +1,4 @@
-/*
+/****
  * cell.cpp
  *
  * Implementation for the Cell class. Cells are what become the pixels in a
@@ -7,7 +7,7 @@
 
 #include "cell.h"
 
-/*
+/****
  * Constructors
  */
 
@@ -29,7 +29,7 @@ Cell::Cell(QPoint _position, QColor _color)
     color    = _color;
 }
 
-/*
+/****
  * Methods
  */
 

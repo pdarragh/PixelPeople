@@ -1,4 +1,4 @@
-/*
+/****
  * cell.h
  *
  * The header for the model of the cell. Cells are what become the pixels in a
