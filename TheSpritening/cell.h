@@ -21,8 +21,10 @@ public:
     // Methods.
     QPoint getPosition();
     QColor getColor();
+    void setColor(QColor color);
 private:
     // Attributes.
+    // The position is immutable, but the color may change.
     QPoint position;
     QColor color;
 };
