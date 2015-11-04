@@ -17,18 +17,18 @@ Cell::Cell()
     color    = QColor(0, 0, 0, 0);  // black
 }
 
-Cell::Cell(QPoint _position)
+Cell::Cell(QPoint position)
 {
-    position = _position;
-    color    = QColor(0, 0, 0, 0);  // black
+    this->position = position;
+    this->color    = QColor(0, 0, 0, 0);  // black
 }
 
 Cell::Cell(
-    QPoint  _position,
-    QColor  _color  )
+    QPoint  position,
+    QColor  color  )
 {
-    position = _position;
-    color    = _color;
+    this->position = position;
+    this->color    = color;
 }
 
 /****
@@ -43,4 +43,9 @@ QPoint Cell::getPosition()
 QColor Cell::getColor()
 {
     return color;
+}
+
+void Cell::setColor(QColor color)
+{
+    this->color = color;
 }

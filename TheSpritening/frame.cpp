@@ -73,3 +73,11 @@ CELL_MATRIX Frame::getCells()
 {
     return cells;
 }
+
+void setCellAtPositionToColor(
+    int     x,
+    int     y,
+    QColor  color   )
+{
+    this->cells[y][x].setColor(color);
+}
