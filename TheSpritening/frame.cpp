@@ -12,7 +12,7 @@
 /****
  * Static member attributes
  */
-int Frame::DFEAULT_LENGTH = 64;
+int Frame::DEFAULT_LENGTH = 64;
 
 /****
  * Constructors
@@ -20,7 +20,7 @@ int Frame::DFEAULT_LENGTH = 64;
 
 Frame::Frame()
 {
-    init(DFEAULT_LENGTH, QColor(0, 0, 0, 0));
+    init(DEFAULT_LENGTH, QColor(0, 0, 0, 0));
 }
 
 Frame::Frame(int length)
