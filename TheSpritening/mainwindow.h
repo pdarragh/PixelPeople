@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+#include "canvas.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -13,6 +15,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
+     Canvas * scene;
     ~MainWindow();
 
 private:
