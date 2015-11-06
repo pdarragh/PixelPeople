@@ -26,6 +26,7 @@ public:
     // Methods.
     CELL_MATRIX getCells();
     void setCellAtPositionToColor(int x, int y, QColor color);
+    QColor getCellColorAtPosition(int x, int y);
 private:
     // Methods.
     void init(int length, QColor color);

@@ -81,3 +81,10 @@ void setCellAtPositionToColor(
 {
     this->cells[y][x].setColor(color);
 }
+
+QColor getCellColorAtPosition(
+    int x,
+    int y   )
+{
+    return this->cells[y][x].getColor();
+}
