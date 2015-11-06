@@ -1,8 +1,12 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+<<<<<<< HEAD
 #include <qmath.h>
 #include "preview.h"
 #include <QColorDialog>
+=======
+#include "fullpreview.h"
+>>>>>>> develop
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -13,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
     scene = new Canvas(this);
 
     QRect rcontent = ui->graphicsView->contentsRect();
+<<<<<<< HEAD
     ui->graphicsView->setSceneRect(0, 0, rcontent.width(), rcontent.height());
     ui->graphicsView->setScene(scene);
 
@@ -48,6 +53,13 @@ void MainWindow::iGotClicked(QPointF point)
     //based on the current tool
     //needs coordinate of the box that it was clicked in  giveMeCell()
     //call fill cell
+=======
+
+    ui->graphicsView->setSceneRect(0, 0, rcontent.width(), rcontent.height());
+    ui->graphicsView->setScene(scene);
+
+    connect(preview_button, SIGNAL(released()), this, SLOT(fullPreviewButtonReleased()));
+>>>>>>> develop
 }
 
 MainWindow::~MainWindow()
@@ -55,13 +67,20 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+<<<<<<< HEAD
 void MainWindow::on_preview_released()
 {
     preview full_preview;
+=======
+void MainWindow::fullPreviewButtonReleased()
+{
+    FullPreview full_preview;
+>>>>>>> develop
     full_preview.setModal(true);
     full_preview.exec();
 }
 
+<<<<<<< HEAD
 void MainWindow::on_colorButton_clicked()
 {
     QColor color = QColorDialog::getColor();
@@ -74,4 +93,41 @@ void MainWindow::on_colorButton_clicked()
            ui->colorButton->update();
 
            scene->color = color;
+=======
+/*
+ * fpsValueChanged
+ *
+ * Handling event which sets the time interval for the QTimer object in
+ * charge of refreshing the small previewer scene.
+ */
+void MainWindow::fpsValueChanged(int value)
+{
+
+}
+
+/*
+ * pskipButtonReleased
+ *
+ * Handling Event which changes the frame being displayed. Proceeds
+ * sequentially from the current frame until it reaches the last frame, then
+ * stops. Can only be used when the play/pause button has been toggled to
+ * pause.
+ */
+void MainWindow::pskipButtonReleased()
+{
+
+}
+
+/*
+ * pbackButtonReleased
+ *
+ * Handling Event which changes the frame being displayed. Works
+ * backwards from the current frame until it reaches the first frame,
+ * then stops. Can only be used when the play/pause button has been toggled
+ * to pause.
+ */
+void MainWindow::pbackButtonReleased()
+{
+
+>>>>>>> develop
 }

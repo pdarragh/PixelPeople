@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QPushButton>
+#include <QSlider>
 
 #include "canvas.h"
 
@@ -20,6 +22,13 @@ public:
      void iGotClicked(QPointF point);
      enum class Tools {Eraser, Pencil, Rotate, Mirror};
     ~MainWindow();
+
+private slots:
+     void fullPreviewButtonReleased();
+     void fpsValueChanged(int value);
+     void pplayButtonReleased();
+     void pskipButtonReleased();
+     void pbackButtonReleased();
 
 private:
     Ui::MainWindow *ui;
