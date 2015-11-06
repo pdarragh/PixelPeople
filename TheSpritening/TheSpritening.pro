@@ -15,10 +15,22 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     cell.cpp \
-    canvas.cpp
+    canvas.cpp \
+    preview.cpp \
+    dialog.cpp \
+    load.cpp
 
 HEADERS  += mainwindow.h \
     cell.h \
-    canvas.h
+    canvas.h \
+    preview.h \
+    dialog.h \
+    load.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    preview.ui \
+    dialog.ui \
+    load.ui
+
+RESOURCES += \
+    resources.qrc
