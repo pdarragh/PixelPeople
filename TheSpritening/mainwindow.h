@@ -18,6 +18,9 @@ public:
      Canvas * scene;
     ~MainWindow();
 
+private slots:
+     void full_preview_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

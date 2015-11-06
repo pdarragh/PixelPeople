@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/MyFiles">
+        <file>../../../Downloads/toolbar_BW.png</file>
+    </qresource>
+</RCC>
