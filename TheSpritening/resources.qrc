@@ -1,6 +1,8 @@
 <RCC>
     <qresource prefix="/MyFiles">
-        <file>../../../Downloads/toolbar_BW.png</file>
-        <file>../../../Downloads/exit.png</file>
+        <file>skip.png</file>
+        <file>back.png</file>
+        <file>play.png</file>
+        <file>exit.png</file>
     </qresource>
 </RCC>

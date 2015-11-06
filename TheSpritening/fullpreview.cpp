@@ -6,8 +6,9 @@ FullPreview::FullPreview(QWidget *parent) :
     ui(new Ui::FullPreview)
 {
     ui->setupUi(this);
+    //ui->exit_button->setIconSize(QSize(20, 20));
 
-    connect(exit_button, SIGNAL(released()), this, SLOT(on_exit_button_clicked()));
+    connect(ui->exit_button, SIGNAL(released()), this, SLOT(on_exit_button_clicked()));
 }
 
 FullPreview::~FullPreview()
@@ -17,5 +18,5 @@ FullPreview::~FullPreview()
 
 void FullPreview::on_exit_button_clicked()
 {
-    this->close;
+    this->close();
 }

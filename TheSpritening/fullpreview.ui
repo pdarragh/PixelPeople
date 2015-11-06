@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QPushButton" name="exitButton">
+  <widget class="QPushButton" name="exit_button">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>X</string>
+    <string/>
    </property>
   </widget>
  </widget>
