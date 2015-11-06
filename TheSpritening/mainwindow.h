@@ -21,8 +21,11 @@ public:
     ~MainWindow();
 
 private slots:
-     void fullPreviewClicked();
+     void fullPreviewButtonReleased();
      void fpsValueChanged(int value);
+     void pplayButtonReleased();
+     void pskipButtonReleased();
+     void pbackButtonReleased();
 
 private:
     Ui::MainWindow *ui;
