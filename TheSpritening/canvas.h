@@ -5,6 +5,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QPointF>
 #include <QList>
+#include<QPainter>
 
 class Canvas : public QGraphicsScene
 {
@@ -14,7 +15,12 @@ public:
    // virtual void mouseMoveEvent(QGraphicsSceneMouseEvent * mouseEvent);
     virtual void mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent);
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent * mouseEvent);
+    void drawBackground(QPainter *painter, const QRectF &rect);
+    void doSomething(QPointF point, int x, int y, QColor color);
     void clear();
+    QColor color;
+    void checkIfNear(QPointF pointToCheck, QGraphicsSceneMouseEvent * mouseEvent);
+    QPainter * painter;
 
 signals:
 

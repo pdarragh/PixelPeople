@@ -14,6 +14,25 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
+<<<<<<< HEAD
+    cell.cpp \
+    canvas.cpp \
+    preview.cpp \
+    dialog.cpp \
+    load.cpp
+
+HEADERS  += mainwindow.h \
+    cell.h \
+    canvas.h \
+    preview.h \
+    dialog.h \
+    load.h
+
+FORMS    += mainwindow.ui \
+    preview.ui \
+    dialog.ui \
+    load.ui
+=======
     sprite.cpp \
     fullpreview.cpp
 
@@ -23,6 +42,7 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui \
     fullpreview.ui
+>>>>>>> develop
 
 RESOURCES += \
     resources.qrc

@@ -18,6 +18,9 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
      Canvas * scene;
+     QColor color;
+     void iGotClicked(QPointF point);
+     enum class Tools {Eraser, Pencil, Rotate, Mirror};
     ~MainWindow();
 
 private slots:
@@ -29,6 +32,14 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+
+public slots:
+    void clearPushed();
+    void addFramePushed();
+
+private slots:
+    void on_preview_released();
+    void on_colorButton_clicked();
 };
 
 #endif // MAINWINDOW_H

@@ -1,8 +1,22 @@
 <RCC>
+<<<<<<< HEAD
+    <qresource prefix="/new/imageassets">
+        <file>erase.png</file>
+        <file>fast_forward.png</file>
+        <file>pencil.png</file>
+        <file>play.png</file>
+        <file>rewind.png</file>
+        <file>delete_sign.png</file>
+        <file>last_quarter.png</file>
+        <file>plus_math.png</file>
+        <file>rotate_right.png</file>
+        <file>pause.png</file>
+=======
     <qresource prefix="/MyFiles">
         <file>skip.png</file>
         <file>back.png</file>
         <file>play.png</file>
         <file>exit.png</file>
+>>>>>>> develop
     </qresource>
 </RCC>
