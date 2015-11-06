@@ -17,7 +17,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->graphicsView->setSceneRect(0, 0, rcontent.width(), rcontent.height());
     ui->graphicsView->setScene(scene);
-    ui->preview_button->
+    
+    connect(preview_button, SIGNAL(released()), this, SLOT(full_preview_clicked()));
 }
 
 MainWindow::~MainWindow()

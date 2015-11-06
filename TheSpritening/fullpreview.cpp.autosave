@@ -1,6 +1,8 @@
 #include "fullpreview.h"
 #include "ui_fullpreview.h"
 
+#include <QPushButton>
+
 FullPreview::FullPreview(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FullPreview)
@@ -17,5 +19,5 @@ FullPreview::~FullPreview()
 
 void FullPreview::on_exit_button_clicked()
 {
-    this->close;
+    this->close();
 }
