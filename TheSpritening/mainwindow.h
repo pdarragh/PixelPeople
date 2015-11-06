@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QPushButton>
+#include <QSlider>
 
 #include "canvas.h"
 
@@ -20,7 +21,8 @@ public:
     ~MainWindow();
 
 private slots:
-     void full_preview_clicked();
+     void fullPreviewClicked();
+     void fpsValueChanged(int value);
 
 private:
     Ui::MainWindow *ui;

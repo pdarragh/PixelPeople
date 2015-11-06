@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->graphicsView->setSceneRect(0, 0, rcontent.width(), rcontent.height());
     ui->graphicsView->setScene(scene);
 
-    connect(preview_button, SIGNAL(released()), this, SLOT(full_preview_clicked()));
+    connect(preview_button, SIGNAL(released()), this, SLOT(fullPreviewClicked()));
 }
 
 MainWindow::~MainWindow()
@@ -26,9 +26,20 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::full_preview_clicked()
+void MainWindow::fullPreviewClicked()
 {
     FullPreview full_preview;
     full_preview.setModal(true);
     full_preview.exec();
+}
+
+/*
+ * fpsValueChanged
+ *
+ * Handling event which sets the time interval for the QTimer object in
+ * charge of refreshing the small previewer scene.
+ */
+void MainWindow::fpsValueChanged(int value)
+{
+
 }
