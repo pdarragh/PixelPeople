@@ -38,9 +38,6 @@ public:
     QGraphicsView *graphicsView;
     QPushButton *clearButton;
     QFrame *line;
-    QWidget *horizontalLayoutWidget;
-    QHBoxLayout *horizontalLayout;
-    QGraphicsView *graphicsView1;
     QFrame *line_2;
     QFrame *line_3;
     QPushButton *addFrameButton;
@@ -56,6 +53,9 @@ public:
     QPushButton *playPause;
     QPushButton *forward;
     QGraphicsView *graphicsView_2;
+    QWidget *horizontalLayoutWidget;
+    QHBoxLayout *horizontalLayout;
+    QGraphicsView *graphicsView1;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QToolBar *mainToolBar;
@@ -66,6 +66,11 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
         MainWindow->resize(1105, 555);
+        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
+        MainWindow->setSizePolicy(sizePolicy);
         actionNew = new QAction(MainWindow);
         actionNew->setObjectName(QStringLiteral("actionNew"));
         actionSave = new QAction(MainWindow);
@@ -76,7 +81,7 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         graphicsView = new QGraphicsView(centralWidget);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
-        graphicsView->setGeometry(QRect(350, 10, 751, 391));
+        graphicsView->setGeometry(QRect(350, 10, 751, 381));
         clearButton = new QPushButton(centralWidget);
         clearButton->setObjectName(QStringLiteral("clearButton"));
         clearButton->setGeometry(QRect(230, 280, 61, 61));
@@ -88,25 +93,6 @@ public:
         line->setGeometry(QRect(330, 20, 20, 371));
         line->setFrameShape(QFrame::VLine);
         line->setFrameShadow(QFrame::Sunken);
-        horizontalLayoutWidget = new QWidget(centralWidget);
-        horizontalLayoutWidget->setObjectName(QStringLiteral("horizontalLayoutWidget"));
-        horizontalLayoutWidget->setGeometry(QRect(70, 410, 1021, 81));
-        horizontalLayout = new QHBoxLayout(horizontalLayoutWidget);
-        horizontalLayout->setSpacing(6);
-        horizontalLayout->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        horizontalLayout->setSizeConstraint(QLayout::SetDefaultConstraint);
-        horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        graphicsView1 = new QGraphicsView(horizontalLayoutWidget);
-        graphicsView1->setObjectName(QStringLiteral("graphicsView1"));
-        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(graphicsView1->sizePolicy().hasHeightForWidth());
-        graphicsView1->setSizePolicy(sizePolicy);
-
-        horizontalLayout->addWidget(graphicsView1);
-
         line_2 = new QFrame(centralWidget);
         line_2->setObjectName(QStringLiteral("line_2"));
         line_2->setGeometry(QRect(10, 230, 331, 20));
@@ -183,6 +169,22 @@ public:
         graphicsView_2 = new QGraphicsView(centralWidget);
         graphicsView_2->setObjectName(QStringLiteral("graphicsView_2"));
         graphicsView_2->setGeometry(QRect(20, 30, 311, 141));
+        horizontalLayoutWidget = new QWidget(centralWidget);
+        horizontalLayoutWidget->setObjectName(QStringLiteral("horizontalLayoutWidget"));
+        horizontalLayoutWidget->setGeometry(QRect(70, 400, 1031, 91));
+        horizontalLayout = new QHBoxLayout(horizontalLayoutWidget);
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setSizeConstraint(QLayout::SetDefaultConstraint);
+        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        graphicsView1 = new QGraphicsView(horizontalLayoutWidget);
+        graphicsView1->setObjectName(QStringLiteral("graphicsView1"));
+        sizePolicy.setHeightForWidth(graphicsView1->sizePolicy().hasHeightForWidth());
+        graphicsView1->setSizePolicy(sizePolicy);
+
+        horizontalLayout->addWidget(graphicsView1);
+
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
