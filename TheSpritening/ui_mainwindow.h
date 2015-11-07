@@ -66,6 +66,11 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
         MainWindow->resize(1105, 555);
+        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
+        MainWindow->setSizePolicy(sizePolicy);
         actionNew = new QAction(MainWindow);
         actionNew->setObjectName(QStringLiteral("actionNew"));
         actionSave = new QAction(MainWindow);
@@ -95,13 +100,10 @@ public:
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        horizontalLayout->setSizeConstraint(QLayout::SetDefaultConstraint);
+        horizontalLayout->setSizeConstraint(QLayout::SetFixedSize);
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
         graphicsView1 = new QGraphicsView(horizontalLayoutWidget);
         graphicsView1->setObjectName(QStringLiteral("graphicsView1"));
-        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(graphicsView1->sizePolicy().hasHeightForWidth());
         graphicsView1->setSizePolicy(sizePolicy);
 
