@@ -56,7 +56,7 @@ void MainWindow::addFramePushed()
     newFrame->setScene(newScene);
     newFrame->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
     //newFrame->setEnabled(false);
-    ui->horizontalLayout->insertWidget(1, newFrame);
+    ui->horizontalLayout->insertWidget(1, newFrame);//TODO:change the 1 to frames.count
 
     //change the canvas in the main graphics view
     QRect rcontent = ui->graphicsView->contentsRect();
