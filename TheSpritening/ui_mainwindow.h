@@ -171,7 +171,7 @@ public:
         graphicsView_2->setGeometry(QRect(20, 30, 311, 141));
         horizontalLayoutWidget = new QWidget(centralWidget);
         horizontalLayoutWidget->setObjectName(QStringLiteral("horizontalLayoutWidget"));
-        horizontalLayoutWidget->setGeometry(QRect(70, 400, 1081, 91));
+        horizontalLayoutWidget->setGeometry(QRect(70, 400, 1031, 91));
         horizontalLayout = new QHBoxLayout(horizontalLayoutWidget);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
