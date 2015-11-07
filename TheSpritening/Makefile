@@ -51,12 +51,26 @@ OBJECTS_DIR   = ./
 SOURCES       = main.cpp \
 		mainwindow.cpp \
 		cell.cpp \
-		canvas.cpp moc_mainwindow.cpp
+		canvas.cpp \
+		preview.cpp \
+		dialog.cpp \
+		load.cpp qrc_resources.cpp \
+		moc_mainwindow.cpp \
+		moc_preview.cpp \
+		moc_dialog.cpp \
+		moc_load.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		cell.o \
 		canvas.o \
-		moc_mainwindow.o
+		preview.o \
+		dialog.o \
+		load.o \
+		qrc_resources.o \
+		moc_mainwindow.o \
+		moc_preview.o \
+		moc_dialog.o \
+		moc_load.o
 DIST          = ../../../../Qt/5.5/clang_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/qdevice.pri \
 		../../../../Qt/5.5/clang_64/mkspecs/features/device_config.prf \
@@ -174,6 +188,7 @@ DIST          = ../../../../Qt/5.5/clang_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/qt_config.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/macx-clang/qmake.conf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../../Qt/5.5/clang_64/mkspecs/features/exclusive_builds.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/default_pre.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/mac/default_pre.prf \
@@ -196,10 +211,16 @@ DIST          = ../../../../Qt/5.5/clang_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/lex.prf \
 		TheSpritening.pro mainwindow.h \
 		cell.h \
-		canvas.h main.cpp \
+		canvas.h \
+		preview.h \
+		dialog.h \
+		load.h main.cpp \
 		mainwindow.cpp \
 		cell.cpp \
-		canvas.cpp
+		canvas.cpp \
+		preview.cpp \
+		dialog.cpp \
+		load.cpp
 QMAKE_TARGET  = TheSpritening
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = TheSpritening.app/Contents/MacOS/TheSpritening
@@ -237,7 +258,7 @@ first: all
 
 ####### Build rules
 
-$(TARGET): ui_mainwindow.h $(OBJECTS)  
+$(TARGET): ui_mainwindow.h ui_preview.h ui_dialog.h ui_load.h $(OBJECTS)  
 	@test -d TheSpritening.app/Contents/MacOS/ || mkdir -p TheSpritening.app/Contents/MacOS/
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
@@ -358,6 +379,7 @@ Makefile: TheSpritening.pro ../../../../Qt/5.5/clang_64/mkspecs/macx-clang/qmake
 		../../../../Qt/5.5/clang_64/mkspecs/features/qt_config.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/macx-clang/qmake.conf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../../Qt/5.5/clang_64/mkspecs/features/exclusive_builds.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/default_pre.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/mac/default_pre.prf \
@@ -379,6 +401,7 @@ Makefile: TheSpritening.pro ../../../../Qt/5.5/clang_64/mkspecs/macx-clang/qmake
 		../../../../Qt/5.5/clang_64/mkspecs/features/yacc.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/lex.prf \
 		TheSpritening.pro \
+		resources.qrc \
 		/Users/mariajenkins/Qt/5.5/clang_64/lib/QtWidgets.framework/QtWidgets.prl \
 		/Users/mariajenkins/Qt/5.5/clang_64/lib/QtGui.framework/QtGui.prl \
 		/Users/mariajenkins/Qt/5.5/clang_64/lib/QtCore.framework/QtCore.prl
@@ -500,6 +523,7 @@ Makefile: TheSpritening.pro ../../../../Qt/5.5/clang_64/mkspecs/macx-clang/qmake
 ../../../../Qt/5.5/clang_64/mkspecs/features/qt_config.prf:
 ../../../../Qt/5.5/clang_64/mkspecs/macx-clang/qmake.conf:
 ../../../../Qt/5.5/clang_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../../../Qt/5.5/clang_64/mkspecs/features/exclusive_builds.prf:
 ../../../../Qt/5.5/clang_64/mkspecs/features/default_pre.prf:
 ../../../../Qt/5.5/clang_64/mkspecs/features/mac/default_pre.prf:
@@ -521,6 +545,7 @@ Makefile: TheSpritening.pro ../../../../Qt/5.5/clang_64/mkspecs/macx-clang/qmake
 ../../../../Qt/5.5/clang_64/mkspecs/features/yacc.prf:
 ../../../../Qt/5.5/clang_64/mkspecs/features/lex.prf:
 TheSpritening.pro:
+resources.qrc:
 /Users/mariajenkins/Qt/5.5/clang_64/lib/QtWidgets.framework/QtWidgets.prl:
 /Users/mariajenkins/Qt/5.5/clang_64/lib/QtGui.framework/QtGui.prl:
 /Users/mariajenkins/Qt/5.5/clang_64/lib/QtCore.framework/QtCore.prl:
@@ -553,9 +578,10 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.h cell.h canvas.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp mainwindow.cpp cell.cpp canvas.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.ui $(DISTDIR)/
+	$(COPY_FILE) --parents resources.qrc $(DISTDIR)/
+	$(COPY_FILE) --parents mainwindow.h cell.h canvas.h preview.h dialog.h load.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp mainwindow.cpp cell.cpp canvas.cpp preview.cpp dialog.cpp load.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents mainwindow.ui preview.ui dialog.ui load.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -579,11 +605,25 @@ check: first
 
 compiler_objective_c_make_all:
 compiler_objective_c_clean:
-compiler_rcc_make_all:
+compiler_rcc_make_all: qrc_resources.cpp
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_mainwindow.cpp
+	-$(DEL_FILE) qrc_resources.cpp
+qrc_resources.cpp: resources.qrc \
+		delete_sign.png \
+		play.png \
+		erase.png \
+		pencil.png \
+		fast_forward.png \
+		last_quarter.png \
+		rewind.png \
+		plus_math.png \
+		rotate_right.png \
+		pause.png
+	/Users/mariajenkins/Qt/5.5/clang_64/bin/rcc -name resources resources.qrc -o qrc_resources.cpp
+
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_preview.cpp moc_dialog.cpp moc_load.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_preview.cpp moc_dialog.cpp moc_load.cpp
 moc_mainwindow.cpp: ../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
 		canvas.h \
@@ -595,16 +635,42 @@ moc_mainwindow.cpp: ../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/
 		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qpoint.h \
 		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/QList \
 		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qlist.h \
+		../../../../Qt/5.5/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../../../Qt/5.5/clang_64/lib/QtGui.framework/Headers/qpainter.h \
 		mainwindow.h
 	/Users/mariajenkins/Qt/5.5/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/mariajenkins/Qt/5.5/clang_64/mkspecs/macx-clang -I/Users/mariajenkins/School/CS3505/Spritening/TheSpritening -I/Users/mariajenkins/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers -I/Users/mariajenkins/Qt/5.5/clang_64/lib/QtGui.framework/Headers -I/Users/mariajenkins/Qt/5.5/clang_64/lib/QtCore.framework/Headers -F/Users/mariajenkins/Qt/5.5/clang_64/lib mainwindow.h -o moc_mainwindow.cpp
 
+moc_preview.cpp: ../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
+		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
+		preview.h
+	/Users/mariajenkins/Qt/5.5/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/mariajenkins/Qt/5.5/clang_64/mkspecs/macx-clang -I/Users/mariajenkins/School/CS3505/Spritening/TheSpritening -I/Users/mariajenkins/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers -I/Users/mariajenkins/Qt/5.5/clang_64/lib/QtGui.framework/Headers -I/Users/mariajenkins/Qt/5.5/clang_64/lib/QtCore.framework/Headers -F/Users/mariajenkins/Qt/5.5/clang_64/lib preview.h -o moc_preview.cpp
+
+moc_dialog.cpp: ../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
+		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
+		dialog.h
+	/Users/mariajenkins/Qt/5.5/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/mariajenkins/Qt/5.5/clang_64/mkspecs/macx-clang -I/Users/mariajenkins/School/CS3505/Spritening/TheSpritening -I/Users/mariajenkins/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers -I/Users/mariajenkins/Qt/5.5/clang_64/lib/QtGui.framework/Headers -I/Users/mariajenkins/Qt/5.5/clang_64/lib/QtCore.framework/Headers -F/Users/mariajenkins/Qt/5.5/clang_64/lib dialog.h -o moc_dialog.cpp
+
+moc_load.cpp: ../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
+		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
+		load.h
+	/Users/mariajenkins/Qt/5.5/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/mariajenkins/Qt/5.5/clang_64/mkspecs/macx-clang -I/Users/mariajenkins/School/CS3505/Spritening/TheSpritening -I/Users/mariajenkins/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers -I/Users/mariajenkins/Qt/5.5/clang_64/lib/QtGui.framework/Headers -I/Users/mariajenkins/Qt/5.5/clang_64/lib/QtCore.framework/Headers -F/Users/mariajenkins/Qt/5.5/clang_64/lib load.h -o moc_load.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h
+compiler_uic_make_all: ui_mainwindow.h ui_preview.h ui_dialog.h ui_load.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h
+	-$(DEL_FILE) ui_mainwindow.h ui_preview.h ui_dialog.h ui_load.h
 ui_mainwindow.h: mainwindow.ui
 	/Users/mariajenkins/Qt/5.5/clang_64/bin/uic mainwindow.ui -o ui_mainwindow.h
+
+ui_preview.h: preview.ui
+	/Users/mariajenkins/Qt/5.5/clang_64/bin/uic preview.ui -o ui_preview.h
+
+ui_dialog.h: dialog.ui
+	/Users/mariajenkins/Qt/5.5/clang_64/bin/uic dialog.ui -o ui_dialog.h
+
+ui_load.h: load.ui
+	/Users/mariajenkins/Qt/5.5/clang_64/bin/uic load.ui -o ui_load.h
 
 compiler_rez_source_make_all:
 compiler_rez_source_clean:
@@ -614,7 +680,7 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_header_clean compiler_uic_clean 
+compiler_clean: compiler_rcc_clean compiler_moc_header_clean compiler_uic_clean 
 
 ####### Compile
 
@@ -630,6 +696,8 @@ main.o: main.cpp mainwindow.h \
 		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qpoint.h \
 		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/QList \
 		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qlist.h \
+		../../../../Qt/5.5/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../../../Qt/5.5/clang_64/lib/QtGui.framework/Headers/qpainter.h \
 		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QApplication \
 		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qapplication.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
@@ -646,7 +714,10 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qpoint.h \
 		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/QList \
 		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qlist.h \
-		ui_mainwindow.h
+		../../../../Qt/5.5/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../../../Qt/5.5/clang_64/lib/QtGui.framework/Headers/qpainter.h \
+		ui_mainwindow.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qmath.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
 cell.o: cell.cpp cell.h \
@@ -665,6 +736,8 @@ canvas.o: canvas.cpp canvas.h \
 		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qpoint.h \
 		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/QList \
 		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qlist.h \
+		../../../../Qt/5.5/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../../../Qt/5.5/clang_64/lib/QtGui.framework/Headers/qpainter.h \
 		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/QDebug \
 		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qdebug.h \
 		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QGraphicsEllipseItem \
@@ -675,8 +748,38 @@ canvas.o: canvas.cpp canvas.h \
 		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qmath.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o canvas.o canvas.cpp
 
+preview.o: preview.cpp preview.h \
+		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
+		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
+		ui_preview.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o preview.o preview.cpp
+
+dialog.o: dialog.cpp dialog.h \
+		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
+		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
+		ui_dialog.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dialog.o dialog.cpp
+
+load.o: load.cpp load.h \
+		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
+		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
+		ui_load.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o load.o load.cpp
+
+qrc_resources.o: qrc_resources.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resources.o qrc_resources.cpp
+
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
+
+moc_preview.o: moc_preview.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_preview.o moc_preview.cpp
+
+moc_dialog.o: moc_dialog.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_dialog.o moc_dialog.cpp
+
+moc_load.o: moc_load.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_load.o moc_load.cpp
 
 ####### Install
 
