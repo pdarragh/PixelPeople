@@ -1,4 +1,4 @@
-/****
+/*
  * cell.h
  *
  * The header for the model of the cell. Cells are what become the pixels in a
@@ -21,10 +21,8 @@ public:
     // Methods.
     QPoint getPosition();
     QColor getColor();
-    void setColor(QColor color);
 private:
     // Attributes.
-    // The position is immutable, but the color may change.
     QPoint position;
     QColor color;
 };
