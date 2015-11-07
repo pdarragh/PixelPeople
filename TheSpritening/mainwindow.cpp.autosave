@@ -45,6 +45,19 @@ void MainWindow::fpsValueChanged(int value)
 }
 
 /*
+ * pplayButtonReleased
+ *
+ * Handling Event which toggles between two states: play true and play false.
+ * If play is false, it freezes the previewer at the current frame being.
+ * Otherwise, it triggers the QTimer object to begin updating the previewer
+ * again.
+ */
+void MainWindow::pplayButtonReleased()
+{
+
+}
+
+/*
  * pskipButtonReleased
  *
  * Handling Event which changes the frame being displayed. Proceeds
@@ -69,3 +82,5 @@ void MainWindow::pbackButtonReleased()
 {
 
 }
+
+
