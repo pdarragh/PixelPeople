@@ -49,7 +49,7 @@ void Frame::init(
     int     length,
     QColor  color   )
 {
-    cells = CELL_MATRIX;
+    cells = CELL_MATRIX();
     for (int y = 0; y < length; ++y)
     {
         // Create the base row vector.
@@ -74,7 +74,7 @@ CELL_MATRIX Frame::getCells()
     return cells;
 }
 
-void setCellAtPositionToColor(
+void Frame::setCellAtPositionToColor(
     int     x,
     int     y,
     QColor  color   )
@@ -82,7 +82,7 @@ void setCellAtPositionToColor(
     this->cells[y][x].setColor(color);
 }
 
-QColor getCellColorAtPosition(
+QColor Frame::getCellColorAtPosition(
     int x,
     int y   )
 {
