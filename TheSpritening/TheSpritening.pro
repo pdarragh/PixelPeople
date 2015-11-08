@@ -18,14 +18,18 @@ SOURCES += main.cpp\
     canvas.cpp \
     preview.cpp \
     dialog.cpp \
-    load.cpp
+    load.cpp \
+    sprite.cpp \
+    frame.cpp
 
 HEADERS  += mainwindow.h \
     cell.h \
     canvas.h \
     preview.h \
     dialog.h \
-    load.h
+    load.h \
+    sprite.h \
+    frame.h
 
 FORMS    += mainwindow.ui \
     preview.ui \
