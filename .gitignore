@@ -30,3 +30,4 @@
 # Stupid Qt user files.
 *.pro.user
 *.pro.user.*
+*.autosave
