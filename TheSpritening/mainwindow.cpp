@@ -5,6 +5,8 @@
 #include <QColorDialog>
 #include <QDebug>
 
+int MainWindow::DEFAULT_DIMENSION = 64;
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -16,8 +18,17 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //create the size of the canvas and set up the canvas
     QRect rcontent = ui->graphicsView->contentsRect();
-    ui->graphicsView->setSceneRect(0, 0, rcontent.width(), rcontent.height());
+
+
+    this->dimension      = DEFAULT_DIMENSION;
+    int available_length = std::min(rcontent.width(), rcontent.height());
+    this->cell_size      = available_length / this->dimension;
+    this->side_length    = available_length - available_length % this->cell_size;
+
     ui->graphicsView->setScene(scene);
+    ui->graphicsView->setSceneRect(0, 0, this->side_length, this->side_length);
+
+
 
     //create the canvas for the frame
     QRect rcontent1 = ui->graphicsView1->contentsRect();

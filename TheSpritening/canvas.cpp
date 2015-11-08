@@ -10,6 +10,8 @@
 Canvas::Canvas(QObject *parent) :QGraphicsScene(parent)
 {
    this->setBackgroundBrush(Qt::gray);
+   this->setSceneRect(100, 100, 50,50);
+
 }
 
 //method that takes a qpoint dimension and color
