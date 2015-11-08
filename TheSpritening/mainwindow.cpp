@@ -68,7 +68,7 @@ void MainWindow::addFramePushed()
 }
 
 
-void MainWindow::iGotClicked(QPointF point)
+void MainWindow::canvasClickedAtPosition(QPointF point)
 {
     //based on the current tool
     //needs coordinate of the box that it was clicked in giveMeCell()

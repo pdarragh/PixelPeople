@@ -17,7 +17,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
      Canvas * scene;
      QColor color;
-     void iGotClicked(QPointF point);
+     void canvasClickedAtPosition(QPointF point);
      enum class Tools {Eraser, Pencil, Rotate, Mirror};
     ~MainWindow();
 
