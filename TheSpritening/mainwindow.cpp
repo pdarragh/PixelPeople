@@ -32,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->addFrameButton, SIGNAL(clicked()), this, SLOT(addFramePushed()));
 
     //TODO: create the sprite for the model
+    //TODO: Initialize cell_size
 }
 
 void MainWindow::clearPushed()
@@ -99,4 +100,18 @@ void MainWindow::on_colorButton_clicked()
 
            //TODO: get the proper canvas from the model and set the color
            scene->color = color;
+}
+
+QPoint MainWindow::getCellAddressFromPositionInView(int x, int y)
+{
+    int cell_x = (x - (x % this->cell_size)) / this->cell_size;
+    int cell_y = (y - (y % this->cell_size)) / this->cell_size;
+    return QPoint(cell_x, cell_y);
+}
+
+QPoint MainWindow::getViewPositionFromCellAddress(int x, int y)
+{
+    int view_x = x * this->cell_size;
+    int view_y = y * this->cell_size;
+    return QPoint(view_x, view_y);
 }

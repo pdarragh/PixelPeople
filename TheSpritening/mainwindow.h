@@ -23,6 +23,9 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    int cell_size;
+    QPoint getCellAddressFromPositionInView(int x, int y);
+    QPoint getViewPositionFromCellAddress(int x, int y);
 
 public slots:
     void clearPushed();
