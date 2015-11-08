@@ -23,6 +23,9 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    static int DEFAULT_DIMENSION;
+    int dimension;
+    int side_length;
     int cell_size;
     QPoint getCellAddressFromPositionInView(int x, int y);
     QPoint getViewPositionFromCellAddress(int x, int y);
