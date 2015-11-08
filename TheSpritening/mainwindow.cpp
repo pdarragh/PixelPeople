@@ -1,7 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <qmath.h>
 #include "preview.h"
+#include <qmath.h>
+#include <iostream>
+#include <sstream>
 #include <QColorDialog>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -21,8 +23,17 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->graphicsView1->setSceneRect(0, 0, rcontent1.width(), rcontent1.height());
     ui->graphicsView1->setScene(scene);
 
+    ui->horizontalSlider->setRange(0, 65);
+    ui->horizontalSlider->setValue(3);
+
+    initSmallPreview(); // TODO draw canvas on the previewer
+
     connect(ui->clearButton, SIGNAL(clicked()), this, SLOT(clearPushed()));
     connect(ui->addFrameButton, SIGNAL(clicked()), this, SLOT(addFramePushed()));
+    connect(ui->playPause, SIGNAL(released()), this, SLOT(pplayButtonReleased()));
+    connect(ui->backward, SIGNAL(released()), this, SLOT(pbackButtonReleased()));
+    connect(ui->forward, SIGNAL(released()), this, SLOT(pskipButtonReleased()));
+    connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(fpsValueChanged(int)));
 
     ui->horizontalLayout->setAlignment(Qt::AlignLeft);
 }
@@ -74,4 +85,56 @@ void MainWindow::on_colorButton_clicked()
            ui->colorButton->update();
 
            scene->color = color;
+}
+
+void MainWindow::initSmallPreview()
+{
+
+}
+
+void MainWindow::pplayButtonReleased()
+{
+    //pplayIcon->addPixmap(QPixmap("new/imageassets/play.png"),QIcon::Normal,QIcon::On);
+    pplayIcon->addPixmap(QPixmap("play.png"),QIcon::Normal,QIcon::On);
+    //pplayIcon->addPixmap(QPixmap("new/imageassets/pause.png"),QIcon::Normal,QIcon::Off);
+    pplayIcon->addPixmap(QPixmap("pause.png"),QIcon::Normal,QIcon::Off);
+    ui->playPause->setIcon(*pplayIcon);
+    ui->playPause->setCheckable(true);
+
+    if (play_on)
+    {
+        // TODO alternates canvas frames
+        // Test code:
+        std::cout << "Play is on." << std::endl;
+        play_on = false;
+    }
+
+    else
+    {
+        // TODO allows creates a small things
+        //toggle();
+        std::cout << "Play is off." << std::endl;
+        play_on = true;
+    }
+}
+
+void MainWindow::pbackButtonReleased()
+{
+
+}
+
+void MainWindow::pskipButtonReleased()
+{
+
+}
+
+void MainWindow::fpsValueChanged(int value)
+{
+    //int a = 10;
+    std::ostringstream ss;
+    ss << value;
+    std::string changed_int = ss.str();
+
+    std::cout << "FPS changed to " << changed_int << "." << std::endl;
+    //std::cout << "FPS changed." << std::endl;
 }
