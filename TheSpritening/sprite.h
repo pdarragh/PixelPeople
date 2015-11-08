@@ -36,7 +36,7 @@ private:
     // Attributes
     static int DEFAULT_LENGTH;
     static QColor DEFAULT_COLOR;
-    std:vector<Frame> frames;
+    std::vector<Frame> frames;
     int current_index;
     int dimension;
     QColor bg_color;
