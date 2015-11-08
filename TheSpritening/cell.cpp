@@ -42,3 +42,8 @@ QColor Cell::getColor()
 {
     return color;
 }
+
+void Cell::setColor(QColor color)
+{
+    this->color = color;
+}

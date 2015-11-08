@@ -56,7 +56,7 @@ Sprite::Sprite(std::vector<Frame> frameStack, int dimension)
  * Public Methods
  */
 
-Frame Sprite::getFrame(int index)
+Frame Sprite::getFrame(unsigned long index)
 {
     if(index <= frames.size() - 1)
     {
@@ -86,7 +86,7 @@ Frame Sprite::getNewFrame()
  * We'll need to increase index by 1 because the insert
  * method inserts before the specified index.
  */
-Frame Sprite::getNewFrameAfterIndex(int index)
+Frame Sprite::getNewFrameAfterIndex(unsigned long index)
 {
     if(index <= frames.size() - 1)
     {
@@ -107,7 +107,7 @@ Frame Sprite::getNewFrameAfterIndex(int index)
  * after index and returns it. Index gets increased by 1 because
  * the insert method inserts before the index provided.
  */
-Frame Sprite::getNewCopyFrameAfterIndex(int index)
+Frame Sprite::getNewCopyFrameAfterIndex(unsigned long index)
 {
     if(index <= frames.size() - 1)
     {
@@ -128,11 +128,11 @@ Frame Sprite::getNewCopyFrameAfterIndex(int index)
  * Next, we'll need to reset the current index if we just deleted
  * the element at that position.
  */
-void Sprite::removeFrameAtIndex(int index)
+void Sprite::removeFrameAtIndex(unsigned long index)
 {
     if(index <= frames.size() - 1)
     {
-        frames.remove(getIteratorAtPosition(index));
+        frames.erase(getIteratorAtPosition(index));
         if(this->current_index == index)
         {
             this->current_index = 0;
@@ -140,7 +140,7 @@ void Sprite::removeFrameAtIndex(int index)
     }
 }
 
-void setCellAtPositionToColor(int x, int y, QColor color)
+void Sprite::setCellAtPositionToColor(int x, int y, QColor color)
 {
     frames[this->current_index].setCellAtPositionToColor(x, y, color);
 }
@@ -164,9 +164,10 @@ int Sprite::getDimension()
  * Private Methods
  */
 
-std::vector<Frame>::iterator Sprite::getIteratorAtPosition(int index)
+std::vector<Frame>::iterator Sprite::getIteratorAtPosition(unsigned long index)
 {
     std::vector<Frame>::iterator new_iterator = frames.begin() + index;
+    return new_iterator;
 }
 
 

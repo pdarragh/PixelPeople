@@ -22,12 +22,12 @@ public:
     Sprite(int dimension, QColor color);
     Sprite(std::vector<Frame> frameStack, int dimension);
     // Methods.
-    Frame getFrame(int index);
+    Frame getFrame(unsigned long index);
     std::vector<Frame> getAllFrames();
     Frame getNewFrame();
-    Frame getNewFrameAfterIndex(int index);
-    Frame getNewCopyFrameAfterIndex(int index);
-    void removeFrameAtIndex(int index);
+    Frame getNewFrameAfterIndex(unsigned long index);
+    Frame getNewCopyFrameAfterIndex(unsigned long index);
+    void removeFrameAtIndex(unsigned long index);
     void setCellAtPositionToColor(int x, int y, QColor color);
     QColor getBGColor();
     void setBGColor(QColor color);
@@ -37,11 +37,11 @@ private:
     static int DEFAULT_LENGTH;
     static QColor DEFAULT_COLOR;
     std::vector<Frame> frames;
-    int current_index;
+    unsigned long current_index;
     int dimension;
     QColor bg_color;
     // Methods.
-    std::vector<Frame>::iterator getIteratorAtPosition(int index);
+    std::vector<Frame>::iterator getIteratorAtPosition(unsigned long index);
 
 };
 

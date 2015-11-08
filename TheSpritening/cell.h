@@ -21,6 +21,7 @@ public:
     // Methods.
     QPoint getPosition();
     QColor getColor();
+    void setColor(QColor color);
 private:
     // Attributes.
     QPoint position;
