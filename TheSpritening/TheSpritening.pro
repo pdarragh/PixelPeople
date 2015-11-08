@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     preview.cpp \
     dialog.cpp \
     load.cpp \
-    sprite.cpp
+    sprite.cpp \
+    frame.cpp
 
 HEADERS  += mainwindow.h \
     cell.h \
@@ -27,7 +28,8 @@ HEADERS  += mainwindow.h \
     preview.h \
     dialog.h \
     load.h \
-    sprite.h
+    sprite.h \
+    frame.h
 
 FORMS    += mainwindow.ui \
     preview.ui \
