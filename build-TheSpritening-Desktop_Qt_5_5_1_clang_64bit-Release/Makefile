@@ -192,6 +192,7 @@ DIST          = ../../Qt/5.5/clang_64/mkspecs/features/spec_pre.prf \
 		../../Qt/5.5/clang_64/mkspecs/features/qt_config.prf \
 		../../Qt/5.5/clang_64/mkspecs/macx-clang/qmake.conf \
 		../../Qt/5.5/clang_64/mkspecs/features/spec_post.prf \
+		../TheSpritening/.qmake.stash \
 		../../Qt/5.5/clang_64/mkspecs/features/exclusive_builds.prf \
 		../../Qt/5.5/clang_64/mkspecs/features/default_pre.prf \
 		../../Qt/5.5/clang_64/mkspecs/features/mac/default_pre.prf \
@@ -386,6 +387,7 @@ Makefile: ../TheSpritening/TheSpritening.pro ../../Qt/5.5/clang_64/mkspecs/macx-
 		../../Qt/5.5/clang_64/mkspecs/features/qt_config.prf \
 		../../Qt/5.5/clang_64/mkspecs/macx-clang/qmake.conf \
 		../../Qt/5.5/clang_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../Qt/5.5/clang_64/mkspecs/features/exclusive_builds.prf \
 		../../Qt/5.5/clang_64/mkspecs/features/default_pre.prf \
 		../../Qt/5.5/clang_64/mkspecs/features/mac/default_pre.prf \
@@ -533,6 +535,7 @@ Makefile: ../TheSpritening/TheSpritening.pro ../../Qt/5.5/clang_64/mkspecs/macx-
 ../../Qt/5.5/clang_64/mkspecs/features/qt_config.prf:
 ../../Qt/5.5/clang_64/mkspecs/macx-clang/qmake.conf:
 ../../Qt/5.5/clang_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../Qt/5.5/clang_64/mkspecs/features/exclusive_builds.prf:
 ../../Qt/5.5/clang_64/mkspecs/features/default_pre.prf:
 ../../Qt/5.5/clang_64/mkspecs/features/mac/default_pre.prf:
@@ -633,9 +636,7 @@ qrc_resources.cpp: ../TheSpritening/resources.qrc \
 compiler_moc_header_make_all: moc_mainwindow.cpp moc_preview.cpp moc_dialog.cpp moc_load.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_mainwindow.cpp moc_preview.cpp moc_dialog.cpp moc_load.cpp
-moc_mainwindow.cpp: ../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
-		../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
-		../TheSpritening/canvas.h \
+moc_mainwindow.cpp: ../TheSpritening/canvas.h \
 		../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QGraphicsScene \
 		../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qgraphicsscene.h \
 		../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QGraphicsSceneMouseEvent \
@@ -646,6 +647,12 @@ moc_mainwindow.cpp: ../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QMainW
 		../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qlist.h \
 		../../Qt/5.5/clang_64/lib/QtGui.framework/Headers/QPainter \
 		../../Qt/5.5/clang_64/lib/QtGui.framework/Headers/qpainter.h \
+		../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
+		../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
+		../../Qt/5.5/clang_64/lib/QtGui.framework/Headers/QIcon \
+		../../Qt/5.5/clang_64/lib/QtGui.framework/Headers/qicon.h \
+		../../Qt/5.5/clang_64/lib/QtGui.framework/Headers/QPixmap \
+		../../Qt/5.5/clang_64/lib/QtGui.framework/Headers/qpixmap.h \
 		../TheSpritening/mainwindow.h
 	/Users/aurora/Qt/5.5/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/aurora/Qt/5.5/clang_64/mkspecs/macx-clang -I/Users/aurora/Spritening/TheSpritening -I/Users/aurora/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers -I/Users/aurora/Qt/5.5/clang_64/lib/QtGui.framework/Headers -I/Users/aurora/Qt/5.5/clang_64/lib/QtCore.framework/Headers -I. -F/Users/aurora/Qt/5.5/clang_64/lib ../TheSpritening/mainwindow.h -o moc_mainwindow.cpp
 
@@ -694,8 +701,6 @@ compiler_clean: compiler_rcc_clean compiler_moc_header_clean compiler_uic_clean
 ####### Compile
 
 main.o: ../TheSpritening/main.cpp ../TheSpritening/mainwindow.h \
-		../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
-		../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
 		../TheSpritening/canvas.h \
 		../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QGraphicsScene \
 		../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qgraphicsscene.h \
@@ -707,13 +712,17 @@ main.o: ../TheSpritening/main.cpp ../TheSpritening/mainwindow.h \
 		../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qlist.h \
 		../../Qt/5.5/clang_64/lib/QtGui.framework/Headers/QPainter \
 		../../Qt/5.5/clang_64/lib/QtGui.framework/Headers/qpainter.h \
+		../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
+		../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
+		../../Qt/5.5/clang_64/lib/QtGui.framework/Headers/QIcon \
+		../../Qt/5.5/clang_64/lib/QtGui.framework/Headers/qicon.h \
+		../../Qt/5.5/clang_64/lib/QtGui.framework/Headers/QPixmap \
+		../../Qt/5.5/clang_64/lib/QtGui.framework/Headers/qpixmap.h \
 		../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QApplication \
 		../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qapplication.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../TheSpritening/main.cpp
 
 mainwindow.o: ../TheSpritening/mainwindow.cpp ../TheSpritening/mainwindow.h \
-		../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
-		../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
 		../TheSpritening/canvas.h \
 		../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QGraphicsScene \
 		../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qgraphicsscene.h \
@@ -725,11 +734,17 @@ mainwindow.o: ../TheSpritening/mainwindow.cpp ../TheSpritening/mainwindow.h \
 		../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qlist.h \
 		../../Qt/5.5/clang_64/lib/QtGui.framework/Headers/QPainter \
 		../../Qt/5.5/clang_64/lib/QtGui.framework/Headers/qpainter.h \
+		../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
+		../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
+		../../Qt/5.5/clang_64/lib/QtGui.framework/Headers/QIcon \
+		../../Qt/5.5/clang_64/lib/QtGui.framework/Headers/qicon.h \
+		../../Qt/5.5/clang_64/lib/QtGui.framework/Headers/QPixmap \
+		../../Qt/5.5/clang_64/lib/QtGui.framework/Headers/qpixmap.h \
 		../TheSpritening/ui_mainwindow.h \
-		../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qmath.h \
 		../TheSpritening/preview.h \
 		../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
+		../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qmath.h \
 		../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QColorDialog \
 		../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qcolordialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../TheSpritening/mainwindow.cpp
