@@ -1,7 +1,11 @@
 #ifndef LOAD_H
 #define LOAD_H
 
+//#include "qcanvas.h"
+
 #include <QDialog>
+#include <QMainWindow>
+#include <QGraphicsView>
 
 namespace Ui {
 class Load;

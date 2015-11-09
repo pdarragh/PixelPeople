@@ -23,7 +23,7 @@ QT_BEGIN_NAMESPACE
 class Ui_preview
 {
 public:
-    QGraphicsView *graphicsView;
+    QGraphicsView *previewLarge;
     QPushButton *pushButton;
 
     void setupUi(QDialog *preview)
@@ -31,9 +31,9 @@ public:
         if (preview->objectName().isEmpty())
             preview->setObjectName(QStringLiteral("preview"));
         preview->resize(637, 440);
-        graphicsView = new QGraphicsView(preview);
-        graphicsView->setObjectName(QStringLiteral("graphicsView"));
-        graphicsView->setGeometry(QRect(260, 110, 256, 192));
+        previewLarge = new QGraphicsView(preview);
+        previewLarge->setObjectName(QStringLiteral("previewLarge"));
+        previewLarge->setGeometry(QRect(260, 110, 256, 192));
         pushButton = new QPushButton(preview);
         pushButton->setObjectName(QStringLiteral("pushButton"));
         pushButton->setGeometry(QRect(20, 20, 115, 32));
