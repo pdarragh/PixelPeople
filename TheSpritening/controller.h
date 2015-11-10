@@ -33,6 +33,7 @@ public:
     void canvasClickedAtPosition(QPointF point);
     void newFrameAdded();
     int getViewSideLength();
+    Sprite getSprite();
     QPointF getCellAddressFromPositionInView(QPointF position);
     QPointF getViewPositionFromCellAddress(int x, int y);
     void setActiveColor(QColor color);

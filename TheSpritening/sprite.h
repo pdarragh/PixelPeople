@@ -24,6 +24,7 @@ public:
     // Methods.
     Frame getFrame(unsigned long index);
     std::vector<Frame> getAllFrames();
+    int getFrameCount();
     Frame getNewFrame();
     Frame getNewFrameAfterIndex(unsigned long index);
     Frame getNewCopyFrameAfterIndex(unsigned long index);

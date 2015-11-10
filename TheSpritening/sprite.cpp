@@ -72,6 +72,11 @@ std::vector<Frame> Sprite::getAllFrames()
     return frames;
 }
 
+int Sprite::getFrameCount()
+{
+    return frames.size();
+}
+
 Frame Sprite::getNewFrame()
 {
     Frame new_frame(this->dimension, this->bg_color);
