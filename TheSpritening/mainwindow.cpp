@@ -121,5 +121,6 @@ void MainWindow::on_colorButton_clicked()
     ui->colorButton->update();
 
     //TODO: get the proper canvas from the model and set the color
-    scene->color = color;
+    //scene->color = color;
+   controller.setActiveColor(color);
 }

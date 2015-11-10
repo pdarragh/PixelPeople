@@ -33,6 +33,10 @@ void Controller::newFrameAdded()
 {
   sprite.getNewFrame();
 }
+void Controller::setActiveColor(QColor color)
+{
+    this->active_color = color;
+}
 
 int Controller::getViewSideLength()
 {
