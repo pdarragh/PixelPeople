@@ -50,6 +50,11 @@ int Controller::getViewSideLength()
     return (cell_size * dimension);
 }
 
+Sprite Controller::getSprite()
+{
+    return sprite;
+}
+
 void Controller::registerCanvas(Canvas* canvas)
 {
     this->canvas = canvas;
