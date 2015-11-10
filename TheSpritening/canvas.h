@@ -16,7 +16,7 @@ public:
     explicit Canvas(QObject *parent = 0, Controller* controller = 0);
     virtual void mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent);
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent * mouseEvent);
-    void drawSquareAtPositionWithColor(QPointF point, int x, int y, QColor color);
+    void drawSquareAtPositionWithColor(QPointF point, int width, int height, QColor color);
     void clear();
 
 signals:

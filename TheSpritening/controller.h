@@ -34,6 +34,7 @@ public:
     QPointF getCellAddressFromPositionInView(QPointF position);
     QPointF getViewPositionFromCellAddress(int x, int y);
     Tools::tool current_tool;
+    void setCurrentTool(Tools::tool new_tool);
 private:
     // Tool methods.
     void usePencilAtPoint(QPointF point);

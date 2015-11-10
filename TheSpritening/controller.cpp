@@ -7,6 +7,7 @@
 
 #include <QDebug>
 #include "controller.h"
+#include "canvas.h"
 
 int Controller::DEFAULT_DIMENSION = 64;
 
@@ -61,6 +62,11 @@ void Controller::canvasClickedAtPosition(QPointF point)
 void Controller::usePencilAtPoint(QPointF point)
 {
     qDebug() << Q_FUNC_INFO;
+    QPointF cell_address = getCellAddressFromPositionInView(point);
+    //TODO: modifications to the sprite
+    // getViewPositionFromCellAddress(cell_address.x(), cell_address.y());
+    // use a different variable down here once this is implemented
+    // this->canvas->drawSquareAtPositionWithColor(point, cell_size, cell_size, active_color);
 }
 
 void Controller::useEraserAtPoint(QPointF point)
@@ -76,6 +82,14 @@ void Controller::useRotateAtPoint(QPointF point)
 void Controller::useMirrorAtPoint(QPointF point)
 {
     qDebug() << Q_FUNC_INFO;
+}
+
+// Call this like this:
+//   controller->setCurrentTool(Tool::Pencil)
+// The values are in controller.h
+void Controller::setCurrentTool(Tools::tool new_tool)
+{
+    current_tool = new_tool;
 }
 
 QPointF Controller::getCellAddressFromPositionInView(QPointF position)
