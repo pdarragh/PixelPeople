@@ -25,6 +25,7 @@ public:
      enum class Tools {Eraser, Pencil, Rotate, Mirror};
      bool play_on = true;
      int FPS = 3;
+     QTimer *play_timer = new QTimer(this);
     ~MainWindow();
 
 private:

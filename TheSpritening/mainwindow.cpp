@@ -35,6 +35,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->backward, SIGNAL(released()), this, SLOT(pbackButtonReleased()));
     connect(ui->forward, SIGNAL(released()), this, SLOT(pskipButtonReleased()));
     connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(fpsValueChanged(int)));
+    connect(play_timer, SIGNAL(timeout()), this, SLOT(updateTimer()));
 
     ui->horizontalLayout->setAlignment(Qt::AlignLeft);
 }
@@ -126,6 +127,12 @@ void MainWindow::initSmallPreview()
 
 }
 
+/*
+ * pplayButtonReleased
+ *
+ * If play_on is true, the QTimer is started and its interval set to the
+ * current fps value.
+ */
 void MainWindow::pplayButtonReleased()
 {
     //pplayIcon->addPixmap(QPixmap("new/imageassets/play.png"),QIcon::Normal,QIcon::On);
@@ -138,9 +145,11 @@ void MainWindow::pplayButtonReleased()
     if (play_on)
     {
         // TODO alternates canvas frames
-        // Test code:
         std::cout << "Play is on." << std::endl;
         play_on = false;
+        int msec = 1000 / FPS;
+        play_timer->start(msec);
+
     }
 
     else
@@ -164,7 +173,8 @@ void MainWindow::pskipButtonReleased()
 
 void MainWindow::fpsValueChanged(int value)
 {
-    //int a = 10;
+    //FPS value is stored
+    FPS = value;
     std::ostringstream ss;
     ss << value;
     std::string changed_int = ss.str();
