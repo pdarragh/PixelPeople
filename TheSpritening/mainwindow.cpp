@@ -46,6 +46,10 @@ MainWindow::MainWindow(QWidget* parent) :
     //connect the clear button and the add frame button
     connect(ui->clearButton, SIGNAL(clicked()), this, SLOT(clearPushed()));
     connect(ui->addFrameButton, SIGNAL(clicked()), this, SLOT(addFramePushed()));
+    connect(ui->playPause, SIGNAL(released()), this, SLOT(pplayButtonReleased()));
+    connect(ui->forward, SIGNAL(released()), this, SLOT(pskipButtonReleased()));
+    connect(ui->backward, SIGNAL(released()), this, SLOT(pbackButtonReleased()));
+    connect(play_timer, SIGNAL(timeout()), this, SLOT(updateTimer()));
 
 
 }
@@ -125,4 +129,102 @@ void MainWindow::on_deleteFrameButton_clicked()
     //TODO:remove frame from widget at frame number
     delete ui->horizontalLayout->itemAt(0)->widget();
     delete ui->horizontalLayout->itemAt(0);
+}
+
+
+void MainWindow::initSmallPreview()
+{
+    //small_preview = new Canvas();
+
+    QGraphicsScene scene;
+    QPainterPath path;
+    //test_scene(&scene);
+
+    // TODO Specify text placement
+    QFont font;
+    font.setPixelSize(50);
+
+    path.addText(30, 30, font,  tr("Hello World!!!"));
+    path.setFillRule(Qt::OddEvenFill);
+
+    scene.addPath(path);
+
+
+    //scene.addText("Hello World!");
+
+    //QGraphicsView view (&scene);
+    //view.show();
+
+    QGraphicsView secondView(&scene, this);
+
+    ui->graphicsView_2 = &secondView;
+    //ui->graphicsView_2 = &view;
+    //ui->graphicsView_2 = QGraphicsView(&scene);
+    //ui->graphicsView_2->show();
+}
+
+/*
+ * pplayButtonReleased
+ *
+ * If play_on is true, the QTimer is started and its interval set to the
+ * current fps value.
+ */
+void MainWindow::pplayButtonReleased()
+{
+    //pplayIcon->addPixmap(QPixmap("new/imageassets/play.png"),QIcon::Normal,QIcon::On);
+    pplayIcon->addPixmap(QPixmap("play.png"),QIcon::Normal,QIcon::On);
+    //pplayIcon->addPixmap(QPixmap("new/imageassets/pause.png"),QIcon::Normal,QIcon::Off);
+    pplayIcon->addPixmap(QPixmap("pause.png"),QIcon::Normal,QIcon::Off);
+    ui->playPause->setIcon(*pplayIcon);
+    ui->playPause->setCheckable(true);
+
+    if (play_on)
+    {
+        // TODO alternates canvas frames
+        std::cout << "Play is on." << std::endl;
+        play_on = false;
+        int msec = 1000 / FPS;
+        play_timer->start(msec);
+
+    }
+
+    else
+    {
+        // TODO allows creates a small things
+        std::cout << "Play is off." << std::endl;
+        play_on = true;
+    }
+}
+
+/*
+ * updateTimer
+ *
+ *
+ */
+void MainWindow::updateTimer()
+{
+    //TODO switchout frame
+}
+
+
+
+void MainWindow::pbackButtonReleased()
+{
+
+}
+
+void MainWindow::pskipButtonReleased()
+{
+
+}
+
+void MainWindow::fpsValueChanged(int value)
+{
+    //FPS value is stored
+    FPS = value;
+    std::ostringstream ss;
+    ss << value;
+    std::string changed_int = ss.str();
+
+    std::cout << "FPS changed to " << changed_int << "." << std::endl;
 }

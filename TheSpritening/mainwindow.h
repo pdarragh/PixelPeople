@@ -19,6 +19,8 @@ public:
      QColor color;
      void canvasClickedAtPosition(QPointF point);
      Controller controller;
+     QTimer play_timer;
+     int FPS;
      // enum class Tools {Eraser, Pencil, Rotate, Mirror};
     ~MainWindow();
 
