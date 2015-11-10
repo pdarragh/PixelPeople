@@ -31,3 +31,6 @@
 *.pro.user
 *.pro.user.*
 *.autosave
+
+# Qt-generated application binary
+TheSpritening/TheSpritening.app/Contents/MacOS/TheSpritening
