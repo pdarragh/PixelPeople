@@ -49,6 +49,7 @@ MainWindow::MainWindow(QWidget* parent) :
     connect(ui->playPause, SIGNAL(released()), this, SLOT(pplayButtonReleased()));
     connect(ui->forward, SIGNAL(released()), this, SLOT(pskipButtonReleased()));
     connect(ui->backward, SIGNAL(released()), this, SLOT(pbackButtonReleased()));
+    connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(fpsValueChanged(int)));
     connect(play_timer, SIGNAL(timeout()), this, SLOT(updateTimer()));
 
 
