@@ -6,6 +6,7 @@
  */
 
 #include <QDebug>
+#include <QFile>
 #include "controller.h"
 #include "canvas.h"
 
@@ -129,4 +130,50 @@ QPointF Controller::getViewPositionFromCellAddress(int x, int y)
     int view_x = x * this->cell_size;
     int view_y = y * this->cell_size;
     return QPointF(view_x, view_y);
+}
+
+void Controller::saveSpriteToFile(QString filename)
+{
+    QFile file(filename);
+    if(!file.open(QIODevice::WriteOnly))
+    {
+        return;
+    }
+
+    // insert data into f
+    QTextStream output(&file);
+
+    // get needed data to save
+    int dimension = sprite.getDimension();
+    std::vector<Frame> frames = sprite.getAllFrames();
+    int number_of_frames = frames.size();
+
+    output << dimension << " " << dimension << "\n";
+    output << number_of_frames << "\n";
+
+    for(int frame_pos = 0; frame_pos < number_of_frames; frame_pos++)
+    {
+        Frame current_frame = frames[frame_pos];
+        for(int row = 0; row < dimension; row++)
+        {
+            for(int col = 0; col < dimension; col++)
+            {
+                QColor cell_color = current_frame.getCellColorAtPosition(row, col);
+                output << cell_color.red() << cell_color.green();
+                output << cell_color.blue() << cell_color.alpha();
+                output << " ";
+                if(col = dimension - 1)
+                {
+                    output << "\n";
+                }
+            }
+        }
+    }
+
+    file.close();
+}
+
+void Controller::loadSpriteFromFile(QString filename)
+{
+
 }
