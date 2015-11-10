@@ -31,7 +31,7 @@ Controller::Controller(int available_length)
 }
 void Controller::newFrameAdded()
 {
-    canvas->is_Main_Canvas = true;
+    canvas->is_Main_Canvas = false;
     canvas->frame_number = 1; //TODO:change to frame count from model
 }
 

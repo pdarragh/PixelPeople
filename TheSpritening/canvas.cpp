@@ -35,8 +35,10 @@ void Canvas::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
     // Add the click to the 'm_points' stack and pass the click position to the
     // controller.
+
     m_points.push_back(mouseEvent->scenePos());
     controller->canvasClickedAtPosition(mouseEvent->scenePos());
+
     // This must be called.
     QGraphicsScene::mousePressEvent(mouseEvent);
 }

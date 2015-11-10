@@ -37,6 +37,8 @@ public:
     QPointF getViewPositionFromCellAddress(int x, int y);
     Tools::tool current_tool;
     void setCurrentTool(Tools::tool new_tool);
+    Canvas* frame_canvas;
+    Canvas* canvas;
 private:
     // Tool methods.
     void usePencilAtPoint(QPointF point);
@@ -51,7 +53,6 @@ private:
     // The model hook-in.
     Sprite sprite;
     // The attributes for drawing.
-    Canvas* canvas;
     QColor active_color;
 };
 
