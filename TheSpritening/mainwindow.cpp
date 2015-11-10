@@ -73,6 +73,10 @@ void MainWindow::addFramePushed()
     newFrame->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
     ui->horizontalLayout->insertWidget(1, newFrame);//TODO:change the 1 to frames.count
 
+
+     ui->graphicsView->setScene(newScene);
+
+     controller.newFrameAdded();
     //change the canvas in the main graphics view
 //    QRect rcontent = ui->graphicsView->contentsRect();
 //    ui->graphicsView->setSceneRect(0, 0, rcontent.width(), rcontent.height());
