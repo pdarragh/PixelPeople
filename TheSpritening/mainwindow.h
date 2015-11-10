@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QIcon>
+#include <QTimer>
 
 #include "canvas.h"
 
@@ -17,6 +19,7 @@ public:
     explicit MainWindow(QWidget* parent = 0);
      Canvas* scene;
      QColor color;
+     QIcon pplayIcon;
      void canvasClickedAtPosition(QPointF point);
      Controller controller;
      QTimer *play_timer;
@@ -40,11 +43,12 @@ private slots:
     void on_preview_released();
     void on_colorButton_clicked();
     void on_deleteFrameButton_clicked();
+    void initSmallPreview();
     void pplayButtonReleased();
     void pbackButtonReleased();
     void pskipButtonReleased();
     void updateFrame();
-    void fpsValueChanged();
+    void fpsValueChanged(int value);
 };
 
 #endif // MAINWINDOW_H

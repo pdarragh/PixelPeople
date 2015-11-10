@@ -1,10 +1,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <qmath.h>
 #include "preview.h"
+#include "controller.h"
+#include <qmath.h>
 #include <QColorDialog>
 #include <QDebug>
-#include "controller.h"
+#include <iostream>
+#include <sstream>
+#include <ostream>
+
 
 int MainWindow::DEFAULT_DIMENSION = 64;
 
@@ -130,7 +134,11 @@ void MainWindow::on_deleteFrameButton_clicked()
     delete ui->horizontalLayout->itemAt(0);
 }
 
-
+/*
+ * initSmallPreview
+ *
+ * (Might actually be redundant?)
+ */
 void MainWindow::initSmallPreview()
 {
     // Set initial scene to something blank
@@ -150,10 +158,10 @@ void MainWindow::initSmallPreview()
 void MainWindow::pplayButtonReleased()
 {
     //pplayIcon->addPixmap(QPixmap("new/imageassets/play.png"),QIcon::Normal,QIcon::On);
-    pplayIcon->addPixmap(QPixmap("play.png"),QIcon::Normal,QIcon::On);
+    pplayIcon.addPixmap(QPixmap("play.png"),QIcon::Normal,QIcon::On);
     //pplayIcon->addPixmap(QPixmap("new/imageassets/pause.png"),QIcon::Normal,QIcon::Off);
-    pplayIcon->addPixmap(QPixmap("pause.png"),QIcon::Normal,QIcon::Off);
-    ui->playPause->setIcon(*pplayIcon);
+    pplayIcon.addPixmap(QPixmap("pause.png"),QIcon::Normal,QIcon::Off);
+    ui->playPause->setIcon(pplayIcon);
     ui->playPause->setCheckable(true);
 
     if (play_on)
@@ -181,9 +189,9 @@ void MainWindow::pplayButtonReleased()
 void MainWindow::updateFrame()
 {
     //TODO switchout frame
-    controller.sprite.getFrame();
-    std::vector<Frame> all_frames = controller.sprite.getAllFrames(); // returns a vector which you can then call size on
-    all_frames.size(); // use this to calculate the
+    //controller.sprite.getFrame();
+    //std::vector<Frame> all_frames = controller.sprite.getAllFrames(); // returns a vector which you can then call size on
+    //all_frames.size(); // use this to calculate the
 }
 
 
