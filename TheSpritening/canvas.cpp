@@ -12,8 +12,9 @@ Canvas::Canvas(QObject* parent, Controller* controller) :
     this->setBackgroundBrush(Qt::gray);
     int side_length = controller->getViewSideLength();
     this->setSceneRect(0, 0, side_length, side_length);
-    controller->registerCanvas(this);
     this->controller = controller;
+    this->controller->registerCanvas(this);
+    qDebug() << "current_tool from canvas: " << this->controller->current_tool;
 }
 
 //method that takes a qpoint dimension and color

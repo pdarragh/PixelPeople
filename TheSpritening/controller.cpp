@@ -12,16 +12,16 @@ int Controller::DEFAULT_DIMENSION = 64;
 
 Controller::Controller(int available_length)
 {
-    active_color = Qt::black;
-    sprite = Sprite(64, Qt::gray);
-
-    // Do some math to lay out the cells.
-    dimension      = DEFAULT_DIMENSION;
-    cell_size      = available_length / dimension;
-    side_length    = available_length - (available_length % cell_size);
+    // Do some math to lay out the cells and set up other variables.
+    dimension       = DEFAULT_DIMENSION;
+    cell_size       = available_length / dimension;
+    side_length     = available_length - (available_length % cell_size);
+    active_color    = Qt::black;
+    sprite          = Sprite(dimension, Qt::gray);
 
     // Set the default tool.
-    current_tool = 0;
+    current_tool = Tools::Pencil;
+    qDebug() << "Current tool: " << current_tool;
 }
 
 int Controller::getViewSideLength()
@@ -41,16 +41,16 @@ void Controller::canvasClickedAtPosition(QPointF point)
 
     switch (current_tool)
     {
-        case TOOL_PENCIL:
+        case Tools::Pencil:
             usePencilAtPoint(point);
             break;
-        case TOOL_ERASER:
+        case Tools::Eraser:
             useEraserAtPoint(point);
             break;
-        case TOOL_ROTATE:
+        case Tools::Rotate:
             useRotateAtPoint(point);
             break;
-        case TOOL_MIRROR:
+        case Tools::Mirror:
             useMirrorAtPoint(point);
             break;
         default:

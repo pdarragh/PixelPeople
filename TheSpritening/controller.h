@@ -14,6 +14,16 @@
 
 class Canvas;
 
+// Tools
+namespace Tools {
+    enum tool {
+        Pencil,
+        Eraser,
+        Rotate,
+        Mirror
+    };
+};
+
 class Controller
 {
 public:
@@ -23,14 +33,8 @@ public:
     int getViewSideLength();
     QPointF getCellAddressFromPositionInView(QPointF position);
     QPointF getViewPositionFromCellAddress(int x, int y);
+    Tools::tool current_tool;
 private:
-    // Tools.
-    enum Tool {
-        TOOL_PENCIL,
-        TOOL_ERASER,
-        TOOL_ROTATE,
-        TOOL_MIRROR
-    };
     // Tool methods.
     void usePencilAtPoint(QPointF point);
     void useEraserAtPoint(QPointF point);
@@ -46,7 +50,6 @@ private:
     // The attributes for drawing.
     Canvas* canvas;
     QColor active_color;
-    Tool current_tool;
 };
 
 #endif
