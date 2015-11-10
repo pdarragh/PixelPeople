@@ -31,19 +31,12 @@ Controller::Controller(int available_length)
 }
 void Controller::newFrameAdded()
 {
-   Frame frame = sprite.getFrame(0);
-    std::vector<CELL_ROW> cells = frame.getCells();
-
-    for (CELL_ROW row : cells)
-    {
-        for (Cell cell : row)
-        {
-
-          this->canvas->drawSquareAtPositionWithColor(cell.getPosition(), cell_size, cell_size, active_color);
-        }
-    }
-
+   //get a new frame from the model
   sprite.getNewFrame();
+
+  //set the canvas's frame number
+  this->canvas->frame_number = sprite.getAllFrames().size()-1;
+
   qDebug() << "Frame Count: " << sprite.getAllFrames().size();
 }
 void Controller::setActiveColor(QColor color)

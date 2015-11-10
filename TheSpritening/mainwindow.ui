@@ -34,7 +34,7 @@
     <property name="geometry">
      <rect>
       <x>220</x>
-      <y>250</y>
+      <y>280</y>
       <width>61</width>
       <height>61</height>
      </rect>
@@ -292,7 +292,7 @@
       <x>70</x>
       <y>400</y>
       <width>1031</width>
-      <height>91</height>
+      <height>194</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -310,26 +310,6 @@
       </widget>
      </item>
     </layout>
-   </widget>
-   <widget class="QPushButton" name="deleteFrameButton">
-    <property name="geometry">
-     <rect>
-      <x>220</x>
-      <y>310</y>
-      <width>61</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="toolTip">
-     <string>Delete the frame</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset resource="resources.qrc">
-      <normaloff>:/new/imageassets/delete_sign.png</normaloff>:/new/imageassets/delete_sign.png</iconset>
-    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
