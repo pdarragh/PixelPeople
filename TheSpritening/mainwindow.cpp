@@ -67,24 +67,19 @@ void MainWindow::addFramePushed()
     //create the canvas for the graphics view
     Canvas* newScene;
     newScene = new Canvas(this, &controller);
+    newScene->is_Main_Canvas = true;
 
     //set the scene and insert the graphics view into the horizontal frame holder
     newFrame->setScene(newScene);
     newFrame->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
     ui->horizontalLayout->insertWidget(1, newFrame);//TODO:change the 1 to frames.count
 
+    //set the main scene to be the new scene
+    ui->graphicsView->setScene(newScene);
 
-     ui->graphicsView->setScene(newScene);
+    //tell the controller so we can add it to the model
+    controller.newFrameAdded();
 
-     controller.newFrameAdded();
-    //change the canvas in the main graphics view
-//    QRect rcontent = ui->graphicsView->contentsRect();
-//    ui->graphicsView->setSceneRect(0, 0, rcontent.width(), rcontent.height());
-//    ui->graphicsView->setScene(newScene);
-
-    //scene->clear();
-
-    //TODO: add frame to the model
 }
 
 
@@ -121,5 +116,13 @@ void MainWindow::on_colorButton_clicked()
     ui->colorButton->update();
 
     //TODO: get the proper canvas from the model and set the color
-    scene->color = color;
+    //scene->color = color;
+   controller.setActiveColor(color);
+}
+
+void MainWindow::on_deleteFrameButton_clicked()
+{
+    //TODO:remove frame from widget at frame number
+    delete ui->horizontalLayout->itemAt(0)->widget();
+    delete ui->horizontalLayout->itemAt(0);
 }

@@ -36,6 +36,7 @@ public slots:
 private slots:
     void on_preview_released();
     void on_colorButton_clicked();
+    void on_deleteFrameButton_clicked();
 };
 
 #endif // MAINWINDOW_H

@@ -31,7 +31,17 @@ Controller::Controller(int available_length)
 }
 void Controller::newFrameAdded()
 {
+   //get a new frame from the model
   sprite.getNewFrame();
+
+  //set the canvas's frame number
+  this->canvas->frame_number = sprite.getAllFrames().size()-1;
+
+  qDebug() << "Frame Count: " << sprite.getAllFrames().size();
+}
+void Controller::setActiveColor(QColor color)
+{
+    this->active_color = color;
 }
 
 int Controller::getViewSideLength()

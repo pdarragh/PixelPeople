@@ -35,6 +35,7 @@ public:
     int getViewSideLength();
     QPointF getCellAddressFromPositionInView(QPointF position);
     QPointF getViewPositionFromCellAddress(int x, int y);
+    void setActiveColor(QColor color);
     Tools::tool current_tool;
     void setCurrentTool(Tools::tool new_tool);
     Canvas* frame_canvas;
