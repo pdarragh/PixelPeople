@@ -20,9 +20,11 @@ MainWindow::MainWindow(QWidget* parent) :
     int available_length = std::min(rcontent.width(), rcontent.height());
 
     // Create the controller and canvas for the graphics view.
-    Controller controller = Controller(available_length);
+    this->controller = Controller(available_length);
     side_length = controller.getViewSideLength();
     scene = new Canvas(this, &controller);
+    scene->is_Main_Canvas = true;
+    scene->frame_number = 0;
 
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setSceneRect(0, 0, this->side_length, this->side_length);
@@ -59,7 +61,7 @@ void MainWindow::addFramePushed()
 
     //create the canvas for the graphics view
     Canvas* newScene;
-    newScene = new Canvas(this);
+    newScene = new Canvas(this, &controller);
 
     //set the scene and insert the graphics view into the horizontal frame holder
     newFrame->setScene(newScene);
@@ -68,9 +70,11 @@ void MainWindow::addFramePushed()
     ui->horizontalLayout->insertWidget(1, newFrame);//TODO:change the 1 to frames.count
 
     //change the canvas in the main graphics view
-    QRect rcontent = ui->graphicsView->contentsRect();
-    ui->graphicsView->setSceneRect(0, 0, rcontent.width(), rcontent.height());
-    ui->graphicsView->setScene(newScene);
+//    QRect rcontent = ui->graphicsView->contentsRect();
+//    ui->graphicsView->setSceneRect(0, 0, rcontent.width(), rcontent.height());
+//    ui->graphicsView->setScene(newScene);
+
+    scene->clear();
 
     //TODO: add frame to the model
 }

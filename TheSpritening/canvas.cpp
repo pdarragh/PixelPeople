@@ -26,7 +26,7 @@ void Canvas::drawSquareAtPositionWithColor(
 {
     // Create the rectangle to draw.
     QGraphicsRectItem* square = this->addRect(point.x(), point.y(), width, height);
-    // Fill the rectangel with colors!
+    // Fill the rectangel with colors !
     square->setBrush(color);
     square->setPen(color);
 }

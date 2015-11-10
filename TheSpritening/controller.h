@@ -27,9 +27,11 @@ namespace Tools {
 class Controller
 {
 public:
+    Controller();
     Controller(int available_length);
     void registerCanvas(Canvas* canvas);
     void canvasClickedAtPosition(QPointF point);
+    void newFrameAdded();
     int getViewSideLength();
     QPointF getCellAddressFromPositionInView(QPointF position);
     QPointF getViewPositionFromCellAddress(int x, int y);

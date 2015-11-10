@@ -11,6 +11,11 @@
 
 int Controller::DEFAULT_DIMENSION = 64;
 
+Controller::Controller()
+{
+     qDebug() << "Called" ;
+}
+
 Controller::Controller(int available_length)
 {
     // Do some math to lay out the cells and set up other variables.
@@ -23,6 +28,11 @@ Controller::Controller(int available_length)
     // Set the default tool.
     current_tool = Tools::Pencil;
     qDebug() << "Current tool: " << current_tool;
+}
+void Controller::newFrameAdded()
+{
+    canvas->is_Main_Canvas = true;
+    canvas->frame_number = 1; //TODO:change to frame count from model
 }
 
 int Controller::getViewSideLength()
@@ -62,11 +72,12 @@ void Controller::canvasClickedAtPosition(QPointF point)
 void Controller::usePencilAtPoint(QPointF point)
 {
     qDebug() << Q_FUNC_INFO;
+     qDebug() << "Point: " << point;
     QPointF cell_address = getCellAddressFromPositionInView(point);
     //TODO: modifications to the sprite
-    // getViewPositionFromCellAddress(cell_address.x(), cell_address.y());
+     getViewPositionFromCellAddress(cell_address.x(), cell_address.y());
     // use a different variable down here once this is implemented
-    // this->canvas->drawSquareAtPositionWithColor(point, cell_size, cell_size, active_color);
+     this->canvas->drawSquareAtPositionWithColor(point, cell_size, cell_size, active_color);
 }
 
 void Controller::useEraserAtPoint(QPointF point)

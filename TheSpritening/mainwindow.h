@@ -18,6 +18,7 @@ public:
      Canvas* scene;
      QColor color;
      void canvasClickedAtPosition(QPointF point);
+     Controller controller;
      // enum class Tools {Eraser, Pencil, Rotate, Mirror};
     ~MainWindow();
 
