@@ -55,6 +55,9 @@ private:
     Sprite sprite;
     // The attributes for drawing.
     QColor active_color;
+    // Save and Load methods.
+    void saveSpriteToFile(QString filename);
+    void loadSpriteFromFile(QString filename);
 };
 
 #endif
