@@ -31,3 +31,7 @@
 *.pro.user
 *.pro.user.*
 *.autosave
+
+# Qt-generated application 
+TheSpritening/TheSpritening.app
+
