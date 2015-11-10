@@ -20,16 +20,24 @@ MainWindow::MainWindow(QWidget* parent) :
     int available_length = std::min(rcontent.width(), rcontent.height());
 
     // Create the controller and canvas for the graphics view.
-    Controller controller = Controller(available_length);
+    this->controller = Controller(available_length);
     side_length = controller.getViewSideLength();
     scene = new Canvas(this, &controller);
+    scene->is_Main_Canvas = true;
 
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setSceneRect(0, 0, this->side_length, this->side_length);
 
     //create the canvas for the frame
-    QRect rcontent1 = ui->graphicsView1->contentsRect();
-    ui->graphicsView1->setSceneRect(0, 0, rcontent1.width(), rcontent1.height());
+    //set is_main_canvas to false
+    //set frame number to 0
+//    QRect rcontent1 = ui->graphicsView1->contentsRect();
+//    Canvas* new_frame_scene;
+//    new_frame_scene = new Canvas(this, &controller);
+//    controller.frame_canvas = new_frame_scene;
+
+//    //set the frame graphics view to have this new scene
+//    ui->graphicsView1->setSceneRect(0, 0, rcontent1.width(), rcontent1.height());
     ui->graphicsView1->setScene(scene);
 
     //set the alignment for the frame holder
@@ -39,8 +47,7 @@ MainWindow::MainWindow(QWidget* parent) :
     connect(ui->clearButton, SIGNAL(clicked()), this, SLOT(clearPushed()));
     connect(ui->addFrameButton, SIGNAL(clicked()), this, SLOT(addFramePushed()));
 
-    //TODO: create the sprite for the model
-    //TODO: Initialize cell_size
+
 }
 
 void MainWindow::clearPushed()
@@ -59,18 +66,23 @@ void MainWindow::addFramePushed()
 
     //create the canvas for the graphics view
     Canvas* newScene;
-    newScene = new Canvas(this);
+    newScene = new Canvas(this, &controller);
 
     //set the scene and insert the graphics view into the horizontal frame holder
     newFrame->setScene(newScene);
     newFrame->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-    //newFrame->setEnabled(false);
     ui->horizontalLayout->insertWidget(1, newFrame);//TODO:change the 1 to frames.count
 
+
+     ui->graphicsView->setScene(newScene);
+
+     controller.newFrameAdded();
     //change the canvas in the main graphics view
-    QRect rcontent = ui->graphicsView->contentsRect();
-    ui->graphicsView->setSceneRect(0, 0, rcontent.width(), rcontent.height());
-    ui->graphicsView->setScene(newScene);
+//    QRect rcontent = ui->graphicsView->contentsRect();
+//    ui->graphicsView->setSceneRect(0, 0, rcontent.width(), rcontent.height());
+//    ui->graphicsView->setScene(newScene);
+
+    //scene->clear();
 
     //TODO: add frame to the model
 }

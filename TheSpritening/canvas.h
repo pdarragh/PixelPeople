@@ -18,6 +18,8 @@ public:
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent * mouseEvent);
     void drawSquareAtPositionWithColor(QPointF point, int width, int height, QColor color);
     void clear();
+    bool is_Main_Canvas;
+    int frame_number;
 
 signals:
 

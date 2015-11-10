@@ -26,7 +26,7 @@ void Canvas::drawSquareAtPositionWithColor(
 {
     // Create the rectangle to draw.
     QGraphicsRectItem* square = this->addRect(point.x(), point.y(), width, height);
-    // Fill the rectangel with colors!
+    // Fill the rectangel with colors !
     square->setBrush(color);
     square->setPen(color);
 }
@@ -35,8 +35,10 @@ void Canvas::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
     // Add the click to the 'm_points' stack and pass the click position to the
     // controller.
+
     m_points.push_back(mouseEvent->scenePos());
     controller->canvasClickedAtPosition(mouseEvent->scenePos());
+
     // This must be called.
     QGraphicsScene::mousePressEvent(mouseEvent);
 }

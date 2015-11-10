@@ -27,14 +27,18 @@ namespace Tools {
 class Controller
 {
 public:
+    Controller();
     Controller(int available_length);
     void registerCanvas(Canvas* canvas);
     void canvasClickedAtPosition(QPointF point);
+    void newFrameAdded();
     int getViewSideLength();
     QPointF getCellAddressFromPositionInView(QPointF position);
     QPointF getViewPositionFromCellAddress(int x, int y);
     Tools::tool current_tool;
     void setCurrentTool(Tools::tool new_tool);
+    Canvas* frame_canvas;
+    Canvas* canvas;
 private:
     // Tool methods.
     void usePencilAtPoint(QPointF point);
@@ -49,7 +53,6 @@ private:
     // The model hook-in.
     Sprite sprite;
     // The attributes for drawing.
-    Canvas* canvas;
     QColor active_color;
 };
 
