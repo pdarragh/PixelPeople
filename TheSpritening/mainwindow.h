@@ -19,8 +19,9 @@ public:
      QColor color;
      void canvasClickedAtPosition(QPointF point);
      Controller controller;
-     QTimer play_timer;
+     QTimer *play_timer;
      int FPS;
+     bool play_on = true;
      // enum class Tools {Eraser, Pencil, Rotate, Mirror};
     ~MainWindow();
 
@@ -39,6 +40,11 @@ private slots:
     void on_preview_released();
     void on_colorButton_clicked();
     void on_deleteFrameButton_clicked();
+    void pplayButtonReleased();
+    void pbackButtonReleased();
+    void pskipButtonReleased();
+    void updateFrame();
+    void fpsValueChanged();
 };
 
 #endif // MAINWINDOW_H

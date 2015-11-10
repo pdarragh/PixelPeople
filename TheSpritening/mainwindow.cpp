@@ -50,9 +50,7 @@ MainWindow::MainWindow(QWidget* parent) :
     connect(ui->forward, SIGNAL(released()), this, SLOT(pskipButtonReleased()));
     connect(ui->backward, SIGNAL(released()), this, SLOT(pbackButtonReleased()));
     connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(fpsValueChanged(int)));
-    connect(play_timer, SIGNAL(timeout()), this, SLOT(updateTimer()));
-
-
+    connect(play_timer, SIGNAL(timeout()), this, SLOT(updateFrame()));
 }
 
 void MainWindow::clearPushed()
@@ -135,33 +133,12 @@ void MainWindow::on_deleteFrameButton_clicked()
 
 void MainWindow::initSmallPreview()
 {
-    //small_preview = new Canvas();
-
+    // Set initial scene to something blank
     QGraphicsScene scene;
-    QPainterPath path;
-    //test_scene(&scene);
-
-    // TODO Specify text placement
-    QFont font;
-    font.setPixelSize(50);
-
-    path.addText(30, 30, font,  tr("Hello World!!!"));
-    path.setFillRule(Qt::OddEvenFill);
-
-    scene.addPath(path);
-
-
-    //scene.addText("Hello World!");
-
-    //QGraphicsView view (&scene);
-    //view.show();
-
     QGraphicsView secondView(&scene, this);
 
     ui->graphicsView_2 = &secondView;
-    //ui->graphicsView_2 = &view;
-    //ui->graphicsView_2 = QGraphicsView(&scene);
-    //ui->graphicsView_2->show();
+    ui->graphicsView_2->show();
 }
 
 /*
@@ -186,7 +163,6 @@ void MainWindow::pplayButtonReleased()
         play_on = false;
         int msec = 1000 / FPS;
         play_timer->start(msec);
-
     }
 
     else
@@ -202,9 +178,12 @@ void MainWindow::pplayButtonReleased()
  *
  *
  */
-void MainWindow::updateTimer()
+void MainWindow::updateFrame()
 {
     //TODO switchout frame
+    controller.sprite.getFrame();
+    std::vector<Frame> all_frames = controller.sprite.getAllFrames(); // returns a vector which you can then call size on
+    all_frames.size(); // use this to calculate the
 }
 
 
