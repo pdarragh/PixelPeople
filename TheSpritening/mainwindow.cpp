@@ -4,31 +4,28 @@
 #include "preview.h"
 #include <QColorDialog>
 #include <QDebug>
+#include "controller.h"
 
 int MainWindow::DEFAULT_DIMENSION = 64;
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(QWidget* parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    // Initial UI setup.
     ui->setupUi(this);
 
-    //create the canvas for the graphics view
-    scene = new Canvas(this);
-
-    //create the size of the canvas and set up the canvas
+    // Create the size of the canvas and set up the canvas.
     QRect rcontent = ui->graphicsView->contentsRect();
-
-
-    this->dimension      = DEFAULT_DIMENSION;
     int available_length = std::min(rcontent.width(), rcontent.height());
-    this->cell_size      = available_length / this->dimension;
-    this->side_length    = available_length - available_length % this->cell_size;
+
+    // Create the controller and canvas for the graphics view.
+    Controller controller = Controller(available_length);
+    side_length = controller.getViewSideLength();
+    scene = new Canvas(this, &controller);
 
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setSceneRect(0, 0, this->side_length, this->side_length);
-
-
 
     //create the canvas for the frame
     QRect rcontent1 = ui->graphicsView1->contentsRect();
@@ -102,27 +99,15 @@ void MainWindow::on_colorButton_clicked()
 {
     QColor color = QColorDialog::getColor();
 
-    QString s("background: #"
-                                 + QString(color.red() < 16? "0" : "") + QString::number(color.red(),16)
-                                 + QString(color.green() < 16? "0" : "") + QString::number(color.green(),16)
-                                 + QString(color.blue() < 16? "0" : "") + QString::number(color.blue(),16) + ";");
-           ui->colorButton->setStyleSheet(s);
-           ui->colorButton->update();
+    QString s(
+        "background: #" +
+        QString(color.red() < 16? "0" : "") + QString::number(color.red(),16) +
+        QString(color.green() < 16? "0" : "") + QString::number(color.green(),16) +
+        QString(color.blue() < 16? "0" : "") + QString::number(color.blue(),16) + ";"
+    );
+    ui->colorButton->setStyleSheet(s);
+    ui->colorButton->update();
 
-           //TODO: get the proper canvas from the model and set the color
-           scene->color = color;
-}
-
-QPoint MainWindow::getCellAddressFromPositionInView(int x, int y)
-{
-    int cell_x = (x - (x % this->cell_size)) / this->cell_size;
-    int cell_y = (y - (y % this->cell_size)) / this->cell_size;
-    return QPoint(cell_x, cell_y);
-}
-
-QPoint MainWindow::getViewPositionFromCellAddress(int x, int y)
-{
-    int view_x = x * this->cell_size;
-    int view_y = y * this->cell_size;
-    return QPoint(view_x, view_y);
+    //TODO: get the proper canvas from the model and set the color
+    scene->color = color;
 }

@@ -14,11 +14,11 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
-     Canvas * scene;
+    explicit MainWindow(QWidget* parent = 0);
+     Canvas* scene;
      QColor color;
      void canvasClickedAtPosition(QPointF point);
-     enum class Tools {Eraser, Pencil, Rotate, Mirror};
+     // enum class Tools {Eraser, Pencil, Rotate, Mirror};
     ~MainWindow();
 
 private:
@@ -27,8 +27,6 @@ private:
     int dimension;
     int side_length;
     int cell_size;
-    QPoint getCellAddressFromPositionInView(int x, int y);
-    QPoint getViewPositionFromCellAddress(int x, int y);
 
 public slots:
     void clearPushed();

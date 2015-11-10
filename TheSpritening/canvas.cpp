@@ -1,39 +1,43 @@
-#include "canvas.h"
-
 #include <QDebug>
 #include <QGraphicsEllipseItem>
 #include <QGraphicsPathItem>
 #include <QPainterPath>
+#include "canvas.h"
 #include "qmath.h"
 
 
-Canvas::Canvas(QObject *parent) :QGraphicsScene(parent)
+Canvas::Canvas(QObject* parent, Controller* controller) :
+    QGraphicsScene(parent)
 {
-   this->setBackgroundBrush(Qt::gray);
-   this->setSceneRect(100, 100, 50,50);
-
+    this->setBackgroundBrush(Qt::gray);
+    int side_length = controller->getViewSideLength();
+    this->setSceneRect(0, 0, side_length, side_length);
+    this->controller = controller;
+    this->controller->registerCanvas(this);
+    qDebug() << "current_tool from canvas: " << this->controller->current_tool;
 }
 
 //method that takes a qpoint dimension and color
-void Canvas::doSomething(QPointF point, int x, int y, QColor color)
+void Canvas::drawSquareAtPositionWithColor(
+    QPointF point,
+    int     width,
+    int     height,
+    QColor  color   )
 {
-
+    // Create the rectangle to draw.
+    QGraphicsRectItem* square = this->addRect(point.x(), point.y(), width, height);
+    // Fill the rectangel with colors!
+    square->setBrush(color);
+    square->setPen(color);
 }
 
-void Canvas::mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent)
+void Canvas::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
-    //print the position of the mouse click in the scene
-    qDebug() << Q_FUNC_INFO << mouseEvent->scenePos();
-
-    //create the rectangle to draw
-    QGraphicsRectItem* pixel = this->addRect(mouseEvent->scenePos().x(), mouseEvent->scenePos().y(), 10, 10);
+    // Add the click to the 'm_points' stack and pass the click position to the
+    // controller.
     m_points.push_back(mouseEvent->scenePos());
-
-    //set brush and pen so that there is now black border around rectangle
-    pixel->setBrush(color);
-    pixel->setPen(color);
-
-    //have to call this
+    controller->canvasClickedAtPosition(mouseEvent->scenePos());
+    // This must be called.
     QGraphicsScene::mousePressEvent(mouseEvent);
 }
 
