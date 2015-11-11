@@ -6,8 +6,6 @@
 #include <QDebug>
 #include "controller.h"
 
-int MainWindow::DEFAULT_DIMENSION = 64;
-
 MainWindow::MainWindow(QWidget* parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -21,24 +19,13 @@ MainWindow::MainWindow(QWidget* parent) :
 
     // Create the controller and canvas for the graphics view.
     this->controller = Controller(available_length);
-    side_length = controller.getViewSideLength();
+    // side_length = controller.getViewSideLength();
     scene = new Canvas(this, &controller);
     scene->is_Main_Canvas = true;
 
+    //set the frame graphics view to have this new scene
     ui->graphicsView->setScene(scene);
-    ui->graphicsView->setSceneRect(0, 0, this->side_length, this->side_length);
-
-    //create the canvas for the frame
-    //set is_main_canvas to false
-    //set frame number to 0
-//    QRect rcontent1 = ui->graphicsView1->contentsRect();
-//    Canvas* new_frame_scene;
-//    new_frame_scene = new Canvas(this, &controller);
-//    controller.frame_canvas = new_frame_scene;
-
-//    //set the frame graphics view to have this new scene
-//    ui->graphicsView1->setSceneRect(0, 0, rcontent1.width(), rcontent1.height());
-    ui->graphicsView1->setScene(scene);
+    ui->graphicsView->setSceneRect(0, 0, rcontent.width(), rcontent.height());
 
     //set the alignment for the frame holder
     ui->horizontalLayout->setAlignment(Qt::AlignLeft);
@@ -46,8 +33,6 @@ MainWindow::MainWindow(QWidget* parent) :
     //connect the clear button and the add frame button
     connect(ui->clearButton, SIGNAL(clicked()), this, SLOT(clearPushed()));
     connect(ui->addFrameButton, SIGNAL(clicked()), this, SLOT(addFramePushed()));
-
-
 }
 
 void MainWindow::clearPushed()
@@ -79,15 +64,6 @@ void MainWindow::addFramePushed()
 
     //tell the controller so we can add it to the model
     controller.newFrameAdded();
-
-}
-
-
-void MainWindow::canvasClickedAtPosition(QPointF point)
-{
-    //based on the current tool
-    //needs coordinate of the box that it was clicked in giveMeCell()
-    //call fill cell
 }
 
 MainWindow::~MainWindow()

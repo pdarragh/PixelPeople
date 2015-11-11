@@ -5,13 +5,12 @@
 #include "canvas.h"
 #include "qmath.h"
 
-
 Canvas::Canvas(QObject* parent, Controller* controller) :
     QGraphicsScene(parent)
 {
     this->setBackgroundBrush(Qt::gray);
     int side_length = controller->getViewSideLength();
-    this->setSceneRect(0, 0, side_length, side_length);
+    // this->setSceneRect(0, 0, side_length, side_length);
     this->controller = controller;
     this->controller->registerCanvas(this);
     qDebug() << "current_tool from canvas: " << this->controller->current_tool;
@@ -48,10 +47,11 @@ void Canvas::mouseReleaseEvent(QGraphicsSceneMouseEvent * me)
     QGraphicsScene::mouseReleaseEvent(me);
 }
 
-void Canvas::clear(){
-
+void Canvas::clear()
+{
     QList <QGraphicsItem*> itemList = items();
-    while(!itemList.isEmpty()){
+    while (!itemList.isEmpty())
+    {
         delete itemList.first();
         itemList = items();
     }
