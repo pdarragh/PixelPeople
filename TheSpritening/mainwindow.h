@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSlider>
+#include <QIcon>
 
 #include "canvas.h"
 
@@ -17,6 +19,8 @@ public:
     explicit MainWindow(QWidget* parent = 0);
     Canvas* scene;
     Controller controller;
+    int FPS = 3;
+    bool play_on = true;
     // enum class Tools {Eraser, Pencil, Rotate, Mirror};
     ~MainWindow();
 
@@ -34,6 +38,8 @@ private slots:
     void on_preview_released();
     void on_colorButton_clicked();
     void on_deleteFrameButton_clicked();
+    void fpsValueChanged(int value);
+    void pplayButtonReleased();
 };
 
 #endif // MAINWINDOW_H

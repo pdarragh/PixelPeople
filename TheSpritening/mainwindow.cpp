@@ -4,6 +4,8 @@
 #include "preview.h"
 #include <QColorDialog>
 #include <QDebug>
+#include <iostream>
+#include <sstream>
 #include "controller.h"
 
 MainWindow::MainWindow(QWidget* parent) :
@@ -30,9 +32,14 @@ MainWindow::MainWindow(QWidget* parent) :
     //set the alignment for the frame holder
     ui->horizontalLayout->setAlignment(Qt::AlignLeft);
 
+    ui->horizontalSlider->setValue(3);
+    ui->horizontalSlider->setRange(0, 65);
+
     //connect the clear button and the add frame button
     connect(ui->clearButton, SIGNAL(clicked()), this, SLOT(clearPushed()));
     connect(ui->addFrameButton, SIGNAL(clicked()), this, SLOT(addFramePushed()));
+    connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(fpsValueChanged(int)));
+    connect(ui->playPause, SIGNAL(released()), this, SLOT(pplayButtonReleased()));
 }
 
 void MainWindow::clearPushed()
@@ -101,4 +108,51 @@ void MainWindow::on_deleteFrameButton_clicked()
     //TODO:remove frame from widget at frame number
     delete ui->horizontalLayout->itemAt(0)->widget();
     delete ui->horizontalLayout->itemAt(0);
+}
+
+void MainWindow::fpsValueChanged(int value)
+{
+
+    FPS = value;
+    std::ostringstream ss;
+    ss << value;
+    std::string changed_int = ss.str();
+
+    std::cout << "FPS changed to " << changed_int << "." << std::endl;
+}
+
+/*
+ * pplayButtonReleased
+ *
+ * If play_on is true, the QTimer is started and its interval set to the
+ * current fps value.
+ */
+void MainWindow::pplayButtonReleased()
+{
+    QIcon *pplayIcon = new QIcon();
+    //pplayIcon->addPixmap(QPixmap("new/imageassets/play.png"),QIcon::Normal,QIcon::On);
+    pplayIcon->addPixmap(QPixmap(":/new/imageassets/play.png"),QIcon::Normal,QIcon::On);
+    //pplayIcon->addPixmap(QPixmap("new/imageassets/pause.png"),QIcon::Normal,QIcon::Off);
+    pplayIcon->addPixmap(QPixmap(":/new/imageassets/pause.png"),QIcon::Normal,QIcon::Off);
+    ui->playPause->setIcon(*pplayIcon);
+    ui->playPause->setCheckable(true);
+
+    if (play_on)
+    {
+        // TODO alternates canvas frames
+        std::cout << "Play turned off." << std::endl;
+        int msec = 1000 / FPS;
+        //play_timer->start(msec);
+
+        play_on = false;
+    }
+
+    else
+    {
+        // TODO allows creates a small things
+        std::cout << "Play turned on." << std::endl;
+        //play_timer->stop();
+
+        play_on = true;
+    }
 }
