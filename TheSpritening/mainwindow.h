@@ -18,6 +18,9 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget* parent = 0);
+    void drawSpritePixelInCanvasAtCellAddressWithColor(int frame, CellAddress address, QColor color);
+    void switchEditorToFrame(int index);
+    void clearFrameAtIndex(int index);
     Canvas* scene;
     Canvas* preview_scene;
     Controller controller;

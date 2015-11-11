@@ -50,6 +50,12 @@ MainWindow::MainWindow(QWidget* parent) :
     play_timer->start(3000);
 }
 
+void MainWindow::switchEditorToFrame(int index)
+{
+    scene->clear();
+    controller.populateCanvasFromFrame(scene, index);
+}
+
 void MainWindow::clearPushed()
 {
     //clear the scenes and update both views
