@@ -24,7 +24,6 @@ Controller::Controller(MainWindow* main_window)
     current_frame = 0;
     // Do some math to lay out the cells and set up other variables.
     dimension       = DEFAULT_DIMENSION;
-    // cell_size       = float(available_length) / float(dimension);
     active_color    = Qt::black;
     sprite          = Sprite(dimension, Qt::gray);
     this->main_window = main_window;
@@ -36,11 +35,7 @@ Controller::Controller(MainWindow* main_window)
 void Controller::newFrameAdded()
 {
     current_frame += 1;
-    //get a new frame from the model
     sprite.getNewFrame();
-
-    //set the canvas's frame number
-    // this->editor->frame_number = sprite.getAllFrames().size()-1;
 }
 
 void Controller::setActiveColor(QColor color)

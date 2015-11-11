@@ -53,29 +53,23 @@ void MainWindow::addFramePushed()
     //create the graphics view for the frame holder
     QGraphicsView* newFrame;
     newFrame = new QGraphicsView;
-    // QRect rcontent = newFrame->contentsRect();
-    // int available_length = std::min(rcontent.width(), rcontent.height());
 
+    //TODO: This should probably be gotten a better way, but I dunno how. /shrug
+    int placeholder_width = 77;
     //create the canvas for the graphics view
     Canvas* newScene;
-    newScene = new Canvas(controller.getCurrentFrame(), 0, false, &controller, this);
+    newScene = new Canvas(controller.getCurrentFrame(), placeholder_width, false, &controller, this);
     frames.push_back(newScene);
 
     newFrame->setScene(newScene);
-    newFrame->setSceneRect(0, 0, 0, 0);
+    QRect rcontent = newFrame->contentsRect();
+    int available_length = std::min(rcontent.width(), rcontent.height());
+    newFrame->setSceneRect(0, 0, placeholder_width, placeholder_width);
     newFrame->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     ui->horizontalLayout->insertWidget(controller.getCurrentFrame() + 1, newFrame);
 
-    // //tell the controller so we can add it to the model
+    //tell the controller so we can add it to the model
     controller.newFrameAdded();
-
-    // //set the scene and insert the graphics view into the horizontal frame holder
-    // newFrame->setScene(newScene);
-    // newFrame->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-    // ui->horizontalLayout->insertWidget(1, newFrame);//TODO:change the 1 to frames.count
-
-    // //set the main scene to be the new scene
-    // ui->graphicsView->setScene(newScene);
 }
 
 MainWindow::~MainWindow()

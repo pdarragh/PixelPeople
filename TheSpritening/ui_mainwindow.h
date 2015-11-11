@@ -65,7 +65,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(1105, 555);
+        MainWindow->resize(1105, 566);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -168,7 +168,7 @@ public:
         graphicsView_2->setGeometry(QRect(20, 30, 311, 141));
         horizontalLayoutWidget = new QWidget(centralWidget);
         horizontalLayoutWidget->setObjectName(QStringLiteral("horizontalLayoutWidget"));
-        horizontalLayoutWidget->setGeometry(QRect(70, 400, 1031, 194));
+        horizontalLayoutWidget->setGeometry(QRect(70, 400, 1031, 101));
         horizontalLayout = new QHBoxLayout(horizontalLayoutWidget);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
@@ -179,6 +179,7 @@ public:
         graphicsView1->setObjectName(QStringLiteral("graphicsView1"));
         sizePolicy.setHeightForWidth(graphicsView1->sizePolicy().hasHeightForWidth());
         graphicsView1->setSizePolicy(sizePolicy);
+        graphicsView1->setMaximumSize(QSize(75, 75));
 
         horizontalLayout->addWidget(graphicsView1);
 

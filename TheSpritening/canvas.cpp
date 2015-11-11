@@ -17,7 +17,6 @@ Canvas::Canvas(
     qDebug() << Q_FUNC_INFO;
     this->frame_number = frame_number;
     this->setBackgroundBrush(Qt::gray);
-    // int side_length = controller->getViewSideLength();
     this->setSceneRect(0, 0, side_length, side_length);
     this->controller = controller;
     this->is_edit_canvas = is_edit_canvas;
@@ -29,19 +28,11 @@ Canvas::Canvas(
     qDebug() << "pixel_scale: " << pixel_scale;
 }
 
-//method that takes a qpoint dimension and color
-// void Canvas::drawSquareAtPositionWithColor(
-//     QPointF point,
-//     int     width,
-//     int     height,
-//     QColor  color   )
-// {
-//     // Create the rectangle to draw.
-//     QGraphicsRectItem* square = this->addRect(point.x(), point.y(), width, height);
-//     // Fill the rectangel with colors !
-//     square->setBrush(color);
-//     square->setPen(color);
-// }
+void Canvas::setPixelScaleFromSideLength(float side_length)
+{
+    pixel_scale = side_length / this->controller->getDimension();
+    qDebug() << "pixel_scale: " << pixel_scale;
+}
 
 void Canvas::drawSpritePixelAtCellAddressWithColor(
     CellAddress address,
@@ -109,10 +100,6 @@ CellAddress Canvas::getCellAddressFromPositionInView(ViewPoint position)
 
 ViewPoint Canvas::getViewPositionFromCellAddress(CellAddress address)
 {
-    qDebug() << "-------------------------------";
-    qDebug() << Q_FUNC_INFO;
-    qDebug() << "address: " << address;
-    qDebug() << "";
     int view_x = address.x() * pixel_scale;
     int view_y = address.y() * pixel_scale;
     return QPointF(view_x, view_y);
