@@ -201,6 +201,30 @@ void MainWindow::pskipButtonReleased()
 
 void MainWindow::updateFrame()
 {
+    /*QGraphicsView* newFrame;
+    newFrame = new QGraphicsView;
+
+    //create the canvas for the graphics view
+    Canvas* newScene;
+    newScene = new Canvas(this, &controller);
+    newScene->is_Main_Canvas = true;
+
+    //set the scene and insert the graphics view into the horizontal frame holder
+    newFrame->setScene(newScene);
+    newFrame->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+    ui->horizontalLayout->insertWidget(1, newFrame);//TODO:change the 1 to frames.count
+
+    //set the main scene to be the new scene
+    ui->graphicsView->setScene(newScene);
+
+    //tell the controller so we can add it to the model
+    controller.newFrameAdded();*/
+
+
+
+
+
+
     Sprite the_sprite = controller.getSprite();
 
     if (temp_frame_int == the_sprite.getFrameCount() - 1) {
@@ -212,9 +236,10 @@ void MainWindow::updateFrame()
     QRect preview_content = ui->graphicsView_2->contentsRect();
     int length_ = std::min(preview_content.width(), preview_content.height());
     preview_scene = new Canvas(this, &controller);
+    preview_scene->is_Main_Canvas = false;
 
     //set the frame graphics view to have this new scene
-    ui->graphicsView_2->setScene(scene);
+    ui->graphicsView_2->setScene(preview_scene);
     ui->graphicsView_2->setSceneRect(0, 0, preview_content.width(), preview_content.height());
 
     // Print testing frames
