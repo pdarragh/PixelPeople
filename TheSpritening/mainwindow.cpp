@@ -16,19 +16,21 @@ MainWindow::MainWindow(QWidget* parent) :
     // Initial UI setup.
     ui->setupUi(this);
 
-    // Create the size of the canvas and set up the canvas.
-    QRect rcontent = ui->graphicsView->contentsRect();
-    int available_length = std::min(rcontent.width(), rcontent.height());
+    // Initiali vector initialization.
+    frames = std::vector<Canvas*>();
 
     // Create the controller and canvas for the graphics view.
-    this->controller = Controller(available_length);
+    this->controller = Controller(this);
+
+    // Create the main editor Canvas.
+    int available_length = getEditorCanvasSize();
     // side_length = controller.getViewSideLength();
-    scene = new Canvas(this, &controller);
-    scene->is_Main_Canvas = true;
+    scene = new Canvas(controller.getCurrentFrame(), available_length, true, &controller, this);
+    // scene->is_Main_Canvas = true;
 
     //set the frame graphics view to have this new scene
     ui->graphicsView->setScene(scene);
-    ui->graphicsView->setSceneRect(0, 0, rcontent.width(), rcontent.height());
+    ui->graphicsView->setSceneRect(0, 0, getEditorCanvasSize(), getEditorCanvasSize());
 
     //set the alignment for the frame holder
     ui->horizontalLayout->setAlignment(Qt::AlignLeft);
@@ -91,6 +93,18 @@ void MainWindow::on_preview_released()
     full_preview.setController(&controller);
     //full_preview.setFrames(&controller.sprite.getAllFrames());
     full_preview.exec();
+}
+
+void MainWindow::drawSpritePixelInCanvasAtCellAddressWithColor(
+    int         frame,
+    CellAddress address,
+    QColor      color   )
+{
+    qDebug() << "-------------------------------";
+    qDebug() << Q_FUNC_INFO;
+    qDebug() << "frame: " << frame;
+    qDebug() << "address: " << address;
+    frames[frame]->drawSpritePixelAtCellAddressWithColor(address, color);
 }
 
 void MainWindow::on_colorButton_clicked()

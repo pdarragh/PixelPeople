@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QSlider>
+#include <vector>
 #include <QIcon>
 
 #include "canvas.h"
@@ -33,6 +34,7 @@ private:
     int dimension;
     int side_length;
     int cell_size;
+    std::vector<Canvas*> frames;
 
 public slots:
     void clearPushed();

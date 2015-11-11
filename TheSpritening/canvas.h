@@ -3,6 +3,7 @@
 
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
+#include <QPoint>
 #include <QPointF>
 #include <QList>
 #include <QPainter>
@@ -11,22 +12,32 @@
 class Canvas : public QGraphicsScene
 {
 public:
-    QColor color;
-
-    explicit Canvas(QObject *parent = 0, Controller* controller = 0);
+    // Constructor
+    explicit Canvas(int frame_number, int side_length, bool is_edit_canvas, Controller* controller, QObject *parent = 0);
+    // Modifier
+    void setPixelScaleFromSideLength(float side_length);
+    // Clear the scene
+    void clear();
+    // Pixel scaling
+    CellAddress getCellAddressFromPositionInView(ViewPoint position);
+    ViewPoint getViewPositionFromCellAddress(CellAddress address);
+    // Drawing
+    void drawSpritePixelAtCellAddressWithColor(CellAddress address, QColor color);
+    // Registering mouse clicks
     virtual void mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent);
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent * mouseEvent);
-    void drawSquareAtPositionWithColor(QPointF point, int width, int height, QColor color);
-    void clear();
-    bool is_Main_Canvas;
-    int frame_number;
 
 signals:
 
 public slots:
 
 private:
-    QList <QPointF> m_points;
+    // Attributes
+    bool is_edit_canvas;
+    int frame_number;
+    float pixel_scale;
+    QColor color;
+    QList <ViewPoint> m_points;
     Controller* controller;
 };
 

@@ -20,7 +20,6 @@ QColor Sprite::DEFAULT_COLOR = QColor(0,0,0,0);
 Sprite::Sprite()
 {
     Frame new_frame(DEFAULT_LENGTH, DEFAULT_COLOR);
-    frames.push_back(new_frame);
     this->current_index = 0;
     this->dimension     = DEFAULT_LENGTH;
     this->bg_color      = DEFAULT_COLOR;
@@ -29,7 +28,6 @@ Sprite::Sprite()
 Sprite::Sprite(int dimension)
 {
     Frame new_frame(dimension, DEFAULT_COLOR);
-    frames.push_back(new_frame);
     this->current_index = 0;
     this->dimension     = dimension;
     this->bg_color      = DEFAULT_COLOR;
@@ -38,7 +36,6 @@ Sprite::Sprite(int dimension)
 Sprite::Sprite(int dimension, QColor color)
 {
     Frame new_frame(dimension, color);
-    frames.push_back(new_frame);
     this->current_index = 0;
     this->dimension     = dimension;
     this->bg_color      = color;

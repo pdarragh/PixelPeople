@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1105</width>
-    <height>555</height>
+    <height>566</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -292,23 +292,13 @@
       <x>70</x>
       <y>400</y>
       <width>1031</width>
-      <height>194</height>
+      <height>101</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <property name="sizeConstraint">
       <enum>QLayout::SetDefaultConstraint</enum>
      </property>
-     <item>
-      <widget class="QGraphicsView" name="graphicsView1">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-      </widget>
-     </item>
     </layout>
    </widget>
   </widget>

@@ -9,21 +9,24 @@
 #include <QFile>
 #include "controller.h"
 #include "canvas.h"
+#include "mainwindow.h"
 
 int Controller::DEFAULT_DIMENSION = 16;
 
 Controller::Controller()
 {
-     qDebug() << "Called";
+    qDebug() << "-------------------------------";
+    qDebug() << "Default controller constructor called.";
 }
 
-Controller::Controller(int available_length)
+Controller::Controller(MainWindow* main_window)
 {
+    current_frame = 0;
     // Do some math to lay out the cells and set up other variables.
     dimension       = DEFAULT_DIMENSION;
-    cell_size       = float(available_length) / float(dimension);
     active_color    = Qt::black;
     sprite          = Sprite(dimension, Qt::gray);
+    this->main_window = main_window;
 
     // Set the default tool.
     current_tool = Tools::Pencil;
@@ -31,22 +34,13 @@ Controller::Controller(int available_length)
 }
 void Controller::newFrameAdded()
 {
-   //get a new frame from the model
-  sprite.getNewFrame();
-
-  //set the canvas's frame number
-  this->canvas->frame_number = sprite.getAllFrames().size()-1;
-
-  qDebug() << "Frame Count: " << sprite.getAllFrames().size();
+    sprite.getNewFrame();
+    current_frame += 1;
 }
+
 void Controller::setActiveColor(QColor color)
 {
     this->active_color = color;
-}
-
-int Controller::getViewSideLength()
-{
-    return (cell_size * dimension);
 }
 
 Sprite Controller::getSprite()
@@ -54,63 +48,90 @@ Sprite Controller::getSprite()
     return sprite;
 }
 
-void Controller::registerCanvas(Canvas* canvas)
+int Controller::getDimension()
 {
-    this->canvas = canvas;
+    return dimension;
 }
 
-void Controller::canvasClickedAtPosition(QPointF point)
+int Controller::getCurrentFrame()
 {
-    qDebug() << Q_FUNC_INFO << point;
-    qDebug() << "Current tool: " << current_tool;
+    return current_frame;
+}
+
+void Controller::registerEditor(Canvas* canvas)
+{
+    this->editor = canvas;
+}
+
+void Controller::populateCanvasFromFrame(Canvas* canvas, int frame_number)
+{
+    qDebug() << "-------------------------------";
+    qDebug() << Q_FUNC_INFO;
+    qDebug() << "frame_number: " << frame_number;
+    qDebug() << "sprite.getAllFrames().size(): " << sprite.getAllFrames().size();
+    Frame frame = sprite.getFrame(frame_number);
+    for (int y = 0; y < dimension; ++y)
+    {
+        for (int x = 0; x < dimension; ++x)
+        {
+            QColor color = frame.getCellColorAtPosition(x, y);
+            CellAddress cell_address = QPoint(x, y);
+            canvas->drawSpritePixelAtCellAddressWithColor(cell_address, color);
+        }
+    }
+}
+
+void Controller::canvasClickedAtCellAddress(CellAddress address)
+{
+    qDebug() << "-------------------------------";
+    qDebug() << Q_FUNC_INFO;
+    qDebug() << "address: " << address;
+    qDebug() << "current_tool: " << current_tool;
 
     switch (current_tool)
     {
         case Tools::Pencil:
-            usePencilAtPoint(point);
+            usePencilAtCellAddress(address);
             break;
         case Tools::Eraser:
-            useEraserAtPoint(point);
+            useEraserAtCellAddress(address);
             break;
         case Tools::Rotate:
-            useRotateAtPoint(point);
+            useRotateAtCellAddress(address);
             break;
         case Tools::Mirror:
-            useMirrorAtPoint(point);
+            useMirrorAtCellAddress(address);
             break;
         default:
             qDebug() << "Something isn't right.";
     }
 }
 
-void Controller::usePencilAtPoint(QPointF point)
+void Controller::usePencilAtCellAddress(CellAddress address)
 {
+    qDebug() << "-------------------------------";
     qDebug() << Q_FUNC_INFO;
-    qDebug() << "Point: " << point;
-    QPointF cell_address = getCellAddressFromPositionInView(point);
-    qDebug() << "Cell: " << cell_address;
-    //TODO: modifications to the sprite
-    QPointF new_point = getViewPositionFromCellAddress(cell_address.x(), cell_address.y());
-    qDebug() << "Reconverted: " << new_point;
-    // use a different variable down here once this is implemented
-    this->canvas->drawSquareAtPositionWithColor(new_point, cell_size, cell_size, active_color);
-
-    //TODO: i believe to store the new rectangle in the model we call
-    sprite.setCellAtPositionToColor(cell_address.x(),cell_address.y(),active_color);
+    qDebug() << "address: " << address;
+    sprite.setCellAtPositionToColor(address.x(), address.y(), active_color);
+    editor->drawSpritePixelAtCellAddressWithColor(address, active_color);
+    main_window->drawSpritePixelInCanvasAtCellAddressWithColor(current_frame - 1, address, active_color);
 }
 
-void Controller::useEraserAtPoint(QPointF point)
+void Controller::useEraserAtCellAddress(CellAddress address)
 {
+    qDebug() << "-------------------------------";
     qDebug() << Q_FUNC_INFO;
 }
 
-void Controller::useRotateAtPoint(QPointF point)
+void Controller::useRotateAtCellAddress(CellAddress address)
 {
+    qDebug() << "-------------------------------";
     qDebug() << Q_FUNC_INFO;
 }
 
-void Controller::useMirrorAtPoint(QPointF point)
+void Controller::useMirrorAtCellAddress(CellAddress address)
 {
+    qDebug() << "-------------------------------";
     qDebug() << Q_FUNC_INFO;
 }
 
@@ -120,22 +141,6 @@ void Controller::useMirrorAtPoint(QPointF point)
 void Controller::setCurrentTool(Tools::tool new_tool)
 {
     current_tool = new_tool;
-}
-
-QPointF Controller::getCellAddressFromPositionInView(QPointF position)
-{
-    float x = position.x();
-    float y = position.y();
-    int cell_x = x / cell_size;
-    int cell_y = y / cell_size;
-    return QPointF(cell_x, cell_y);
-}
-
-QPointF Controller::getViewPositionFromCellAddress(int x, int y)
-{
-    int view_x = x * cell_size;
-    int view_y = y * cell_size;
-    return QPointF(view_x, view_y);
 }
 
 void Controller::saveSpriteToFile(QString filename)
@@ -165,12 +170,15 @@ void Controller::saveSpriteToFile(QString filename)
             for(int col = 0; col < dimension; col++)
             {
                 QColor cell_color = current_frame.getCellColorAtPosition(row, col);
-                output << cell_color.red() << cell_color.green();
-                output << cell_color.blue() << cell_color.alpha();
-                output << " ";
+                output << cell_color.red() << " " << cell_color.green() << " ";
+                output << cell_color.blue() << " " << cell_color.alpha();
                 if(col = dimension - 1)
                 {
                     output << "\n";
+                }
+                else
+                {
+                    output << " ";
                 }
             }
         }
@@ -181,5 +189,111 @@ void Controller::saveSpriteToFile(QString filename)
 
 void Controller::loadSpriteFromFile(QString filename)
 {
+    QFile file(filename);
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        throw;
+    }
 
+    QTextStream input(&file);
+
+    // get dimensions from file
+    QString line = input.readLine();
+    QStringList dimension_list = line.split(" ");
+    if(dimension_list.size() != 2)
+    {
+        throw;
+    }
+    QString height_string = dimension_list[0];
+    QString width_string = dimension_list[1];
+    bool height_ok = true;
+    bool width_ok = true;
+    int height = height_string.toInt(&height_ok);
+    int width = width_string.toInt(&width_ok);
+    if(!height_ok || !width_ok)
+    {
+        throw;
+    }
+    int dimension = std::max(height, width);
+
+    // get number of frames
+    line = input.readLine();
+    QStringList frames_count_list = line.split(" ");
+    if(frames_count_list.size() != 1)
+    {
+        throw;
+    }
+    QString frame_count_string = frames_count_list[0];
+    bool frame_count_ok = true;
+    int frame_count = frame_count_string.toInt(&frame_count_ok);
+    if(!frame_count_ok)
+    {
+        throw;
+    }
+
+    // start creating frames from file
+    std::vector<Frame> frame_stack;
+
+    // set up variables for loop
+    QStringList current_row_list;
+    int current_color_value = 0;
+
+    QString r_string;
+    QString g_string; // haha
+    QString b_string;
+    QString a_string;
+
+    bool r_ok;
+    bool g_ok;
+    bool b_ok;
+    bool a_ok;
+
+    int r;
+    int g;
+    int b;
+    int a;
+
+    // fill frame with colors from file
+    for(int frame_pos = 0; frame_pos < frame_count; frame_pos++)
+    {
+        Frame new_frame(dimension);
+        current_color_value = 0;
+        for(int row = 0; row < height; row++)
+        {
+            line = input.readLine();
+            current_row_list = line.split(" ");
+            if(current_row_list.size() != (width * 4))
+            {
+                throw;
+            }
+
+            for(int col = 0; col < width; col++)
+            {
+                // colors are stored as r g b a
+                r_string = current_row_list[current_color_value];
+                g_string = current_row_list[current_color_value + 1];
+                b_string = current_row_list[current_color_value + 2];
+                a_string = current_row_list[current_color_value + 3];
+
+                r = r_string.toInt(&r_ok);
+                g = g_string.toInt(&g_ok);
+                b = b_string.toInt(&b_ok);
+                a = a_string.toInt(&a_ok);
+
+                if(!r_ok || !g_ok || !b_ok || !a_ok)
+                {
+                    throw;
+                }
+
+                QColor cell_color(r, g, b, a);
+                new_frame.setCellAtPositionToColor(col, row, cell_color);
+
+                // move to the next set of rgba values in row data
+                current_color_value += 4;
+            }
+        }
+        frame_stack.push_back(new_frame);
+    }
+
+    sprite = Sprite(frame_stack, dimension);
 }
