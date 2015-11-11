@@ -81,6 +81,13 @@ void Controller::populateCanvasFromFrame(Canvas* canvas, int frame_number)
     }
 }
 
+void Controller::clickInMiniCanvas(int index)
+{
+    // Switch to that canvas!
+    current_frame = index;
+    main_window->switchEditorToFrame(index);
+}
+
 void Controller::canvasClickedAtCellAddress(CellAddress address)
 {
     qDebug() << "-------------------------------";

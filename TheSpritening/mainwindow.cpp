@@ -45,6 +45,12 @@ int MainWindow::getEditorCanvasSize()
     return std::min(rcontent.width(), rcontent.height());
 }
 
+void MainWindow::switchEditorToFrame(int index)
+{
+    scene->clear();
+    controller.populateCanvasFromFrame(scene, index);
+}
+
 void MainWindow::clearPushed()
 {
     qDebug() << "-------------------------------";
