@@ -178,32 +178,57 @@ void MainWindow::pplayButtonReleased()
         // TODO allows creates a small things
         std::cout << "Play is off." << std::endl;
         play_on = true;
+        play_timer->stop();
     }
 }
 
 /*
  * updateTimer
  *
- *
+ * cycles through the stack of frames and displays them on the previewer.
  */
 void MainWindow::updateFrame()
 {
-    //TODO switchout frame
-    //controller.sprite.getFrame();
-    //std::vector<Frame> all_frames = controller.sprite.getAllFrames(); // returns a vector which you can then call size on
-    //all_frames.size(); // use this to calculate the
+    // TODO update the current frame
+    Sprite the_sprite = controller.getSprite();
+    temp_frame = the_sprite.getFrame(temp_frame_int);
+    QRect preview_content = ui->graphicsView_2->contentsRect();
+    int length_ = std::min(preview_content.width(), preview_content.height());
+    preview_scene = new Canvas(this, &controller);
+
+    if (temp_frame_int == the_sprite.getFrameCount() - 1) {
+        temp_frame_int = 0;
+    }
+    else {
+        temp_frame_int += 1;
+    }
 }
 
 
-
+/*
+ * pbackButtonReleased
+ *
+ * If the tmp frame on display is the first frame, does nothing.
+ * Otherwise, goes back one frame.
+ */
 void MainWindow::pbackButtonReleased()
 {
-
+    if (temp_frame_int != 0) {
+        temp_frame_int -= 1;
+    }
 }
 
+/*
+ * pskipButtonReleased
+ *
+ * If the tmp frame on display is the last frame, does nothing.
+ * Otherwise, goes forward one frame.
+ */
 void MainWindow::pskipButtonReleased()
 {
-
+    if (temp_frame_int != controller.getSprite().getFrameCount() - 1) {
+        temp_frame_int += 1;
+    }
 }
 
 void MainWindow::fpsValueChanged(int value)

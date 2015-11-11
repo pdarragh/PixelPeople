@@ -18,6 +18,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget* parent = 0);
      Canvas* scene;
+     Canvas* preview_scene;
      QColor color;
      QIcon pplayIcon;
      void canvasClickedAtPosition(QPointF point);
@@ -25,6 +26,8 @@ public:
      QTimer *play_timer;
      int FPS;
      bool play_on = true;
+     Frame temp_frame;
+     int temp_frame_int = 0;
      // enum class Tools {Eraser, Pencil, Rotate, Mirror};
     ~MainWindow();
 
