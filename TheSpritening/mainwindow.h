@@ -16,7 +16,6 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget* parent = 0);
     Canvas* scene;
-    QColor color;
     Controller controller;
     // enum class Tools {Eraser, Pencil, Rotate, Mirror};
     ~MainWindow();
@@ -35,9 +34,6 @@ private slots:
     void on_preview_released();
     void on_colorButton_clicked();
     void on_deleteFrameButton_clicked();
-    void on_pencil_clicked();
-    void on_eraser_clicked();
-    void on_flip_clicked();
 };
 
 #endif // MAINWINDOW_H
