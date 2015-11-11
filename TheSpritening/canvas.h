@@ -11,12 +11,11 @@
 class Canvas : public QGraphicsScene
 {
 public:
-    QColor color;
-
     explicit Canvas(QObject *parent = 0, Controller* controller = 0);
     virtual void mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent);
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent * mouseEvent);
     void drawSquareAtPositionWithColor(QPointF point, int width, int height, QColor color);
+    void eraseSquareAtPosition(QPointF point);
     void clear();
     bool is_Main_Canvas;
     int frame_number;

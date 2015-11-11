@@ -75,7 +75,10 @@ void Controller::canvasClickedAtPosition(QPointF point)
         case Tools::Rotate:
             useRotateAtPoint(point);
             break;
-        case Tools::Mirror:
+        case Tools::MirrorPencil:
+            useMirrorAtPoint(point);
+            break;
+        case Tools::MirrorErase:
             useMirrorAtPoint(point);
             break;
         default:
@@ -101,6 +104,18 @@ void Controller::usePencilAtPoint(QPointF point)
 
 void Controller::useEraserAtPoint(QPointF point)
 {
+    qDebug() << "Point: " << point;
+    QPointF cell_address = getCellAddressFromPositionInView(point);
+    qDebug() << "Cell: " << cell_address;
+    //TODO: modifications to the sprite
+    QPointF new_point = getViewPositionFromCellAddress(cell_address.x(), cell_address.y());
+    qDebug() << "Reconverted: " << new_point;
+    // use a different variable down here once this is implemented
+    this->canvas->eraseSquareAtPosition(new_point);
+
+    //TODO: i believe to store the blank rectangle
+    sprite.setCellAtPositionToColor(cell_address.x(),cell_address.y(),QColor(0,0,0,0));
+
     qDebug() << Q_FUNC_INFO;
 }
 
@@ -111,6 +126,20 @@ void Controller::useRotateAtPoint(QPointF point)
 
 void Controller::useMirrorAtPoint(QPointF point)
 {
+    QPointF mirror_point;
+    if (current_tool == Tools::MirrorPencil)
+    {
+        usePencilAtPoint(point);
+        mirror_point = QPointF(point.x()+50,point.y());
+        usePencilAtPoint(mirror_point);
+    }
+    else
+    {
+        useEraserAtPoint(point);
+        mirror_point = QPointF(point.x()+50,point.y());
+        useEraserAtPoint(mirror_point);
+    }
+
     qDebug() << Q_FUNC_INFO;
 }
 

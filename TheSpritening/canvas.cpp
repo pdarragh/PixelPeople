@@ -14,6 +14,7 @@ Canvas::Canvas(QObject* parent, Controller* controller) :
     this->controller = controller;
     this->controller->registerCanvas(this);
     qDebug() << "current_tool from canvas: " << this->controller->current_tool;
+
 }
 
 //method that takes a qpoint dimension and color
@@ -23,11 +24,24 @@ void Canvas::drawSquareAtPositionWithColor(
     int     height,
     QColor  color   )
 {
+    //erase any item already at this point
+    eraseSquareAtPosition(point);
     // Create the rectangle to draw.
     QGraphicsRectItem* square = this->addRect(point.x(), point.y(), width, height);
-    // Fill the rectangel with colors !
+    // Fill the rectangle with colors !
     square->setBrush(color);
     square->setPen(color);
+}
+
+//method that takes a qpoint dimension and color and erases
+void Canvas::eraseSquareAtPosition( QPointF point )
+{
+    QGraphicsItem *item;
+    item = itemAt(point,QTransform()); //Get the item at the position
+    if (item)
+    {
+        delete item;
+    }
 }
 
 void Canvas::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
