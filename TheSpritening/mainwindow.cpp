@@ -58,7 +58,7 @@ void MainWindow::clearPushed()
     //clear the scenes and update both views
     scene->clear();
     ui->graphicsView->viewport()->update();
-    ui->graphicsView1->viewport()->update();
+   // ui->graphicsView1->viewport()->update();
     frames[controller.getCurrentFrame() - 1]->clear();
 }
 

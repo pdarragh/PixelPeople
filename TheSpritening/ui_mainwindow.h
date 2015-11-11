@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.1
+** Created by: Qt User Interface Compiler version 5.5.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -55,7 +55,6 @@ public:
     QGraphicsView *graphicsView_2;
     QWidget *horizontalLayoutWidget;
     QHBoxLayout *horizontalLayout;
-    QGraphicsView *graphicsView1;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QToolBar *mainToolBar;
@@ -168,21 +167,12 @@ public:
         graphicsView_2->setGeometry(QRect(20, 30, 311, 141));
         horizontalLayoutWidget = new QWidget(centralWidget);
         horizontalLayoutWidget->setObjectName(QStringLiteral("horizontalLayoutWidget"));
-        horizontalLayoutWidget->setGeometry(QRect(70, 400, 1031, 101));
+        horizontalLayoutWidget->setGeometry(QRect(70, 420, 1021, 80));
         horizontalLayout = new QHBoxLayout(horizontalLayoutWidget);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        horizontalLayout->setSizeConstraint(QLayout::SetDefaultConstraint);
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        graphicsView1 = new QGraphicsView(horizontalLayoutWidget);
-        graphicsView1->setObjectName(QStringLiteral("graphicsView1"));
-        sizePolicy.setHeightForWidth(graphicsView1->sizePolicy().hasHeightForWidth());
-        graphicsView1->setSizePolicy(sizePolicy);
-        graphicsView1->setMaximumSize(QSize(75, 75));
-
-        horizontalLayout->addWidget(graphicsView1);
-
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));

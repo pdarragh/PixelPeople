@@ -290,16 +290,12 @@
     <property name="geometry">
      <rect>
       <x>70</x>
-      <y>400</y>
-      <width>1031</width>
-      <height>101</height>
+      <y>420</y>
+      <width>1021</width>
+      <height>80</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <property name="sizeConstraint">
-      <enum>QLayout::SetDefaultConstraint</enum>
-     </property>
-    </layout>
+    <layout class="QHBoxLayout" name="horizontalLayout"/>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
