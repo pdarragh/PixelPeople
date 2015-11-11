@@ -55,9 +55,8 @@ void Canvas::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
     qDebug() << "frame_number: " << frame_number;
     if (!is_edit_canvas)
     {
-        // Any canvas other than the main editor will switch the main view to
-        // that canvas.
-        controller->clickInMiniCanvas(frame_number);
+        // Any canvas other than the main editor canvas does not deal with
+        // mouse clicks.
         return;
     }
     // Grab the position of the click event.
