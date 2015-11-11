@@ -164,12 +164,15 @@ void Controller::saveSpriteToFile(QString filename)
             for(int col = 0; col < dimension; col++)
             {
                 QColor cell_color = current_frame.getCellColorAtPosition(row, col);
-                output << cell_color.red() << cell_color.green();
-                output << cell_color.blue() << cell_color.alpha();
-                output << " ";
+                output << cell_color.red() << " " << cell_color.green() << " ";
+                output << cell_color.blue() << " " << cell_color.alpha();
                 if(col = dimension - 1)
                 {
                     output << "\n";
+                }
+                else
+                {
+                    output << " ";
                 }
             }
         }
@@ -180,5 +183,111 @@ void Controller::saveSpriteToFile(QString filename)
 
 void Controller::loadSpriteFromFile(QString filename)
 {
+    QFile file(filename);
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        throw;
+    }
 
+    QTextStream input(&file);
+
+    // get dimensions from file
+    QString line = input.readLine();
+    QStringList dimension_list = line.split(" ");
+    if(dimension_list.size() != 2)
+    {
+        throw;
+    }
+    QString height_string = dimension_list[0];
+    QString width_string = dimenstion_list[1];
+    bool height_ok = true;
+    bool width_ok = true;
+    int height = height_string.toInt(height_ok);
+    int width = width_string.toInt(width_ok);
+    if(!height_ok || !width_ok)
+    {
+        throw;
+    }
+    int dimension = std::max(height, width);
+
+    // get number of frames
+    line = input.readLine();
+    QStringList frames_count_list = line.split(" ");
+    if(frames_count_list.size() != 1)
+    {
+        throw;
+    }
+    QString frame_count_string = frames_count_list[0];
+    bool frame_count_ok = true;
+    int frame_count = frame_count_string.toInt(frame_count_ok);
+    if(!frame_count_ok)
+    {
+        throw;
+    }
+
+    // start creating frames from file
+    std::vector<Frame> frame_stack;
+
+    // set up variables for loop
+    QStringList current_row_list;
+    int current_color_value = 0;
+
+    QString r_string;
+    QString g_string; // haha
+    QString b_string;
+    QString a_string;
+
+    bool r_ok;
+    bool g_ok;
+    bool b_ok;
+    bool a_ok;
+
+    int r;
+    int g;
+    int b;
+    int a;
+
+    // fill frame with colors from file
+    for(int frame_pos = 0; frame_pos < frame_count; frame_pos++)
+    {
+        Frame new_frame(dimension);
+        current_color_value = 0;
+        for(int row = 0; row < height; row++)
+        {
+            line = input.readLine();
+            current_row_list = line.split(" ");
+            if(current_row_list.size() != (width * 4))
+            {
+                throw;
+            }
+
+            for(int col = 0; col < width; col++)
+            {
+                // colors are stored as r g b a
+                r_string = current_row_list[current_color_value];
+                g_string = current_row_list[current_color_value + 1];
+                b_string = current_row_list[current_color_value + 2];
+                a_string = current_row_list[current_color_value + 3];
+
+                r = r_string.toInt(r_ok);
+                g = g_string.toInt(g_ok);
+                b = b_string.toInt(b_ok);
+                a = a_string.toInt(a_ok);
+
+                if(!r_ok || !g_ok || !b_ok || !a_ok)
+                {
+                    throw;
+                }
+
+                QColor cell_color(r, g, b, a);
+                new_frame.setCellAtPositionToColor(col, row, cell_color);
+
+                // move to the next set of rgba values in row data
+                current_color_value += 4;
+            }
+        }
+        frame_stack.push_back(new_frame);
+    }
+
+    sprite = Sprite(frame_stack, dimension);
 }
