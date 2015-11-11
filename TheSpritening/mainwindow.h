@@ -24,7 +24,7 @@ public:
     bool play_on = true;
     QTimer *play_timer;
     Frame temp_frame;
-    int temp_frame_int;
+    int temp_frame_int = 0;
     // enum class Tools {Eraser, Pencil, Rotate, Mirror};
     ~MainWindow();
 
