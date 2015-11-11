@@ -4,6 +4,7 @@
 #include "preview.h"
 #include <QColorDialog>
 #include <QDebug>
+#include <QTimer>
 #include <iostream>
 #include <sstream>
 #include "controller.h"
@@ -33,13 +34,18 @@ MainWindow::MainWindow(QWidget* parent) :
     ui->horizontalLayout->setAlignment(Qt::AlignLeft);
 
     ui->horizontalSlider->setValue(3);
-    ui->horizontalSlider->setRange(0, 65);
+    ui->horizontalSlider->setRange(1, 65);
+
+    play_timer = new QTimer(this);
 
     //connect the clear button and the add frame button
     connect(ui->clearButton, SIGNAL(clicked()), this, SLOT(clearPushed()));
     connect(ui->addFrameButton, SIGNAL(clicked()), this, SLOT(addFramePushed()));
     connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(fpsValueChanged(int)));
     connect(ui->playPause, SIGNAL(released()), this, SLOT(pplayButtonReleased()));
+    connect(play_timer, SIGNAL(timeout()), this, SLOT(updateFrame()));
+
+    play_timer->start(3000);
 }
 
 void MainWindow::clearPushed()
@@ -112,8 +118,10 @@ void MainWindow::on_deleteFrameButton_clicked()
 
 void MainWindow::fpsValueChanged(int value)
 {
-
+    play_timer->stop();
     FPS = value;
+    play_timer->start(1000 / FPS);
+
     std::ostringstream ss;
     ss << value;
     std::string changed_int = ss.str();
@@ -137,22 +145,80 @@ void MainWindow::pplayButtonReleased()
     ui->playPause->setIcon(*pplayIcon);
     ui->playPause->setCheckable(true);
 
+    // If play_on is true, pressing the button turns it off
     if (play_on)
     {
         // TODO alternates canvas frames
         std::cout << "Play turned off." << std::endl;
-        int msec = 1000 / FPS;
-        //play_timer->start(msec);
+        play_timer->stop();
 
         play_on = false;
     }
 
+    // If play_on is false, pressing the button turns it off
     else
     {
         // TODO allows creates a small things
         std::cout << "Play turned on." << std::endl;
-        //play_timer->stop();
+        int msec = 1000 / FPS;
+        play_timer->start(msec);
 
         play_on = true;
     }
+}
+
+/*
+ * pbackButtonReleased
+ *
+ * If the tmp frame on display is the first frame, does nothing.
+ * Otherwise, goes back one frame.
+ */
+void MainWindow::pbackButtonReleased()
+{
+    if (!play_on)
+    {
+        if (temp_frame_int != 0) {
+            temp_frame_int -= 1;
+        }
+    }
+}
+
+/*
+ * pskipButtonReleased
+ *
+ * If the tmp frame on display is the last frame, does nothing.
+ * Otherwise, goes forward one frame.
+ */
+void MainWindow::pskipButtonReleased()
+{
+    if (!play_on)
+    {
+        if (temp_frame_int != controller.getSprite().getFrameCount() - 1) {
+            temp_frame_int += 1;
+        }
+    }
+}
+
+
+void MainWindow::updateFrame()
+{
+    // TODO update the current frame
+    Sprite the_sprite = controller.getSprite();
+    temp_frame = the_sprite.getFrame(temp_frame_int);
+    QRect preview_content = ui->graphicsView_2->contentsRect();
+    int length_ = std::min(preview_content.width(), preview_content.height());
+    preview_scene = new Canvas(this, &controller);
+
+    //set the frame graphics view to have this new scene
+    ui->graphicsView_2->setScene(scene);
+    ui->graphicsView_2->setSceneRect(0, 0, preview_content.width(), preview_content.height());
+
+    if (temp_frame_int == the_sprite.getFrameCount() - 1) {
+        temp_frame_int = 0;
+    }
+    else {
+        temp_frame_int += 1;
+    }
+
+    std::cout << "play_timer went off" << std::endl;
 }

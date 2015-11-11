@@ -18,9 +18,13 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget* parent = 0);
     Canvas* scene;
+    Canvas* preview_scene;
     Controller controller;
     int FPS = 3;
     bool play_on = true;
+    QTimer *play_timer;
+    Frame temp_frame;
+    int temp_frame_int;
     // enum class Tools {Eraser, Pencil, Rotate, Mirror};
     ~MainWindow();
 
@@ -40,6 +44,9 @@ private slots:
     void on_deleteFrameButton_clicked();
     void fpsValueChanged(int value);
     void pplayButtonReleased();
+    void pbackButtonReleased();
+    void pskipButtonReleased();
+    void updateFrame();
 };
 
 #endif // MAINWINDOW_H
