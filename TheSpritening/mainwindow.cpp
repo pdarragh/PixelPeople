@@ -88,6 +88,8 @@ void MainWindow::on_preview_released()
 {
     preview full_preview;
     full_preview.setModal(true);
+    full_preview.setController(&controller);
+    //full_preview.setFrames(&controller.sprite.getAllFrames());
     full_preview.exec();
 }
 
@@ -193,7 +195,7 @@ void MainWindow::pskipButtonReleased()
 {
     if (!play_on)
     {
-        if (temp_frame_int != controller.getSprite().getFrameCount() - 1) {
+        if (temp_frame_int != controller.getSprite().getFrameCount()) {
             temp_frame_int += 1;
         }
     }
