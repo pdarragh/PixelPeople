@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.0
+** Created by: Qt User Interface Compiler version 5.5.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -81,13 +81,10 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         graphicsView = new QGraphicsView(centralWidget);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
-        graphicsView->setGeometry(QRect(350, 10, 751, 381));
+        graphicsView->setGeometry(QRect(350, 10, 380, 380));
         clearButton = new QPushButton(centralWidget);
         clearButton->setObjectName(QStringLiteral("clearButton"));
-        clearButton->setGeometry(QRect(230, 280, 61, 61));
-        QIcon icon;
-        icon.addFile(QStringLiteral(":/new/imageassets/delete_sign.png"), QSize(), QIcon::Normal, QIcon::Off);
-        clearButton->setIcon(icon);
+        clearButton->setGeometry(QRect(220, 280, 61, 61));
         line = new QFrame(centralWidget);
         line->setObjectName(QStringLiteral("line"));
         line->setGeometry(QRect(330, 20, 20, 371));
@@ -106,9 +103,9 @@ public:
         addFrameButton = new QPushButton(centralWidget);
         addFrameButton->setObjectName(QStringLiteral("addFrameButton"));
         addFrameButton->setGeometry(QRect(20, 431, 41, 41));
-        QIcon icon1;
-        icon1.addFile(QStringLiteral(":/new/imageassets/plus_math.png"), QSize(), QIcon::Normal, QIcon::Off);
-        addFrameButton->setIcon(icon1);
+        QIcon icon;
+        icon.addFile(QStringLiteral(":/new/imageassets/plus_math.png"), QSize(), QIcon::Normal, QIcon::Off);
+        addFrameButton->setIcon(icon);
         colorButton = new QPushButton(centralWidget);
         colorButton->setObjectName(QStringLiteral("colorButton"));
         colorButton->setGeometry(QRect(20, 280, 71, 71));
@@ -120,27 +117,27 @@ public:
         pencil = new QPushButton(centralWidget);
         pencil->setObjectName(QStringLiteral("pencil"));
         pencil->setGeometry(QRect(160, 250, 61, 61));
-        QIcon icon2;
-        icon2.addFile(QStringLiteral(":/new/imageassets/pencil.png"), QSize(), QIcon::Normal, QIcon::Off);
-        pencil->setIcon(icon2);
+        QIcon icon1;
+        icon1.addFile(QStringLiteral(":/new/imageassets/pencil.png"), QSize(), QIcon::Normal, QIcon::Off);
+        pencil->setIcon(icon1);
         eraser = new QPushButton(centralWidget);
         eraser->setObjectName(QStringLiteral("eraser"));
         eraser->setGeometry(QRect(100, 250, 61, 61));
-        QIcon icon3;
-        icon3.addFile(QStringLiteral(":/new/imageassets/erase.png"), QSize(), QIcon::Normal, QIcon::Off);
-        eraser->setIcon(icon3);
+        QIcon icon2;
+        icon2.addFile(QStringLiteral(":/new/imageassets/erase.png"), QSize(), QIcon::Normal, QIcon::Off);
+        eraser->setIcon(icon2);
         flip = new QPushButton(centralWidget);
         flip->setObjectName(QStringLiteral("flip"));
         flip->setGeometry(QRect(100, 310, 61, 61));
-        QIcon icon4;
-        icon4.addFile(QStringLiteral(":/new/imageassets/last_quarter.png"), QSize(), QIcon::Normal, QIcon::Off);
-        flip->setIcon(icon4);
+        QIcon icon3;
+        icon3.addFile(QStringLiteral(":/new/imageassets/last_quarter.png"), QSize(), QIcon::Normal, QIcon::Off);
+        flip->setIcon(icon3);
         pushButton_7 = new QPushButton(centralWidget);
         pushButton_7->setObjectName(QStringLiteral("pushButton_7"));
         pushButton_7->setGeometry(QRect(160, 310, 61, 61));
-        QIcon icon5;
-        icon5.addFile(QStringLiteral(":/new/imageassets/rotate_right.png"), QSize(), QIcon::Normal, QIcon::Off);
-        pushButton_7->setIcon(icon5);
+        QIcon icon4;
+        icon4.addFile(QStringLiteral(":/new/imageassets/rotate_right.png"), QSize(), QIcon::Normal, QIcon::Off);
+        pushButton_7->setIcon(icon4);
         horizontalSlider = new QSlider(centralWidget);
         horizontalSlider->setObjectName(QStringLiteral("horizontalSlider"));
         horizontalSlider->setGeometry(QRect(80, 170, 160, 22));
@@ -151,27 +148,27 @@ public:
         backward = new QPushButton(centralWidget);
         backward->setObjectName(QStringLiteral("backward"));
         backward->setGeometry(QRect(90, 200, 31, 32));
-        QIcon icon6;
-        icon6.addFile(QStringLiteral(":/new/imageassets/rewind.png"), QSize(), QIcon::Normal, QIcon::Off);
-        backward->setIcon(icon6);
+        QIcon icon5;
+        icon5.addFile(QStringLiteral(":/new/imageassets/rewind.png"), QSize(), QIcon::Normal, QIcon::Off);
+        backward->setIcon(icon5);
         playPause = new QPushButton(centralWidget);
         playPause->setObjectName(QStringLiteral("playPause"));
         playPause->setGeometry(QRect(150, 200, 31, 32));
-        QIcon icon7;
-        icon7.addFile(QStringLiteral(":/new/imageassets/play.png"), QSize(), QIcon::Normal, QIcon::Off);
-        playPause->setIcon(icon7);
+        QIcon icon6;
+        icon6.addFile(QStringLiteral(":/new/imageassets/play.png"), QSize(), QIcon::Normal, QIcon::Off);
+        playPause->setIcon(icon6);
         forward = new QPushButton(centralWidget);
         forward->setObjectName(QStringLiteral("forward"));
         forward->setGeometry(QRect(210, 200, 31, 32));
-        QIcon icon8;
-        icon8.addFile(QStringLiteral(":/new/imageassets/fast_forward.png"), QSize(), QIcon::Normal, QIcon::Off);
-        forward->setIcon(icon8);
+        QIcon icon7;
+        icon7.addFile(QStringLiteral(":/new/imageassets/fast_forward.png"), QSize(), QIcon::Normal, QIcon::Off);
+        forward->setIcon(icon7);
         graphicsView_2 = new QGraphicsView(centralWidget);
         graphicsView_2->setObjectName(QStringLiteral("graphicsView_2"));
         graphicsView_2->setGeometry(QRect(20, 30, 311, 141));
         horizontalLayoutWidget = new QWidget(centralWidget);
         horizontalLayoutWidget->setObjectName(QStringLiteral("horizontalLayoutWidget"));
-        horizontalLayoutWidget->setGeometry(QRect(70, 400, 1031, 91));
+        horizontalLayoutWidget->setGeometry(QRect(70, 400, 1031, 194));
         horizontalLayout = new QHBoxLayout(horizontalLayoutWidget);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
@@ -218,7 +215,7 @@ public:
 #ifndef QT_NO_TOOLTIP
         clearButton->setToolTip(QApplication::translate("MainWindow", "Clear the canvas", 0));
 #endif // QT_NO_TOOLTIP
-        clearButton->setText(QString());
+        clearButton->setText(QApplication::translate("MainWindow", "Clear", 0));
 #ifndef QT_NO_TOOLTIP
         addFrameButton->setToolTip(QApplication::translate("MainWindow", "Add a frame", 0));
 #endif // QT_NO_TOOLTIP

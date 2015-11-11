@@ -10,19 +10,18 @@
 #include "controller.h"
 #include "canvas.h"
 
-int Controller::DEFAULT_DIMENSION = 64;
+int Controller::DEFAULT_DIMENSION = 16;
 
 Controller::Controller()
 {
-     qDebug() << "Called" ;
+     qDebug() << "Called";
 }
 
 Controller::Controller(int available_length)
 {
     // Do some math to lay out the cells and set up other variables.
     dimension       = DEFAULT_DIMENSION;
-    cell_size       = available_length / dimension;
-    side_length     = available_length - (available_length % cell_size);
+    cell_size       = float(available_length) / float(dimension);
     active_color    = Qt::black;
     sprite          = Sprite(dimension, Qt::gray);
 
@@ -89,13 +88,15 @@ void Controller::usePencilAtPoint(QPointF point)
     qDebug() << Q_FUNC_INFO;
     qDebug() << "Point: " << point;
     QPointF cell_address = getCellAddressFromPositionInView(point);
+    qDebug() << "Cell: " << cell_address;
     //TODO: modifications to the sprite
-     getViewPositionFromCellAddress(cell_address.x(), cell_address.y());
+    QPointF new_point = getViewPositionFromCellAddress(cell_address.x(), cell_address.y());
+    qDebug() << "Reconverted: " << new_point;
     // use a different variable down here once this is implemented
-     this->canvas->drawSquareAtPositionWithColor(point, cell_size, cell_size, active_color);
+    this->canvas->drawSquareAtPositionWithColor(new_point, cell_size, cell_size, active_color);
 
-     //TODO: i believe to store the new rectangle in the model we call
-     sprite.setCellAtPositionToColor(cell_address.x(),cell_address.y(),active_color);
+    //TODO: i believe to store the new rectangle in the model we call
+    sprite.setCellAtPositionToColor(cell_address.x(),cell_address.y(),active_color);
 }
 
 void Controller::useEraserAtPoint(QPointF point)
@@ -123,17 +124,17 @@ void Controller::setCurrentTool(Tools::tool new_tool)
 
 QPointF Controller::getCellAddressFromPositionInView(QPointF position)
 {
-    int x = position.x();
-    int y = position.y();
-    int cell_x = (x - (x % this->cell_size)) / this->cell_size;
-    int cell_y = (y - (y % this->cell_size)) / this->cell_size;
+    float x = position.x();
+    float y = position.y();
+    int cell_x = x / cell_size;
+    int cell_y = y / cell_size;
     return QPointF(cell_x, cell_y);
 }
 
 QPointF Controller::getViewPositionFromCellAddress(int x, int y)
 {
-    int view_x = x * this->cell_size;
-    int view_y = y * this->cell_size;
+    int view_x = x * cell_size;
+    int view_y = y * cell_size;
     return QPointF(view_x, view_y);
 }
 

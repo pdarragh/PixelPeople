@@ -15,16 +15,13 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget* parent = 0);
-     Canvas* scene;
-     QColor color;
-     void canvasClickedAtPosition(QPointF point);
-     Controller controller;
-     // enum class Tools {Eraser, Pencil, Rotate, Mirror};
+    Canvas* scene;
+    Controller controller;
+    // enum class Tools {Eraser, Pencil, Rotate, Mirror};
     ~MainWindow();
 
 private:
     Ui::MainWindow *ui;
-    static int DEFAULT_DIMENSION;
     int dimension;
     int side_length;
     int cell_size;
