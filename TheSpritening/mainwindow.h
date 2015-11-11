@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <vector>
 
 #include "canvas.h"
 
@@ -15,6 +16,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget* parent = 0);
+    void drawSpritePixelInCanvasAtCellAddressWithColor(int frame, CellAddress address, QColor color);
     Canvas* scene;
     Controller controller;
     // enum class Tools {Eraser, Pencil, Rotate, Mirror};
@@ -25,6 +27,7 @@ private:
     int dimension;
     int side_length;
     int cell_size;
+    std::vector<Canvas*> frames;
 
 public slots:
     void clearPushed();

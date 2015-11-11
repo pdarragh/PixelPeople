@@ -13,15 +13,18 @@ MainWindow::MainWindow(QWidget* parent) :
     // Initial UI setup.
     ui->setupUi(this);
 
-    // Create the size of the canvas and set up the canvas.
-    QRect rcontent = ui->graphicsView->contentsRect();
-    int available_length = std::min(rcontent.width(), rcontent.height());
+    // Initiali vector initialization.
+    frames = std::vector<Canvas*>();
 
     // Create the controller and canvas for the graphics view.
-    this->controller = Controller(available_length);
+    this->controller = Controller(this);
+
+    // Create the main editor Canvas.
+    QRect rcontent = ui->graphicsView->contentsRect();
+    int available_length = std::min(rcontent.width(), rcontent.height());
     // side_length = controller.getViewSideLength();
-    scene = new Canvas(this, &controller);
-    scene->is_Main_Canvas = true;
+    scene = new Canvas(controller.getCurrentFrame(), available_length, true, &controller, this);
+    // scene->is_Main_Canvas = true;
 
     //set the frame graphics view to have this new scene
     ui->graphicsView->setScene(scene);
@@ -33,6 +36,8 @@ MainWindow::MainWindow(QWidget* parent) :
     //connect the clear button and the add frame button
     connect(ui->clearButton, SIGNAL(clicked()), this, SLOT(clearPushed()));
     connect(ui->addFrameButton, SIGNAL(clicked()), this, SLOT(addFramePushed()));
+
+    addFramePushed();
 }
 
 void MainWindow::clearPushed()
@@ -48,22 +53,29 @@ void MainWindow::addFramePushed()
     //create the graphics view for the frame holder
     QGraphicsView* newFrame;
     newFrame = new QGraphicsView;
+    // QRect rcontent = newFrame->contentsRect();
+    // int available_length = std::min(rcontent.width(), rcontent.height());
 
     //create the canvas for the graphics view
     Canvas* newScene;
-    newScene = new Canvas(this, &controller);
-    newScene->is_Main_Canvas = true;
+    newScene = new Canvas(controller.getCurrentFrame(), 0, false, &controller, this);
+    frames.push_back(newScene);
 
-    //set the scene and insert the graphics view into the horizontal frame holder
     newFrame->setScene(newScene);
-    newFrame->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-    ui->horizontalLayout->insertWidget(1, newFrame);//TODO:change the 1 to frames.count
+    newFrame->setSceneRect(0, 0, 0, 0);
+    newFrame->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    ui->horizontalLayout->insertWidget(controller.getCurrentFrame() + 1, newFrame);
 
-    //set the main scene to be the new scene
-    ui->graphicsView->setScene(newScene);
-
-    //tell the controller so we can add it to the model
+    // //tell the controller so we can add it to the model
     controller.newFrameAdded();
+
+    // //set the scene and insert the graphics view into the horizontal frame holder
+    // newFrame->setScene(newScene);
+    // newFrame->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+    // ui->horizontalLayout->insertWidget(1, newFrame);//TODO:change the 1 to frames.count
+
+    // //set the main scene to be the new scene
+    // ui->graphicsView->setScene(newScene);
 }
 
 MainWindow::~MainWindow()
@@ -76,6 +88,18 @@ void MainWindow::on_preview_released()
     preview full_preview;
     full_preview.setModal(true);
     full_preview.exec();
+}
+
+void MainWindow::drawSpritePixelInCanvasAtCellAddressWithColor(
+    int         frame,
+    CellAddress address,
+    QColor      color   )
+{
+    qDebug() << "-------------------------------";
+    qDebug() << Q_FUNC_INFO;
+    qDebug() << "frame: " << frame;
+    qDebug() << "address: " << address;
+    frames[frame]->drawSpritePixelAtCellAddressWithColor(address, color);
 }
 
 void MainWindow::on_colorButton_clicked()

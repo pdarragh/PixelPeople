@@ -9,10 +9,14 @@
 #define CONTROLLER_H
 
 #include <QColor>
+#include <QPoint>
 #include <QPointF>
 #include "sprite.h"
 
 class Canvas;
+class MainWindow;
+typedef QPoint CellAddress;
+typedef QPointF ViewPoint;
 
 // Tools
 namespace Tools {
@@ -27,32 +31,37 @@ namespace Tools {
 class Controller
 {
 public:
+    // Constructors
     Controller();
-    Controller(int available_length);
-    void registerCanvas(Canvas* canvas);
-    void canvasClickedAtPosition(QPointF point);
+    Controller(MainWindow* main_window);
+    // Canvas methods
+    void registerEditor(Canvas* editor);
+    void canvasClickedAtCellAddress(CellAddress address);
+    // Mini canvases.
     void newFrameAdded();
-    int getViewSideLength();
     Sprite getSprite();
-    QPointF getCellAddressFromPositionInView(QPointF position);
-    QPointF getViewPositionFromCellAddress(int x, int y);
+    // Drawing and tools.
     void setActiveColor(QColor color);
-    Tools::tool current_tool;
     void setCurrentTool(Tools::tool new_tool);
-    Canvas* frame_canvas;
-    Canvas* canvas;
+    // Attributes.
+    int getDimension();
+    int getCurrentFrame();
+    Tools::tool current_tool;
+    Canvas* editor;
 private:
     // Tool methods.
-    void usePencilAtPoint(QPointF point);
-    void useEraserAtPoint(QPointF point);
-    void useRotateAtPoint(QPointF point);
-    void useMirrorAtPoint(QPointF point);
+    void usePencilAtCellAddress(CellAddress address);
+    void useEraserAtCellAddress(CellAddress address);
+    void useRotateAtCellAddress(CellAddress address);
+    void useMirrorAtCellAddress(CellAddress address);
     // For doing math on the canvas.
     static int DEFAULT_DIMENSION;
     int dimension;
-    float cell_size;
     // The model hook-in.
     Sprite sprite;
+    // The view hook-in.
+    MainWindow* main_window;
+    int current_frame;
     // The attributes for drawing.
     QColor active_color;
     // Save and Load methods.
