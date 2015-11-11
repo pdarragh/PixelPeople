@@ -20,15 +20,14 @@ MainWindow::MainWindow(QWidget* parent) :
     this->controller = Controller(this);
 
     // Create the main editor Canvas.
-    QRect rcontent = ui->graphicsView->contentsRect();
-    int available_length = std::min(rcontent.width(), rcontent.height());
+    int available_length = getEditorCanvasSize();
     // side_length = controller.getViewSideLength();
     scene = new Canvas(controller.getCurrentFrame(), available_length, true, &controller, this);
     // scene->is_Main_Canvas = true;
 
     //set the frame graphics view to have this new scene
     ui->graphicsView->setScene(scene);
-    ui->graphicsView->setSceneRect(0, 0, rcontent.width(), rcontent.height());
+    ui->graphicsView->setSceneRect(0, 0, getEditorCanvasSize(), getEditorCanvasSize());
 
     //set the alignment for the frame holder
     ui->horizontalLayout->setAlignment(Qt::AlignLeft);
@@ -40,12 +39,21 @@ MainWindow::MainWindow(QWidget* parent) :
     addFramePushed();
 }
 
+int MainWindow::getEditorCanvasSize()
+{
+    QRect rcontent = ui->graphicsView->contentsRect();
+    return std::min(rcontent.width(), rcontent.height());
+}
+
 void MainWindow::clearPushed()
 {
+    qDebug() << "-------------------------------";
+    qDebug() << Q_FUNC_INFO;
     //clear the scenes and update both views
     scene->clear();
     ui->graphicsView->viewport()->update();
     ui->graphicsView1->viewport()->update();
+    frames[controller.getCurrentFrame() - 1]->clear();
 }
 
 void MainWindow::addFramePushed()
@@ -60,16 +68,17 @@ void MainWindow::addFramePushed()
     Canvas* newScene;
     newScene = new Canvas(controller.getCurrentFrame(), placeholder_width, false, &controller, this);
     frames.push_back(newScene);
-
     newFrame->setScene(newScene);
-    QRect rcontent = newFrame->contentsRect();
-    int available_length = std::min(rcontent.width(), rcontent.height());
     newFrame->setSceneRect(0, 0, placeholder_width, placeholder_width);
     newFrame->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    // Append the frame to the bottom mini-frame view.
     ui->horizontalLayout->insertWidget(controller.getCurrentFrame() + 1, newFrame);
 
     //tell the controller so we can add it to the model
     controller.newFrameAdded();
+
+    // Wipe the main editor;
+    scene->clear();
 }
 
 MainWindow::~MainWindow()

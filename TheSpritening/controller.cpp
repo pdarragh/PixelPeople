@@ -34,8 +34,8 @@ Controller::Controller(MainWindow* main_window)
 }
 void Controller::newFrameAdded()
 {
-    current_frame += 1;
     sprite.getNewFrame();
+    current_frame += 1;
 }
 
 void Controller::setActiveColor(QColor color)
@@ -63,11 +63,30 @@ void Controller::registerEditor(Canvas* canvas)
     this->editor = canvas;
 }
 
+void Controller::populateCanvasFromFrame(Canvas* canvas, int frame_number)
+{
+    qDebug() << "-------------------------------";
+    qDebug() << Q_FUNC_INFO;
+    qDebug() << "frame_number: " << frame_number;
+    qDebug() << "sprite.getAllFrames().size(): " << sprite.getAllFrames().size();
+    Frame frame = sprite.getFrame(frame_number);
+    for (int y = 0; y < dimension; ++y)
+    {
+        for (int x = 0; x < dimension; ++x)
+        {
+            QColor color = frame.getCellColorAtPosition(x, y);
+            CellAddress cell_address = QPoint(x, y);
+            canvas->drawSpritePixelAtCellAddressWithColor(cell_address, color);
+        }
+    }
+}
+
 void Controller::canvasClickedAtCellAddress(CellAddress address)
 {
     qDebug() << "-------------------------------";
-    qDebug() << Q_FUNC_INFO << address;
-    qDebug() << "Current tool: " << current_tool;
+    qDebug() << Q_FUNC_INFO;
+    qDebug() << "address: " << address;
+    qDebug() << "current_tool: " << current_tool;
 
     switch (current_tool)
     {

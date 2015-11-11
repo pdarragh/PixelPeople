@@ -37,6 +37,7 @@ public:
     // Canvas methods
     void registerEditor(Canvas* editor);
     void canvasClickedAtCellAddress(CellAddress address);
+    void populateCanvasFromFrame(Canvas* canvas, int frame_number);
     // Mini canvases.
     void newFrameAdded();
     Sprite getSprite();

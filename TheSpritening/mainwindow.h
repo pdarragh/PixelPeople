@@ -17,12 +17,14 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget* parent = 0);
     void drawSpritePixelInCanvasAtCellAddressWithColor(int frame, CellAddress address, QColor color);
+    void clearFrameAtIndex(int index);
     Canvas* scene;
     Controller controller;
     // enum class Tools {Eraser, Pencil, Rotate, Mirror};
     ~MainWindow();
 
 private:
+    int getEditorCanvasSize();
     Ui::MainWindow *ui;
     int dimension;
     int side_length;
