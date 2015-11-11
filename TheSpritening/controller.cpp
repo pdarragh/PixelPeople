@@ -199,11 +199,11 @@ void Controller::loadSpriteFromFile(QString filename)
         throw;
     }
     QString height_string = dimension_list[0];
-    QString width_string = dimenstion_list[1];
+    QString width_string = dimension_list[1];
     bool height_ok = true;
     bool width_ok = true;
-    int height = height_string.toInt(height_ok);
-    int width = width_string.toInt(width_ok);
+    int height = height_string.toInt(&height_ok);
+    int width = width_string.toInt(&width_ok);
     if(!height_ok || !width_ok)
     {
         throw;
@@ -219,7 +219,7 @@ void Controller::loadSpriteFromFile(QString filename)
     }
     QString frame_count_string = frames_count_list[0];
     bool frame_count_ok = true;
-    int frame_count = frame_count_string.toInt(frame_count_ok);
+    int frame_count = frame_count_string.toInt(&frame_count_ok);
     if(!frame_count_ok)
     {
         throw;
@@ -269,10 +269,10 @@ void Controller::loadSpriteFromFile(QString filename)
                 b_string = current_row_list[current_color_value + 2];
                 a_string = current_row_list[current_color_value + 3];
 
-                r = r_string.toInt(r_ok);
-                g = g_string.toInt(g_ok);
-                b = b_string.toInt(b_ok);
-                a = a_string.toInt(a_ok);
+                r = r_string.toInt(&r_ok);
+                g = g_string.toInt(&g_ok);
+                b = b_string.toInt(&b_ok);
+                a = a_string.toInt(&a_ok);
 
                 if(!r_ok || !g_ok || !b_ok || !a_ok)
                 {
