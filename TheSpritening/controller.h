@@ -50,8 +50,7 @@ private:
     // For doing math on the canvas.
     static int DEFAULT_DIMENSION;
     int dimension;
-    int side_length;
-    int cell_size;
+    float cell_size;
     // The model hook-in.
     Sprite sprite;
     // The attributes for drawing.
