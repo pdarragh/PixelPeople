@@ -17,25 +17,27 @@ Controller::Controller()
      qDebug() << "Called";
 }
 
-Controller::Controller(int available_length)
+Controller::Controller(int available_length, std::vector<Canvas*>* canvases)
 {
     // Do some math to lay out the cells and set up other variables.
     dimension       = DEFAULT_DIMENSION;
     cell_size       = float(available_length) / float(dimension);
     active_color    = Qt::black;
     sprite          = Sprite(dimension, Qt::gray);
-
+    this->canvases  = canvases;
+    c_frame_number  = this->canvases->size();
+    qDebug() << "canvases: " << canvases->size();
     // Set the default tool.
     current_tool = Tools::Pencil;
     qDebug() << "Current tool: " << current_tool;
 }
 void Controller::newFrameAdded()
 {
-   //get a new frame from the model
+  //get a new frame from the model
   sprite.getNewFrame();
 
   //set the canvas's frame number
-  this->canvas->frame_number = sprite.getAllFrames().size()-1;
+  //this->canvas->frame_number = sprite.getAllFrames().size()-1;
 
   qDebug() << "Frame Count: " << sprite.getAllFrames().size();
 }
@@ -85,18 +87,19 @@ void Controller::canvasClickedAtPosition(QPointF point)
 
 void Controller::usePencilAtPoint(QPointF point)
 {
-    qDebug() << Q_FUNC_INFO;
-    qDebug() << "Point: " << point;
-    QPointF cell_address = getCellAddressFromPositionInView(point);
-    qDebug() << "Cell: " << cell_address;
-    //TODO: modifications to the sprite
-    QPointF new_point = getViewPositionFromCellAddress(cell_address.x(), cell_address.y());
-    qDebug() << "Reconverted: " << new_point;
-    // use a different variable down here once this is implemented
-    this->canvas->drawSquareAtPositionWithColor(new_point, cell_size, cell_size, active_color);
+
+    //this->canvas->drawSquareAtPositionWithColor(new_point, cell_size, cell_size, active_color);
+    this->canvas->drawSquareAtPositionWithColor(point, active_color);
+//    Canvas* mini_canvas = this->canvases[c_frame_number];
+    std::vector<Canvas*>* vector_pointer = this->canvases;
+    std::vector<Canvas*> vector = *vector_pointer;
+    Canvas* mini_canvas_pointer = vector[c_frame_number];
+    mini_canvas_pointer->drawSquareAtPositionWithColor(point, active_color);
+//    mini_canvas->drawSquareAtPositionWithColor(point, active_color);
+//    *(this->canvases[c_frame_number])->drawSquareAtPositionWithColor(point, active_color);
 
     //TODO: i believe to store the new rectangle in the model we call
-    sprite.setCellAtPositionToColor(cell_address.x(),cell_address.y(),active_color);
+    sprite.setCellAtPositionToColor(point.x(),point.y(),active_color);
 }
 
 void Controller::useEraserAtPoint(QPointF point)
@@ -122,21 +125,21 @@ void Controller::setCurrentTool(Tools::tool new_tool)
     current_tool = new_tool;
 }
 
-QPointF Controller::getCellAddressFromPositionInView(QPointF position)
-{
-    float x = position.x();
-    float y = position.y();
-    int cell_x = x / cell_size;
-    int cell_y = y / cell_size;
-    return QPointF(cell_x, cell_y);
-}
+//QPointF Controller::getCellAddressFromPositionInView(QPointF position)
+//{
+//    float x = position.x();
+//    float y = position.y();
+//    int cell_x = x / cell_size;
+//    int cell_y = y / cell_size;
+//    return QPointF(cell_x, cell_y);
+//}
 
-QPointF Controller::getViewPositionFromCellAddress(int x, int y)
-{
-    int view_x = x * cell_size;
-    int view_y = y * cell_size;
-    return QPointF(view_x, view_y);
-}
+//QPointF Controller::getViewPositionFromCellAddress(int x, int y)
+//{
+//    int view_x = x * cell_size;
+//    int view_y = y * cell_size;
+//    return QPointF(view_x, view_y);
+//}
 
 void Controller::saveSpriteToFile(QString filename)
 {

@@ -13,6 +13,7 @@
 #include "sprite.h"
 
 class Canvas;
+class MainWindow;
 
 // Tools
 namespace Tools {
@@ -28,7 +29,7 @@ class Controller
 {
 public:
     Controller();
-    Controller(int available_length);
+    Controller(int available_length, std::vector<Canvas*>* canvases);
     void registerCanvas(Canvas* canvas);
     void canvasClickedAtPosition(QPointF point);
     void newFrameAdded();
@@ -37,10 +38,15 @@ public:
     QPointF getCellAddressFromPositionInView(QPointF position);
     QPointF getViewPositionFromCellAddress(int x, int y);
     void setActiveColor(QColor color);
+    static int DEFAULT_DIMENSION;
+    int dimension;
+    int c_frame_number;
     Tools::tool current_tool;
     void setCurrentTool(Tools::tool new_tool);
     Canvas* frame_canvas;
     Canvas* canvas;
+    std::vector<Canvas*>* canvases;
+
 private:
     // Tool methods.
     void usePencilAtPoint(QPointF point);
@@ -48,8 +54,6 @@ private:
     void useRotateAtPoint(QPointF point);
     void useMirrorAtPoint(QPointF point);
     // For doing math on the canvas.
-    static int DEFAULT_DIMENSION;
-    int dimension;
     float cell_size;
     // The model hook-in.
     Sprite sprite;

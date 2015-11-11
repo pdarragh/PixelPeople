@@ -17,6 +17,7 @@ public:
     explicit MainWindow(QWidget* parent = 0);
     Canvas* scene;
     Controller controller;
+    std::vector<Canvas*> canvases;
     // enum class Tools {Eraser, Pencil, Rotate, Mirror};
     ~MainWindow();
 

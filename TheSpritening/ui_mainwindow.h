@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.1
+** Created by: Qt User Interface Compiler version 5.5.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -56,6 +56,7 @@ public:
     QWidget *horizontalLayoutWidget;
     QHBoxLayout *horizontalLayout;
     QGraphicsView *graphicsView1;
+    QPushButton *clearButton_2;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QToolBar *mainToolBar;
@@ -84,7 +85,7 @@ public:
         graphicsView->setGeometry(QRect(350, 10, 380, 380));
         clearButton = new QPushButton(centralWidget);
         clearButton->setObjectName(QStringLiteral("clearButton"));
-        clearButton->setGeometry(QRect(220, 280, 61, 61));
+        clearButton->setGeometry(QRect(220, 250, 61, 61));
         line = new QFrame(centralWidget);
         line->setObjectName(QStringLiteral("line"));
         line->setGeometry(QRect(330, 20, 20, 371));
@@ -168,7 +169,7 @@ public:
         graphicsView_2->setGeometry(QRect(20, 30, 311, 141));
         horizontalLayoutWidget = new QWidget(centralWidget);
         horizontalLayoutWidget->setObjectName(QStringLiteral("horizontalLayoutWidget"));
-        horizontalLayoutWidget->setGeometry(QRect(70, 400, 1031, 194));
+        horizontalLayoutWidget->setGeometry(QRect(70, 410, 1011, 81));
         horizontalLayout = new QHBoxLayout(horizontalLayoutWidget);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
@@ -179,9 +180,16 @@ public:
         graphicsView1->setObjectName(QStringLiteral("graphicsView1"));
         sizePolicy.setHeightForWidth(graphicsView1->sizePolicy().hasHeightForWidth());
         graphicsView1->setSizePolicy(sizePolicy);
+        graphicsView1->setSizeAdjustPolicy(QAbstractScrollArea::AdjustIgnored);
 
         horizontalLayout->addWidget(graphicsView1);
 
+        clearButton_2 = new QPushButton(centralWidget);
+        clearButton_2->setObjectName(QStringLiteral("clearButton_2"));
+        clearButton_2->setGeometry(QRect(220, 310, 61, 61));
+        QIcon icon8;
+        icon8.addFile(QStringLiteral(":/new/imageassets/delete_sign.png"), QSize(), QIcon::Normal, QIcon::Off);
+        clearButton_2->setIcon(icon8);
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -229,6 +237,10 @@ public:
         backward->setText(QString());
         playPause->setText(QString());
         forward->setText(QString());
+#ifndef QT_NO_TOOLTIP
+        clearButton_2->setToolTip(QApplication::translate("MainWindow", "Clear the canvas", 0));
+#endif // QT_NO_TOOLTIP
+        clearButton_2->setText(QString());
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
     } // retranslateUi
 

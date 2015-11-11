@@ -13,19 +13,23 @@ class Canvas : public QGraphicsScene
 public:
     QColor color;
 
-    explicit Canvas(QObject *parent = 0, Controller* controller = 0);
+    explicit Canvas(QObject *parent = 0, Controller* controller = 0, int side_length = 0);
     virtual void mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent);
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent * mouseEvent);
-    void drawSquareAtPositionWithColor(QPointF point, int width, int height, QColor color);
+    void drawSquareAtPositionWithColor(QPointF position, QColor color);
+    QPointF getCellAddressFromPositionInView(QPointF position);
+    QPointF getViewPositionFromCellAddress(int x, int y);
     void clear();
     bool is_Main_Canvas;
-    int frame_number;
+    bool first_click;
 
 signals:
 
 public slots:
 
 private:
+    float cell_size;
+    int my_frame_number;
     QList <QPointF> m_points;
     Controller* controller;
 };
