@@ -21,7 +21,7 @@ namespace Tools {
         Eraser,
         Rotate,
         MirrorPencil,
-        MirrorErase
+        MirrorEraser
     };
 };
 

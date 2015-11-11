@@ -78,7 +78,7 @@ void Controller::canvasClickedAtPosition(QPointF point)
         case Tools::MirrorPencil:
             useMirrorAtPoint(point);
             break;
-        case Tools::MirrorErase:
+        case Tools::MirrorEraser:
             useMirrorAtPoint(point);
             break;
         default:
@@ -126,18 +126,16 @@ void Controller::useRotateAtPoint(QPointF point)
 
 void Controller::useMirrorAtPoint(QPointF point)
 {
-    QPointF mirror_point;
+    int x = (dimension * cell_size) - point.x();
     if (current_tool == Tools::MirrorPencil)
     {
         usePencilAtPoint(point);
-        mirror_point = QPointF(point.x()+50,point.y());
-        usePencilAtPoint(mirror_point);
+        usePencilAtPoint(QPointF(x,point.y()));
     }
     else
     {
         useEraserAtPoint(point);
-        mirror_point = QPointF(point.x()+50,point.y());
-        useEraserAtPoint(mirror_point);
+        useEraserAtPoint(QPointF(x,point.y()));
     }
 
     qDebug() << Q_FUNC_INFO;

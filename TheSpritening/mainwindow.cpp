@@ -113,10 +113,10 @@ void MainWindow::on_eraser_clicked()
     ui->eraser->setStyleSheet("border:1px solid black;");
     switch (controller.current_tool)
     {
-        case Tools::MirrorErase:
-            controller.setCurrentTool(Tools::MirrorErase);
+        case Tools::MirrorEraser:
+            controller.setCurrentTool(Tools::MirrorEraser);
         case Tools::MirrorPencil:
-            controller.setCurrentTool(Tools::MirrorErase);
+            controller.setCurrentTool(Tools::MirrorEraser);
             ui->pencil->setStyleSheet("");
             break;
         case Tools::Pencil:
@@ -136,7 +136,7 @@ void MainWindow::on_pencil_clicked()
     {
         case Tools::MirrorPencil:
             controller.setCurrentTool(Tools::MirrorPencil);
-        case Tools::MirrorErase:
+        case Tools::MirrorEraser:
             controller.setCurrentTool(Tools::MirrorPencil);
             ui->eraser->setStyleSheet("");
             break;
@@ -159,14 +159,14 @@ void MainWindow::on_flip_clicked()
             ui->flip->setStyleSheet("border:1px solid black;");
             break;
         case Tools::Eraser:
-            controller.setCurrentTool(Tools::MirrorErase);
+            controller.setCurrentTool(Tools::MirrorEraser);
             ui->flip->setStyleSheet("border:1px solid black;");
             break;
         case Tools::MirrorPencil:
             controller.setCurrentTool(Tools::Pencil);
             ui->flip->setStyleSheet("");
             break;
-        case Tools::MirrorErase:
+        case Tools::MirrorEraser:
             controller.setCurrentTool(Tools::Eraser);
             ui->flip->setStyleSheet("");
             break;
