@@ -22,7 +22,7 @@ public:
     void switchEditorToFrame(int index);
     void clearFrameAtIndex(int index);
     Canvas* scene;
-    Canvas* preview_scene;
+    //Canvas* preview_scene;
     Controller controller;
     int FPS = 3;
     bool play_on = true;

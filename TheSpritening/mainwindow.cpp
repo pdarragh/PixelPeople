@@ -50,6 +50,7 @@ MainWindow::MainWindow(QWidget* parent) :
     connect(ui->forward, SIGNAL(released), this, SLOT(pskipButtonReleased()));
     connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(fpsValueChanged(int)));
     connect(play_timer, SIGNAL(timeout()), this, SLOT(updateFrame()));
+    connect(ui->preview, SIGNAL(released()), this, SLOT(on_preview_released()));
 
     addFramePushed();
     play_timer->start(3000);
@@ -117,6 +118,8 @@ void MainWindow::on_preview_released()
 {
     preview full_preview;
     full_preview.setModal(true);
+    full_preview.setController(&controller);
+    //full_preview.setFrames(&controller.sprite.getAllFrames());
     full_preview.exec();
 }
 
@@ -158,7 +161,6 @@ void MainWindow::on_deleteFrameButton_clicked()
     delete ui->horizontalLayout->itemAt(0)->widget();
     delete ui->horizontalLayout->itemAt(0);
 }
-
 
 void MainWindow::fpsValueChanged(int value)
 {
@@ -256,12 +258,17 @@ void MainWindow::updateFrame()
     QRect preview_content = ui->graphicsView_2->contentsRect();
     //int length_ = std::min(preview_content.width(), preview_content.height());
     int preview_width = 140;
-    preview_scene = new Canvas(0, preview_width, false, &controller, this);
+    Canvas* preview_scene = new Canvas(0, preview_width, false, &controller, this);
+    preview_scene->setPixelScaleFromSideLength(140);
     //preview_scene->is_Main_Canvas = false;
 
     // Sets the graphicsView_2 to display this new scene
     ui->graphicsView_2->setScene(preview_scene);
-    ui->graphicsView_2->setSceneRect(0, 0, preview_content.width(), preview_content.height());
+    ui->graphicsView_2->setSceneRect(0, 0, 140, 140);
+    ui->graphicsView_2->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+
+    preview_scene->clear();
+
 
     // Print testing frames
     std::ostringstream ss;

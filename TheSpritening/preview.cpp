@@ -44,8 +44,8 @@ void preview::updateFullPreview()
     // Updates to the current frame
     temp_frame = the_sprite.getFrame(temp_frame_int);
     QRect full_content = ui->graphicsView->contentsRect();
-    int length = std::min(full_content.width(), full_content.height());
-    full_scene = new Canvas(the_controller->getCurrentFrame(), length, false, the_controller, this);
+    int length_ = std::min(full_content.width(), full_content.height());
+    full_scene = new Canvas(temp_frame_int, the_sprite.getDimension(), false, the_controller, this);
 
     // Sets the graphicsView_2 to display this new scene
     ui->graphicsView->setScene(full_scene);
