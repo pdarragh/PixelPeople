@@ -22,6 +22,7 @@ public:
     QTimer *full_timer;
     void setController(Controller* controller);
     void setFPS(int value);
+    //void closeEvent(QCloseEvent *Event);
 private:
     Ui::preview *ui;
     Frame temp_frame;
