@@ -29,16 +29,22 @@ Cell::Cell(QPoint _position, QColor _color)
     color    = _color;
 }
 
+Cell::Cell(const Cell& other)
+{
+    position = other.position;
+    color    = other.color;
+}
+
 /*
  * Methods
  */
 
-QPoint Cell::getPosition()
+const QPoint Cell::getPosition()
 {
     return position;
 }
 
-QColor Cell::getColor()
+const QColor Cell::getColor()
 {
     return color;
 }

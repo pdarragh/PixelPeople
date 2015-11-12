@@ -49,6 +49,14 @@ Sprite::Sprite(std::vector<Frame> frameStack, int dimension)
     this->bg_color      = DEFAULT_COLOR;
 }
 
+Sprite::Sprite(const Sprite& other)
+{
+    frames          = other.frames;
+    current_index   = other.current_index;
+    dimension       = other.dimension;
+    bg_color        = DEFAULT_COLOR;
+}
+
 /****
  * Public Methods
  */
@@ -121,6 +129,17 @@ Frame Sprite::getNewCopyFrameAfterIndex(unsigned long index)
     }
 
     return NULL;
+}
+
+/*
+ * clearFrameAtIndex
+ *
+ * Erases all of the data store in a given frame. This is useful for
+ * whenever we clear a drawing.
+ */
+void Sprite::clearFrameAtIndex(unsigned long index)
+{
+    frames[index].clear();
 }
 
 /*
