@@ -317,6 +317,50 @@
       <normaloff>:/new/imageassets/delete_sign.png</normaloff>:/new/imageassets/delete_sign.png</iconset>
     </property>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>50</y>
+      <width>271</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Futura</family>
+      <pointsize>64</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>The</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>140</y>
+      <width>291</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Futura</family>
+      <pointsize>64</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Spritening</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
