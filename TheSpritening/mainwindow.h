@@ -59,6 +59,7 @@ private slots:
     void on_clearButton_2_clicked();
     void on_pencil_clicked();
     void on_eraser_clicked();
+    void on_mirror_clicked();
     void on_flip_clicked();
 };
 
