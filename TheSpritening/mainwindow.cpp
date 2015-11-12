@@ -209,22 +209,41 @@ void MainWindow::on_colorButton_clicked()
 
 void MainWindow::on_deleteFrameButton_clicked()
 {
-    //get the current frame that was clicked
-
-    //TODO:remove frame from widget at frame number
-    delete ui->horizontalLayout->itemAt(0)->widget();
-    delete ui->horizontalLayout->itemAt(0);
-}
-
-void MainWindow::on_eraser_clicked()
-{
     // user can't delete the only freaking frame
     if(frames.size() == 1)
     {
         return;
+    }
+
+    // remove frame from frames
+    frames.erase(getIteratorAtPosition(controller.getCurrentFrame()));
+
+    // decrement the frame_number of frames after the index
+    std::vector<Canvas*>::iterator iterator = getIteratorAtPosition(controller.getCurrentFrame());
+    while(iterator != frames.end())
+    {
+        Canvas* curr = *(iterator);
+        curr->decrementFrameNumber();
+        iterator++;
+    }
+
+    // remove frame from model
+    controller.frameRemovedAtCurrentIndex();
+
+    rebuildFrameDisplay();
+    switchEditorToFrame(controller.getCurrentFrame());
+}
+
+void MainWindow::on_eraser_clicked()
+{
+    ui->eraser->setStyleSheet("border:1px solid black;");
+    switch(controller.current_tool)
+    {
+        case Tools::MirrorEraser:
             controller.setCurrentTool(Tools::MirrorEraser);
+            break;
         case Tools::MirrorPencil:
-            controller.setCurrentTool(Tools::MirrorEraser);
+            controller.setCurrentTool(Tools::MirrorPencil);
             ui->pencil->setStyleSheet("");
             break;
         case Tools::Pencil:
@@ -233,7 +252,7 @@ void MainWindow::on_eraser_clicked()
             break;
         default:
             controller.setCurrentTool(Tools::Eraser);
-        break;
+            break;
     }
 }
 
