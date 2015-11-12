@@ -45,9 +45,9 @@ MainWindow::MainWindow(QWidget* parent) :
     //connect the clear button and the add frame button
     connect(ui->clearButton, SIGNAL(clicked()), this, SLOT(clearPushed()));
     connect(ui->addFrameButton, SIGNAL(clicked()), this, SLOT(addFramePushed()));
-    connect(ui->playPause, SIGNAL(released()), this, SLOT(pplayButtonReleased));
-    connect(ui->backward, SIGNAL(released()), this, SLOT(pbackButtonReleased));
-    connect(ui->forward, SIGNAL(released), this, SLOT(pskipButtonReleased));
+    connect(ui->playPause, SIGNAL(released()), this, SLOT(pplayButtonReleased()));
+    connect(ui->backward, SIGNAL(released()), this, SLOT(pbackButtonReleased()));
+    connect(ui->forward, SIGNAL(released), this, SLOT(pskipButtonReleased()));
     connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(fpsValueChanged(int)));
     connect(play_timer, SIGNAL(timeout()), this, SLOT(updateFrame()));
 
@@ -248,14 +248,15 @@ void MainWindow::updateFrame()
     Sprite the_sprite = controller.getSprite();
 
     if (temp_frame_int == the_sprite.getFrameCount()) {
-        temp_frame_int = 1;
+        temp_frame_int = 0;
     }
 
     // Updates to the current frame
     temp_frame = the_sprite.getFrame(temp_frame_int);
     QRect preview_content = ui->graphicsView_2->contentsRect();
-    int length_ = std::min(preview_content.width(), preview_content.height());
-    preview_scene = new Canvas(temp_frame_int, length_, false, &controller, this);
+    //int length_ = std::min(preview_content.width(), preview_content.height());
+    int preview_width = 140;
+    preview_scene = new Canvas(0, preview_width, false, &controller, this);
     //preview_scene->is_Main_Canvas = false;
 
     // Sets the graphicsView_2 to display this new scene

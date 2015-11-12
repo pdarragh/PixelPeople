@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.0
+** Created by: Qt User Interface Compiler version 5.5.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -139,7 +139,7 @@ public:
         pushButton_7->setIcon(icon4);
         horizontalSlider = new QSlider(centralWidget);
         horizontalSlider->setObjectName(QStringLiteral("horizontalSlider"));
-        horizontalSlider->setGeometry(QRect(80, 170, 160, 22));
+        horizontalSlider->setGeometry(QRect(100, 170, 160, 22));
         horizontalSlider->setOrientation(Qt::Horizontal);
         preview = new QPushButton(centralWidget);
         preview->setObjectName(QStringLiteral("preview"));
@@ -164,7 +164,7 @@ public:
         forward->setIcon(icon7);
         graphicsView_2 = new QGraphicsView(centralWidget);
         graphicsView_2->setObjectName(QStringLiteral("graphicsView_2"));
-        graphicsView_2->setGeometry(QRect(20, 30, 311, 141));
+        graphicsView_2->setGeometry(QRect(110, 30, 140, 140));
         horizontalLayoutWidget = new QWidget(centralWidget);
         horizontalLayoutWidget->setObjectName(QStringLiteral("horizontalLayoutWidget"));
         horizontalLayoutWidget->setGeometry(QRect(70, 420, 1021, 80));
