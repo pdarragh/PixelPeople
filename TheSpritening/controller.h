@@ -35,6 +35,7 @@ public:
     // Constructors
     Controller();
     Controller(MainWindow* main_window);
+    Controller(MainWindow* main_window, int user_dimension);
     // Canvas methods
     void registerEditor(Canvas* editor);
     void canvasClickedAtCellAddress(CellAddress address);

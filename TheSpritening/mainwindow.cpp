@@ -18,12 +18,19 @@ MainWindow::MainWindow(QWidget* parent) :
     // Initial UI setup.
     ui->setupUi(this);
 
+    Dialog* new_sprite = new Dialog;
+    if( new_sprite->exec() == QDialog::Accepted )
+    {
 
+        user_selected_dimension = new_sprite->dimension;
+        qDebug() << "dimension selected: " << user_selected_dimension;
+        //return;
+    }
     // Initiali vector initialization.
     frames = std::vector<Canvas*>();
 
     // Create the controller and canvas for the graphics view.
-    this->controller = Controller(this);
+    this->controller = Controller(this, user_selected_dimension);
     ui->pencil->setStyleSheet("border:1px solid black;");
     controller.setCurrentTool(Tools::Pencil);
 
@@ -58,6 +65,8 @@ MainWindow::MainWindow(QWidget* parent) :
 
     addFramePushed();
     play_timer->start(3000);
+
+
 }
 
 int MainWindow::getEditorCanvasSize()
