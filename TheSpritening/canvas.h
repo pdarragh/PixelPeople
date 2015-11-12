@@ -25,6 +25,7 @@ public:
     explicit Canvas(int frame_number, int side_length, CanvasTypes::type canvas_type, Controller* controller, QObject *parent = 0);
     // Modifier
     void incrementFrameNumber();
+    void decrementFrameNumber();
     void setPixelScaleFromSideLength(float side_length);
     // Clear the scene
     void clear();

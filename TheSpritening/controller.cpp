@@ -39,10 +39,26 @@ void Controller::newFrameAdded()
     current_frame += 1;
 }
 
-void Controller::newFrameAddedAtIndex()
+void Controller::newFrameAddedAtCurrentIndex()
 {
     current_frame += 1;
     sprite.getNewFrameAfterIndex(current_frame);
+}
+
+void Controller::frameRemovedAtCurrentIndex()
+{
+    // remove frame from model
+    sprite.removeFrameAtIndex(current_frame);
+
+    // figure out where to go after deletion
+    if(current_frame == (sprite.getFrameCount() - 1)) // end of list
+    {
+        current_frame = sprite.getFrameCount() - 1;
+    }
+    else // middle of list
+    {
+        current_frame++;
+    }
 }
 
 void Controller::setActiveColor(QColor color)

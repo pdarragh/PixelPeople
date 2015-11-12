@@ -26,7 +26,7 @@ namespace Tools {
         Rotate,
         Mirror
     };
-};
+}
 
 class Controller
 {
@@ -41,7 +41,8 @@ public:
     void populateCanvasFromFrame(Canvas* canvas, int frame_number);
     // Mini canvases.
     void newFrameAdded();
-    void newFrameAddedAtIndex();
+    void newFrameAddedAtCurrentIndex();
+    void frameRemovedAtCurrentIndex();
     Sprite getSprite();
     // Drawing and tools.
     void setActiveColor(QColor color);

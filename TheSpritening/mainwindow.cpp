@@ -76,7 +76,7 @@ void MainWindow::clearPushed()
     scene->clear();
     ui->graphicsView->viewport()->update();
    // ui->graphicsView1->viewport()->update();
-    frames[controller.getCurrentFrame() - 1]->clear();
+    frames[controller.getCurrentFrame()]->clear();
 }
 
 void MainWindow::addFramePushed()
@@ -100,15 +100,13 @@ void MainWindow::addFramePushed()
     }
     else // add after a specific index
     {
-        controller.newFrameAddedAtIndex();
+        controller.newFrameAddedAtCurrentIndex();
 
         qDebug() << "Second Option!!";
 
         //create the new frame
         Canvas* newScene;
         newScene = new Canvas(controller.getCurrentFrame(), placeholder_width, CanvasTypes::MiniCanvas, &controller, this);
-
-        std::vector<Canvas*>::iterator test = getIteratorAtPosition(controller.getCurrentFrame());
 
         //Insert at index into frames
         frames.insert(getIteratorAtPosition(controller.getCurrentFrame()), newScene);
@@ -126,30 +124,6 @@ void MainWindow::addFramePushed()
         //rebuild frame list
         rebuildFrameDisplay();
     }
-
-    /*
-    //tell the controller so we can add it to the model
-    controller.newFrameAdded();
-
-    //create the graphics view for the frame holder
-    QGraphicsView* newFrame;
-    newFrame = new QGraphicsView;
-
-    //TODO: This should probably be gotten a better way, but I dunno how. /shrug
-    int placeholder_width = 77;
-    //create the canvas for the graphics view
-    Canvas* newScene;
-    newScene = new Canvas(controller.getCurrentFrame(), placeholder_width, CanvasTypes::MiniCanvas, &controller, this);
-    frames.push_back(newScene);
-    newFrame->setScene(newScene);
-    newFrame->setSceneRect(0, 0, placeholder_width, placeholder_width);
-    newFrame->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    // Append the frame to the bottom mini-frame view.
-    //ui->horizontalLayout->insertWidget(frames.size(), newFrame);
-    qDebug() << "controler " << controller.getCurrentFrame() << "cont plus 1 "<< controller.getCurrentFrame() + 1;
-
-    ui->horizontalLayout->insertWidget(controller.getCurrentFrame() + 1, newFrame);
-    */
 
     // Wipe the main editor;
     scene->clear();
@@ -226,11 +200,29 @@ void MainWindow::on_colorButton_clicked()
 
 void MainWindow::on_deleteFrameButton_clicked()
 {
-    //get the current frame that was clicked
+    // user can't delete the only freaking frame
+    if(frames.size() == 1)
+    {
+        return;
+    }
 
-    //TODO:remove frame from widget at frame number
-    delete ui->horizontalLayout->itemAt(0)->widget();
-    delete ui->horizontalLayout->itemAt(0);
+    // remove frame from frames
+    frames.erase(getIteratorAtPosition(controller.getCurrentFrame()));
+
+    // decrement the frame_number of frames after the item
+    std::vector<Canvas*>::iterator iterator = getIteratorAtPosition(controller.getCurrentFrame());
+    while(iterator != frames.end())
+    {
+        Canvas* curr = *(iterator);
+        curr->decrementFrameNumber();
+        iterator++;
+    }
+
+    // remove frame from model
+    controller.frameRemovedAtCurrentIndex();
+
+    rebuildFrameDisplay();
+    switchEditorToFrame(controller.getCurrentFrame());
 }
 
 void MainWindow::fpsValueChanged(int value)
