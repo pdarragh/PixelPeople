@@ -35,6 +35,11 @@ void Canvas::incrementFrameNumber()
     frame_number++;
 }
 
+void Canvas::decrementFrameNumber()
+{
+    frame_number--;
+}
+
 void Canvas::setPixelScaleFromSideLength(float side_length)
 {
     pixel_scale = side_length / this->controller->getDimension();
