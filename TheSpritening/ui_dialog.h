@@ -55,7 +55,10 @@ public:
         radioButton_4->setGeometry(QRect(100, 110, 102, 20));
         label = new QLabel(Dialog);
         label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(110, 80, 151, 16));
+        label->setGeometry(QRect(90, 50, 231, 31));
+        QFont font;
+        font.setPointSize(21);
+        label->setFont(font);
 
         retranslateUi(Dialog);
         QObject::connect(buttonBox, SIGNAL(accepted()), Dialog, SLOT(accept()));

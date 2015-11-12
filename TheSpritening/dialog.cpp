@@ -7,7 +7,7 @@ Dialog::Dialog(QWidget *parent) :
     ui(new Ui::Dialog)
 {
     ui->setupUi(this);
-
+    qDebug() << "is 8 checked: " << ui->radioButton_4->isChecked();
 }
 
 Dialog::~Dialog()
