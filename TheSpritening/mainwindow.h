@@ -19,6 +19,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget* parent = 0);
     void drawSpritePixelInCanvasAtCellAddressWithColor(int frame, CellAddress address, QColor color);
+    void eraseSpritePixelInCanvasAtCellAddress(int frame, CellAddress address);
     void switchEditorToFrame(int index);
     void clearFrameAtIndex(int index);
     Canvas* scene;
@@ -56,6 +57,9 @@ private slots:
     void pskipButtonReleased();
     void updateFrame();
     void on_clearButton_2_clicked();
+    void on_pencil_clicked();
+    void on_eraser_clicked();
+    void on_flip_clicked();
 };
 
 #endif // MAINWINDOW_H
