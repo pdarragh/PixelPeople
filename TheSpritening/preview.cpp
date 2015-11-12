@@ -36,8 +36,8 @@ void preview::setFPS(int value)
     //FPS = value;
     //int msec = (1000 / value);
     //int fps = value;
-    //full_timer->setInterval(1000 / fps);
-    full_timer->setInterval(1000 / 3);
+    full_timer->setInterval(1000 / value);
+    //full_timer->setInterval(1000 / 3);
     full_timer->start();
 }
 
