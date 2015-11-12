@@ -38,12 +38,11 @@ MainWindow::MainWindow(QWidget* parent) :
     ui->horizontalLayout->setAlignment(Qt::AlignLeft);
 
     //set values for horizontal slider
-    ui->horizontalSlider->setValue(3);
+    ui->horizontalSlider->setValue(0);
     ui->horizontalSlider->setRange(1, 65);
 
     //instantiate timer
     play_timer = new QTimer(this);
-
     //connect the clear button and the add frame button
     connect(ui->clearButton, SIGNAL(clicked()), this, SLOT(clearPushed()));
     connect(ui->addFrameButton, SIGNAL(clicked()), this, SLOT(addFramePushed()));
@@ -191,8 +190,9 @@ void MainWindow::rebuildFrameDisplay()
 void MainWindow::on_preview_released()
 {
     preview full_preview;
-    full_preview.setModal(true);
+    full_preview.setFPS(this->FPS);
     full_preview.setController(&controller);
+    full_preview.setModal(true);
     //full_preview.setFrames(&controller.sprite.getAllFrames());
     full_preview.exec();
 }
@@ -320,10 +320,9 @@ void MainWindow::fpsValueChanged(int value)
  */
 void MainWindow::pplayButtonReleased()
 {
+    //set icon for play/pause
     QIcon *pplayIcon = new QIcon();
-    //pplayIcon->addPixmap(QPixmap("new/imageassets/play.png"),QIcon::Normal,QIcon::On);
     pplayIcon->addPixmap(QPixmap(":/new/imageassets/play.png"),QIcon::Normal,QIcon::On);
-    //pplayIcon->addPixmap(QPixmap("new/imageassets/pause.png"),QIcon::Normal,QIcon::Off);
     pplayIcon->addPixmap(QPixmap(":/new/imageassets/pause.png"),QIcon::Normal,QIcon::Off);
     ui->playPause->setIcon(*pplayIcon);
     ui->playPause->setCheckable(true);
@@ -343,7 +342,7 @@ void MainWindow::pplayButtonReleased()
     {
         // TODO allows creates a small things
         std::cout << "Play turned on." << std::endl;
-        int msec = 1000 / FPS;
+        int msec = (1000 / FPS);
         play_timer->start(msec);
 
         play_on = true;
@@ -406,10 +405,10 @@ void MainWindow::updateFrame()
     ui->graphicsView_2->setScene(preview_scene);
     ui->graphicsView_2->setSceneRect(0, 0, 140, 140);
     ui->graphicsView_2->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    controller.populateCanvasFromFrame(preview_scene, temp_frame_int);
 
     // Clears scene immediately afterward
-    preview_scene->clear();
-
+    //preview_scene->clear();
 
     // Print testing frames
     std::ostringstream ss;
@@ -421,7 +420,6 @@ void MainWindow::updateFrame()
     xx << the_sprite.getFrameCount();
     std::string frame_count_int = xx.str();
     std::cout << "Total frames: " << frame_count_int << "." << std::endl;
-
 
     // increment to loop through frames if play is on
     if (play_on) {

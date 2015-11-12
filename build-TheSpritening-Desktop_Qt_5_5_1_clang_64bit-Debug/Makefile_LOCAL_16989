@@ -14,7 +14,7 @@ CC            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefau
 CXX           = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
 DEFINES       = -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk -mmacosx-version-min=10.7 -Wall -W -fPIC $(DEFINES)
-CXXFLAGS      = -pipe -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk -mmacosx-version-min=10.7 -Wall -W -fPIC $(DEFINES)
+CXXFLAGS      = -pipe -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk -std=c++11 -stdlib=libc++ -mmacosx-version-min=10.7 -Wall -W -fPIC $(DEFINES)
 INCPATH       = -I../TheSpritening -I. -I../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers -I../../Qt/5.5/clang_64/lib/QtGui.framework/Headers -I../../Qt/5.5/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk/System/Library/Frameworks/AGL.framework/Headers -I. -I../../Qt/5.5/clang_64/mkspecs/macx-clang -F/Users/aurora/Qt/5.5/clang_64/lib
 QMAKE         = /Users/aurora/Qt/5.5/clang_64/bin/qmake
 DEL_FILE      = rm -f
@@ -35,7 +35,7 @@ COMPRESS      = gzip -9f
 DISTNAME      = TheSpritening1.0.0
 DISTDIR = /Users/aurora/Spritening/build-TheSpritening-Desktop_Qt_5_5_1_clang_64bit-Debug/.tmp/TheSpritening1.0.0
 LINK          = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
-LFLAGS        = -headerpad_max_install_names -Wl,-syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk -mmacosx-version-min=10.7 -Wl,-rpath,/Users/aurora/Qt/5.5/clang_64/lib
+LFLAGS        = -headerpad_max_install_names -Wl,-syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk -stdlib=libc++ -mmacosx-version-min=10.7 -Wl,-rpath,/Users/aurora/Qt/5.5/clang_64/lib
 LIBS          = $(SUBLIBS) -F/Users/aurora/Qt/5.5/clang_64/lib -framework QtWidgets -framework QtGui -framework QtCore -framework DiskArbitration -framework IOKit -framework OpenGL -framework AGL 
 AR            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar cq
 RANLIB        = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib -s
@@ -203,6 +203,7 @@ DIST          = ../../Qt/5.5/clang_64/mkspecs/features/spec_pre.prf \
 		../../Qt/5.5/clang_64/mkspecs/features/mac/default_pre.prf \
 		../../Qt/5.5/clang_64/mkspecs/features/resolve_config.prf \
 		../../Qt/5.5/clang_64/mkspecs/features/default_post.prf \
+		../../Qt/5.5/clang_64/mkspecs/features/c++11.prf \
 		../../Qt/5.5/clang_64/mkspecs/features/mac/sdk.prf \
 		../../Qt/5.5/clang_64/mkspecs/features/mac/default_post.prf \
 		../../Qt/5.5/clang_64/mkspecs/features/mac/objective_c.prf \
@@ -245,6 +246,8 @@ QMAKE_COMP_QMAKE_OBJECTIVE_CFLAGS = -pipe \
 		-g \
 		-isysroot \
 		/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk \
+		-std=c++11 \
+		-stdlib=libc++ \
 		-mmacosx-version-min=10.7 \
 		-Wall \
 		-W
@@ -403,6 +406,7 @@ Makefile: ../TheSpritening/TheSpritening.pro ../../Qt/5.5/clang_64/mkspecs/macx-
 		../../Qt/5.5/clang_64/mkspecs/features/mac/default_pre.prf \
 		../../Qt/5.5/clang_64/mkspecs/features/resolve_config.prf \
 		../../Qt/5.5/clang_64/mkspecs/features/default_post.prf \
+		../../Qt/5.5/clang_64/mkspecs/features/c++11.prf \
 		../../Qt/5.5/clang_64/mkspecs/features/mac/sdk.prf \
 		../../Qt/5.5/clang_64/mkspecs/features/mac/default_post.prf \
 		../../Qt/5.5/clang_64/mkspecs/features/mac/objective_c.prf \
@@ -550,6 +554,7 @@ Makefile: ../TheSpritening/TheSpritening.pro ../../Qt/5.5/clang_64/mkspecs/macx-
 ../../Qt/5.5/clang_64/mkspecs/features/mac/default_pre.prf:
 ../../Qt/5.5/clang_64/mkspecs/features/resolve_config.prf:
 ../../Qt/5.5/clang_64/mkspecs/features/default_post.prf:
+../../Qt/5.5/clang_64/mkspecs/features/c++11.prf:
 ../../Qt/5.5/clang_64/mkspecs/features/mac/sdk.prf:
 ../../Qt/5.5/clang_64/mkspecs/features/mac/default_post.prf:
 ../../Qt/5.5/clang_64/mkspecs/features/mac/objective_c.prf:
@@ -899,6 +904,8 @@ controller.o: ../TheSpritening/controller.cpp ../../Qt/5.5/clang_64/lib/QtCore.f
 		../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qdebug.h \
 		../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/QFile \
 		../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qfile.h \
+		../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QGraphicsItem \
+		../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qgraphicsitem.h \
 		../TheSpritening/controller.h \
 		../../Qt/5.5/clang_64/lib/QtGui.framework/Headers/QColor \
 		../../Qt/5.5/clang_64/lib/QtGui.framework/Headers/qcolor.h \

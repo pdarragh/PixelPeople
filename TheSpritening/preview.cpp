@@ -11,11 +11,8 @@ preview::preview(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    full_timer->setInterval(3000);
-
+    full_timer = new QTimer(this);
     connect(full_timer, SIGNAL(timeout()), this, SLOT(updateFullPreview()));
-
-    full_timer->start();
 }
 
 preview::~preview()
@@ -34,10 +31,16 @@ void preview::setController(Controller* controller)
     this->adjustSize();
 }
 
-/*void preview::setFrames(std::vector<Frame> allFrames)
+void preview::setFPS(int value)
 {
-    the_frames = allFrames;
-}*/
+    //FPS = value;
+    //int msec = (1000 / value);
+    //int fps = value;
+    //full_timer->setInterval(1000 / fps);
+    full_timer->setInterval(1000 / 3);
+    full_timer->start();
+}
+
 
 void preview::updateFullPreview()
 {
@@ -50,6 +53,8 @@ void preview::updateFullPreview()
     // Sets the graphicsView_2 to display this new scene
     ui->graphicsView->setScene(full_scene);
     ui->graphicsView->setSceneRect(0, 0, full_content.width(), full_content.height());
+    ui->graphicsView->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    the_controller->populateCanvasFromFrame(full_scene, temp_frame_int);
 
     // Print testing frames
     std::ostringstream ss;
@@ -64,6 +69,11 @@ void preview::updateFullPreview()
 
     // Increment frames
     temp_frame_int += 1;
+
+    // Make sure that if you reach the end, you go back to the beginning
+    if (temp_frame_int == the_sprite.getFrameCount()) {
+        temp_frame_int = 0;
+    }
 
     std::cout << "Timeout" << std::endl;
 }
