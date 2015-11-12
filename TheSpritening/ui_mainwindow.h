@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.0
+** Created by: Qt User Interface Compiler version 5.5.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -158,7 +158,7 @@ public:
         playPause->setObjectName(QStringLiteral("playPause"));
         playPause->setGeometry(QRect(150, 200, 31, 32));
         QIcon icon6;
-        icon6.addFile(QStringLiteral(":/new/imageassets/play.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon6.addFile(QStringLiteral(":/new/imageassets/pause.png"), QSize(), QIcon::Normal, QIcon::Off);
         playPause->setIcon(icon6);
         forward = new QPushButton(centralWidget);
         forward->setObjectName(QStringLiteral("forward"));

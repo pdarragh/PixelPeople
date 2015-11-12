@@ -195,6 +195,8 @@ void MainWindow::on_preview_released()
     full_preview.setModal(true);
     //full_preview.setFrames(&controller.sprite.getAllFrames());
     full_preview.exec();
+    full_preview.close();
+    //delete full_preview;
 }
 
 void MainWindow::drawSpritePixelInCanvasAtCellAddressWithColor(
@@ -322,8 +324,8 @@ void MainWindow::pplayButtonReleased()
 {
     //set icon for play/pause
     QIcon *pplayIcon = new QIcon();
-    pplayIcon->addPixmap(QPixmap(":/new/imageassets/play.png"),QIcon::Normal,QIcon::On);
-    pplayIcon->addPixmap(QPixmap(":/new/imageassets/pause.png"),QIcon::Normal,QIcon::Off);
+    pplayIcon->addPixmap(QPixmap(":/new/imageassets/pause.png"),QIcon::Normal,QIcon::On);
+    pplayIcon->addPixmap(QPixmap(":/new/imageassets/play.png"),QIcon::Normal,QIcon::Off);
     ui->playPause->setIcon(*pplayIcon);
     ui->playPause->setCheckable(true);
 
