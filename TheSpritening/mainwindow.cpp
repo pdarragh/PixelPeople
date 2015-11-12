@@ -486,6 +486,7 @@ void MainWindow::on_actionNew_triggered()
 
         user_selected_dimension = new_sprite->dimension;
         qDebug() << "dimension selected: " << user_selected_dimension;
+        this->controller.setUpNewSpriteProject(user_selected_dimension);
         return;
     }
     else
