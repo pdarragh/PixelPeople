@@ -102,7 +102,8 @@ void MainWindow::addFramePushed()
     }
     else // add after a specific index
     {
-        controller.newFrameAddedAtIndex();
+        // This this is right?
+        controller.newFrameAddedAtCurrentIndex();
 
         qDebug() << "Second Option!!";
 
