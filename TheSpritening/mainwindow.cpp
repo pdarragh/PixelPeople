@@ -47,7 +47,7 @@ MainWindow::MainWindow(QWidget* parent) :
     connect(ui->addFrameButton, SIGNAL(clicked()), this, SLOT(addFramePushed()));
     connect(ui->playPause, SIGNAL(released()), this, SLOT(pplayButtonReleased()));
     connect(ui->backward, SIGNAL(released()), this, SLOT(pbackButtonReleased()));
-    connect(ui->forward, SIGNAL(released), this, SLOT(pskipButtonReleased()));
+    connect(ui->forward, SIGNAL(released()), this, SLOT(pskipButtonReleased()));
     connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(fpsValueChanged(int)));
     connect(play_timer, SIGNAL(timeout()), this, SLOT(updateFrame()));
     connect(ui->preview, SIGNAL(released()), this, SLOT(on_preview_released()));
@@ -201,7 +201,7 @@ void MainWindow::pplayButtonReleased()
         play_on = false;
     }
 
-    // If play_on is false, pressing the button turns it off
+    // If play_on is false, pressing the button turns it on
     else
     {
         // TODO allows creates a small things
@@ -223,9 +223,11 @@ void MainWindow::pbackButtonReleased()
 {
     if (!play_on)
     {
-        if (temp_frame_int != 0) {
-            temp_frame_int -= 1;
+        if (temp_frame_int > 0) {
+            temp_frame_int = temp_frame_int - 1;
         }
+
+        updateFrame();
     }
 }
 
@@ -239,9 +241,11 @@ void MainWindow::pskipButtonReleased()
 {
     if (!play_on)
     {
-        if (temp_frame_int != controller.getSprite().getFrameCount() - 1) {
-            temp_frame_int += 1;
+        if (temp_frame_int < (controller.getSprite().getFrameCount() - 1)) {
+            temp_frame_int = temp_frame_int + 1;
         }
+
+        updateFrame();
     }
 }
 
@@ -249,24 +253,24 @@ void MainWindow::updateFrame()
 {
     Sprite the_sprite = controller.getSprite();
 
-    if (temp_frame_int == the_sprite.getFrameCount()) {
-        temp_frame_int = 0;
-    }
-
-    // Updates to the current frame
+    // Stores some frame's index number inside of temp_frame
     temp_frame = the_sprite.getFrame(temp_frame_int);
+
+    // Stores contentsRect() inside of preview_content for later size calculations
     QRect preview_content = ui->graphicsView_2->contentsRect();
     //int length_ = std::min(preview_content.width(), preview_content.height());
     int preview_width = 140;
-    Canvas* preview_scene = new Canvas(0, preview_width, false, &controller, this);
-    preview_scene->setPixelScaleFromSideLength(140);
-    //preview_scene->is_Main_Canvas = false;
+    preview_scene = new Canvas(temp_frame_int, preview_width, false, &controller, this);
 
-    // Sets the graphicsView_2 to display this new scene
+    // Double checks that the Pixel size is set correctly
+    preview_scene->setPixelScaleFromSideLength(140);
+
+    // Sets graphicsView_2 to display the correct scene
     ui->graphicsView_2->setScene(preview_scene);
     ui->graphicsView_2->setSceneRect(0, 0, 140, 140);
     ui->graphicsView_2->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
+    // Clears scene immediately afterward
     preview_scene->clear();
 
 
@@ -281,6 +285,15 @@ void MainWindow::updateFrame()
     std::string frame_count_int = xx.str();
     std::cout << "Total frames: " << frame_count_int << "." << std::endl;
 
-    // Increment frames
-    temp_frame_int += 1;
+
+    // increment to loop through frames if play is on
+    if (play_on) {
+        // Increment frames
+        temp_frame_int += 1;
+    }
+
+    // Make sure that if you reach the end, you go back to the beginning
+    if (temp_frame_int == the_sprite.getFrameCount()) {
+        temp_frame_int = 0;
+    }
 }
