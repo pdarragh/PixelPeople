@@ -193,10 +193,7 @@ void MainWindow::on_preview_released()
     full_preview.setFPS(FPS);
     full_preview.setController(&controller);
     full_preview.setModal(true);
-    //full_preview.setFrames(&controller.sprite.getAllFrames());
     full_preview.exec();
-    //full_preview.close();
-    //delete full_preview;
 }
 
 void MainWindow::drawSpritePixelInCanvasAtCellAddressWithColor(

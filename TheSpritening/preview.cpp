@@ -77,3 +77,10 @@ void preview::updateFullPreview()
 
     std::cout << "Timeout" << std::endl;
 }
+
+
+/*void preview::closeEvent(QCloseEvent *Event)
+{
+    QEvent* exitEvent = (QEvent*)Event;
+    exitEvent->accept();
+}*/
