@@ -540,5 +540,57 @@ void MainWindow::setUpNewSprite()
 
 void MainWindow::on_pushButton_clicked()
 {
+    int placeholder_width = 77;
 
+    if(frames.size() > 11)
+    {
+        return;
+    }
+
+    if(controller.getCurrentFrame() == (frames.size() - 1)) // add to end of frames list
+    {
+        controller.newCopyFrameAdded();
+
+        qDebug() << "First Option!!";
+
+        //create the canvas for the graphics view
+        Canvas* newScene;
+        newScene = new Canvas(controller.getCurrentFrame(), placeholder_width, CanvasTypes::MiniCanvas, &controller, this);
+        frames.push_back(newScene);
+
+        // rebuild frame list
+        rebuildFrameDisplay();
+
+    }
+    else // add after a specific index
+    {
+        // This this is right?
+        controller.newCopyFrameAddedAtCurrentIndex();
+
+        qDebug() << "Second Option!!";
+
+        //create the new frame
+        Canvas* newScene;
+        newScene = new Canvas(controller.getCurrentFrame(), placeholder_width, CanvasTypes::MiniCanvas, &controller, this);
+
+        //Insert at index into frames
+        frames.insert(getIteratorAtPosition(controller.getCurrentFrame()), newScene);
+
+        //increment frame_number in canvisi
+        std::vector<Canvas*>::iterator iterator = getIteratorAtPosition(controller.getCurrentFrame() + 1);
+        while(iterator != frames.end())
+        {
+            Canvas* curr = *iterator;
+            curr->incrementFrameNumber();
+            //(*iterator)->incrementFrameNumber();
+            iterator++;
+        }
+
+        //rebuild frame list
+        rebuildFrameDisplay();
+    }
+
+    // Wipe the main editor;
+    scene->clear();
+    switchEditorToFrame(controller.getCurrentFrame());
 }

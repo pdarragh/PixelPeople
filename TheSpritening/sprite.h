@@ -27,6 +27,7 @@ public:
     std::vector<Frame> getAllFrames();
     int getFrameCount();
     Frame getNewFrame();
+    Frame getNewCopyFrame();
     Frame getNewFrameAfterIndex(unsigned long index);
     Frame getNewCopyFrameAfterIndex(unsigned long index);
     void clearFrameAtIndex(unsigned long index);
