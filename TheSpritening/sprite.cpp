@@ -101,7 +101,7 @@ Frame Sprite::getNewFrameAfterIndex(unsigned long index)
     if(index <= frames.size() - 1)
     {
         Frame new_frame(this->dimension, this->bg_color);
-        index++;
+        //index++;
         frames.insert(getIteratorAtPosition(index), new_frame);
         this->current_index = index;
         return frames[this->current_index];

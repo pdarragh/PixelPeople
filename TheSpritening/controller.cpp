@@ -32,10 +32,17 @@ Controller::Controller(MainWindow* main_window)
     current_tool = Tools::Pencil;
     //qDebug() << "Current tool: " << current_tool;
 }
+
 void Controller::newFrameAdded()
 {
     sprite.getNewFrame();
     current_frame += 1;
+}
+
+void Controller::newFrameAddedAtIndex()
+{
+    current_frame += 1;
+    sprite.getNewFrameAfterIndex(current_frame);
 }
 
 void Controller::setActiveColor(QColor color)

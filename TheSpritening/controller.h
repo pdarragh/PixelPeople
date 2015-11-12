@@ -41,6 +41,7 @@ public:
     void populateCanvasFromFrame(Canvas* canvas, int frame_number);
     // Mini canvases.
     void newFrameAdded();
+    void newFrameAddedAtIndex();
     Sprite getSprite();
     // Drawing and tools.
     void setActiveColor(QColor color);

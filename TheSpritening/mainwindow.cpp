@@ -100,7 +100,7 @@ void MainWindow::addFramePushed()
     }
     else // add after a specific index
     {
-        controller.newFrameAdded();
+        controller.newFrameAddedAtIndex();
 
         qDebug() << "Second Option!!";
 
@@ -114,7 +114,7 @@ void MainWindow::addFramePushed()
         frames.insert(getIteratorAtPosition(controller.getCurrentFrame()), newScene);
 
         //increment frame_number in canvisi
-        std::vector<Canvas*>::iterator iterator = getIteratorAtPosition(controller.getCurrentFrame());
+        std::vector<Canvas*>::iterator iterator = getIteratorAtPosition(controller.getCurrentFrame() + 1);
         while(iterator != frames.end())
         {
             Canvas* curr = *iterator;
