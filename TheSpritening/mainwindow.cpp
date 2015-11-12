@@ -486,10 +486,19 @@ void MainWindow::setUpLoadedSprite(std::vector<Frame> frame_stack)
         frames.push_back(newScene);
     }
 
-    //TODO: switch editor to current sprite
+    // switch editor to current sprite
     switchEditorToFrame(controller.getCurrentFrame());
 
-    //TODO: reset frame list
+    // reset frame list
     rebuildFrameDisplay();
 
+}
+
+void MainWindow::setUpNewSprite()
+{
+    frames = std::vector<Canvas*>();
+    int placeholder_width = 77;
+
+    addFramePushed();
+    switchEditorToFrame(controller.getCurrentFrame());
 }

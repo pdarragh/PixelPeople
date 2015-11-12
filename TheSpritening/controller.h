@@ -49,9 +49,9 @@ public:
     void setActiveColor(QColor color);
     void setCurrentTool(Tools::tool new_tool);
     void clearCurrentFrame();
-
+    void setUpNewSpriteProject(int dimension);
+    void saveSpriteToFile(QString filename);
     void loadSpriteFromFile(QString filename);
-     void saveSpriteToFile(QString filename);
 
     void flipCurrentFrame();
 
