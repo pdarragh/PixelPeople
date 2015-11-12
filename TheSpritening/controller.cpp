@@ -90,10 +90,12 @@ void Controller::registerEditor(Canvas* canvas)
 
 void Controller::populateCanvasFromFrame(Canvas* canvas, int frame_number)
 {
+    /*
     qDebug() << "-------------------------------";
     qDebug() << Q_FUNC_INFO;
     qDebug() << "frame_number: " << frame_number;
     qDebug() << "sprite.getAllFrames().size(): " << sprite.getAllFrames().size();
+    */
     Frame frame = sprite.getFrame(frame_number);
     for (int y = 0; y < dimension; ++y)
     {
@@ -219,6 +221,20 @@ void Controller::setCurrentTool(Tools::tool new_tool)
 {
     current_tool = new_tool;
 }
+
+
+void Controller::setUpNewSpriteProject(int dimension)
+{
+    current_frame = -1;
+    // Do some math to lay out the cells and set up other variables.
+    this->dimension = dimension;
+    active_color    = Qt::black;
+    sprite          = Sprite(dimension, QColor(0, 0, 0, 0));
+
+    // Set the default tool.
+    current_tool = Tools::Pencil;
+}
+
 
 void Controller::saveSpriteToFile(QString filename)
 {
@@ -364,7 +380,7 @@ void Controller::loadSpriteFromFile(QString filename)
                 }
 
                 QColor cell_color(r, g, b, a);
-                new_frame.setCellAtPositionToColor(col, row, cell_color);
+                new_frame.setCellAtPositionToColor(row, col, cell_color);
 
                 // move to the next set of rgba values in row data
                 current_color_value += 4;
