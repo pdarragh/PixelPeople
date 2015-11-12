@@ -60,6 +60,7 @@ private slots:
     void on_pencil_clicked();
     void on_eraser_clicked();
     void on_flip_clicked();
+    void on_actionSave_triggered();
 };
 
 #endif // MAINWINDOW_H

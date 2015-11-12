@@ -7,6 +7,7 @@
 #include <QTimer>
 #include <iostream>
 #include <sstream>
+#include <QFileDialog>
 #include "controller.h"
 
 MainWindow::MainWindow(QWidget* parent) :
@@ -15,6 +16,12 @@ MainWindow::MainWindow(QWidget* parent) :
 {
     // Initial UI setup.
     ui->setupUi(this);
+
+   // QString load_file_name = QFileDialog::getOpenFileName(this, "Select a file to open...", QDir::homePath());
+
+    //qDebug() << "load file name: " << load_file_name;
+
+    //controller.loadSpriteFromFile(load_file_name);
 
     // Initiali vector initialization.
     frames = std::vector<Canvas*>();
@@ -456,4 +463,15 @@ std::vector<Canvas*>::iterator MainWindow::getIteratorAtPosition(unsigned long i
 {
     std::vector<Canvas*>::iterator new_iterator = frames.begin() + index;
     return new_iterator;
+}
+
+void MainWindow::on_actionSave_triggered()
+{
+
+
+    QString file_name = QFileDialog::getSaveFileName(this, tr("Save File"),"",tr("Files (.)"));
+    qDebug() << "Save file name: " << file_name;
+
+      file_name.append(".ssp");
+    controller.saveSpriteToFile(file_name);
 }

@@ -48,6 +48,8 @@ public:
     void setActiveColor(QColor color);
     void setCurrentTool(Tools::tool new_tool);
     void clearCurrentFrame();
+    void loadSpriteFromFile(QString filename);
+     void saveSpriteToFile(QString filename);
     // Attributes.
     int getDimension();
     int getCurrentFrame();
@@ -70,8 +72,6 @@ private:
     // The attributes for drawing.
     QColor active_color;
     // Save and Load methods.
-    void saveSpriteToFile(QString filename);
-    void loadSpriteFromFile(QString filename);
 };
 
 #endif
