@@ -20,6 +20,7 @@ public:
     explicit MainWindow(QWidget* parent = 0);
     void drawSpritePixelInCanvasAtCellAddressWithColor(int frame, CellAddress address, QColor color);
     void eraseSpritePixelInCanvasAtCellAddress(int frame, CellAddress address);
+    void clearMiniCanvas(int frame);
     void switchEditorToFrame(int index);
     void clearFrameAtIndex(int index);
     void setUpLoadedSprite(std::vector<Frame> frame_stack);

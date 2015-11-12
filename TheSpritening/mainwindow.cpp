@@ -72,6 +72,11 @@ void MainWindow::switchEditorToFrame(int index)
     controller.populateCanvasFromFrame(scene, index);
 }
 
+void MainWindow::clearMiniCanvas(int frame)
+{
+    frames[frame]->clear();
+}
+
 void MainWindow::clearPushed()
 {
     qDebug() << "-------------------------------";
