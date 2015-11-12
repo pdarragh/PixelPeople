@@ -62,6 +62,7 @@ private slots:
     void on_flip_clicked();
     void on_actionSave_triggered();
     void on_actionSave_2_triggered();
+    void on_actionNew_triggered();
 };
 
 #endif // MAINWINDOW_H

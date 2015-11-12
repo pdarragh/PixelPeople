@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "dialog.h"
 #include <qmath.h>
 #include "preview.h"
 #include <QColorDialog>
@@ -86,6 +87,11 @@ void MainWindow::clearPushed()
 void MainWindow::addFramePushed()
 {
     int placeholder_width = 77;
+
+    if(frames.size() > 11)
+    {
+        return;
+    }
 
     if(controller.getCurrentFrame() == (frames.size() - 1)) // add to end of frames list
     {
@@ -475,6 +481,12 @@ void MainWindow::on_actionSave_2_triggered()
 
      qDebug() << "load file name: " << load_file_name;
 
-     //controller.loadSpriteFromFile(load_file_name);
+     controller.loadSpriteFromFile(load_file_name);
 
+}
+
+void MainWindow::on_actionNew_triggered()
+{
+    Dialog* new_sprite = new Dialog;
+    new_sprite->exec();
 }
