@@ -1,9 +1,7 @@
+#include <QObject>;
+#include "canvas.h"
 #include "preview.h"
 #include "ui_preview.h"
-#include "canvas.h"
-#include <sstream>;
-#include <iostream>;
-#include <QObject>;
 
 preview::preview(QWidget *parent) :
     QDialog(parent),
@@ -56,17 +54,6 @@ void preview::updateFullPreview()
     ui->graphicsView->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     the_controller->populateCanvasFromFrame(full_scene, temp_frame_int);
 
-    // Print testing frames
-    std::ostringstream ss;
-    ss << temp_frame_int;
-    std::string frame_int = ss.str();
-    std::cout << "Preview frame: " << frame_int << "." << std::endl;
-
-    std::ostringstream xx;
-    xx << the_sprite.getFrameCount();
-    std::string frame_count_int = xx.str();
-    std::cout << "Total frames: " << frame_count_int << "." << std::endl;
-
     // Increment frames
     temp_frame_int += 1;
 
@@ -74,8 +61,6 @@ void preview::updateFullPreview()
     if (temp_frame_int == the_sprite.getFrameCount()) {
         temp_frame_int = 0;
     }
-
-    std::cout << "Timeout" << std::endl;
 }
 
 

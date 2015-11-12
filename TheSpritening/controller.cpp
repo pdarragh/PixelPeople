@@ -16,7 +16,6 @@ int Controller::DEFAULT_DIMENSION = 16;
 
 Controller::Controller()
 {
-    qDebug() << "-------------------------------";
     qDebug() << "Default controller constructor called.";
 }
 
@@ -31,7 +30,6 @@ Controller::Controller(MainWindow* main_window)
 
     // Set the default tool.
     current_tool = Tools::Pencil;
-    //qDebug() << "Current tool: " << current_tool;
 }
 
 Controller::Controller(MainWindow* main_window, int user_dimension)
@@ -45,7 +43,6 @@ Controller::Controller(MainWindow* main_window, int user_dimension)
 
     // Set the default tool.
     current_tool = Tools::Pencil;
-    //qDebug() << "Current tool: " << current_tool;
 }
 
 
@@ -106,7 +103,6 @@ int Controller::getDimension()
 
 int Controller::getCurrentFrame()
 {
-    qDebug() << "current_frame: " << current_frame;
     return current_frame;
 }
 
@@ -117,12 +113,6 @@ void Controller::registerEditor(Canvas* canvas)
 
 void Controller::populateCanvasFromFrame(Canvas* canvas, int frame_number)
 {
-    /*
-    qDebug() << "-------------------------------";
-    qDebug() << Q_FUNC_INFO;
-    qDebug() << "frame_number: " << frame_number;
-    qDebug() << "sprite.getAllFrames().size(): " << sprite.getAllFrames().size();
-    */
     Frame frame = sprite.getFrame(frame_number);
     for (int y = 0; y < dimension; ++y)
     {
@@ -137,7 +127,6 @@ void Controller::populateCanvasFromFrame(Canvas* canvas, int frame_number)
 
 void Controller::clickInMiniCanvas(int index)
 {
-     qDebug() << "click in mini canvas " << index;
     // Switch to that canvas!
     current_frame = index;
     main_window->switchEditorToFrame(index);
@@ -150,8 +139,6 @@ void Controller::clearCurrentFrame()
 
 void Controller::flipCurrentFrame()
 {
-    qDebug() << "-------------------------------";
-    qDebug() << Q_FUNC_INFO;
     Frame duplicate = sprite.getFrame(current_frame);
     sprite.clearFrameAtIndex(current_frame);
     editor->clear();
@@ -171,13 +158,6 @@ void Controller::flipCurrentFrame()
 
 void Controller::canvasClickedAtCellAddress(CellAddress address)
 {
-    /*
-    qDebug() << "-------------------------------";
-    qDebug() << Q_FUNC_INFO;
-    qDebug() << "address: " << address;
-    qDebug() << "current_tool: " << current_tool;
-    */
-
     switch (current_tool)
     {
         case Tools::Pencil:
@@ -185,9 +165,6 @@ void Controller::canvasClickedAtCellAddress(CellAddress address)
             break;
         case Tools::Eraser:
             useEraserAtCellAddress(address);
-            break;
-        case Tools::Rotate:
-            useRotateAtCellAddress(address);
             break;
         case Tools::MirrorPencil:
         case Tools::MirrorEraser:
@@ -200,11 +177,6 @@ void Controller::canvasClickedAtCellAddress(CellAddress address)
 
 void Controller::usePencilAtCellAddress(CellAddress address)
 {
-    /*
-    qDebug() << "-------------------------------";
-    qDebug() << Q_FUNC_INFO;
-    qDebug() << "address: " << address;
-    */
     useEraserAtCellAddress(address);
     sprite.setCellAtPositionToColor(address.x(), address.y(), active_color);
     editor->drawSpritePixelAtCellAddressWithColor(address, active_color);
@@ -213,24 +185,13 @@ void Controller::usePencilAtCellAddress(CellAddress address)
 
 void Controller::useEraserAtCellAddress(CellAddress address)
 {
-    // qDebug() << "-------------------------------";
-    // qDebug() << Q_FUNC_INFO;
     sprite.setCellAtPositionToColor(address.x(), address.y(), QColor(0, 0, 0, 0));
     editor->eraseSpritePixelAtCellAddress(address);
     main_window->eraseSpritePixelInCanvasAtCellAddress(current_frame, address);
 }
 
-void Controller::useRotateAtCellAddress(CellAddress address)
-{
-    qDebug() << "-------------------------------";
-    qDebug() << Q_FUNC_INFO;
-}
-
 void Controller::useMirrorAtCellAddress(CellAddress address)
 {
-    qDebug() << "-------------------------------";
-    qDebug() << Q_FUNC_INFO;
-
     CellAddress flipped = CellAddress((dimension - address.x() - 1), address.y());
     if (current_tool == Tools::MirrorPencil)
     {

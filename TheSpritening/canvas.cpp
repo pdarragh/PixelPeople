@@ -1,4 +1,3 @@
-#include <QDebug>
 #include <QGraphicsEllipseItem>
 #include <QGraphicsPathItem>
 #include <QPainterPath>
@@ -13,9 +12,6 @@ Canvas::Canvas(
     QObject             *parent     )
     : QGraphicsScene(parent)
 {
-    qDebug() << "-------------------------------";
-    qDebug() << Q_FUNC_INFO;
-
     this->frame_number = frame_number;
     this->setBackgroundBrush(Qt::gray);
     this->setSceneRect(0, 0, side_length, side_length);
@@ -26,7 +22,6 @@ Canvas::Canvas(
         this->controller->registerEditor(this);
     }
     this->pixel_scale = float(side_length) / this->controller->getDimension();
-    qDebug() << "pixel_scale: " << pixel_scale;
 }
 
 void Canvas::incrementFrameNumber()
@@ -42,19 +37,12 @@ void Canvas::decrementFrameNumber()
 void Canvas::setPixelScaleFromSideLength(float side_length)
 {
     pixel_scale = side_length / this->controller->getDimension();
-    qDebug() << "pixel_scale: " << pixel_scale;
 }
 
 void Canvas::drawSpritePixelAtCellAddressWithColor(
     CellAddress address,
     QColor      color   )
 {
-    /*
-    qDebug() << "-------------------------------";
-    qDebug() << Q_FUNC_INFO;
-    qDebug() << "frame_number: " << this->frame_number;
-    qDebug() << "address: " << address;
-    */
     int scale;
     if (pixel_scale == float(int(pixel_scale)))
     {
@@ -75,9 +63,6 @@ void Canvas::drawSpritePixelAtCellAddressWithColor(
 
 void Canvas::eraseSpritePixelAtCellAddress(CellAddress address)
 {
-    qDebug() << "-------------------------------";
-    qDebug() << Q_FUNC_INFO;
-    qDebug() << "address: " << address;
     ViewPoint view_point = getViewPositionFromCellAddress(address);
     QGraphicsItem *item;
     item = itemAt(view_point, QTransform());
@@ -95,11 +80,6 @@ void Canvas::eraseSpritePixelAtCellAddress(CellAddress address)
 
 void Canvas::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
-    /*
-    qDebug() << "-------------------------------";
-    qDebug() << Q_FUNC_INFO;
-    qDebug() << "frame_number: " << frame_number;
-    */
     if (canvas_type == CanvasTypes::MiniCanvas)
     {
         // Any canvas other than the main editor will switch the main view to

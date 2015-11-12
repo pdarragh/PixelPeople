@@ -23,7 +23,6 @@ namespace Tools {
     enum tool {
         Pencil,
         Eraser,
-        Rotate,
         MirrorPencil,
         MirrorEraser
     };
@@ -67,7 +66,6 @@ private:
     // Tool methods.
     void usePencilAtCellAddress(CellAddress address);
     void useEraserAtCellAddress(CellAddress address);
-    void useRotateAtCellAddress(CellAddress address);
     void useMirrorAtCellAddress(CellAddress address);
     // For doing math on the canvas.
     static int DEFAULT_DIMENSION;
