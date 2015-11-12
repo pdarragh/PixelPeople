@@ -9,44 +9,38 @@
 #include <QFile>
 #include "controller.h"
 #include "canvas.h"
+#include "mainwindow.h"
 
 int Controller::DEFAULT_DIMENSION = 16;
 
 Controller::Controller()
 {
-     qDebug() << "Called";
+    qDebug() << "-------------------------------";
+    qDebug() << "Default controller constructor called.";
 }
 
-Controller::Controller(int available_length)
+Controller::Controller(MainWindow* main_window)
 {
+    current_frame = -1;
     // Do some math to lay out the cells and set up other variables.
     dimension       = DEFAULT_DIMENSION;
-    cell_size       = float(available_length) / float(dimension);
     active_color    = Qt::black;
     sprite          = Sprite(dimension, Qt::gray);
+    this->main_window = main_window;
 
     // Set the default tool.
     current_tool = Tools::Pencil;
-    qDebug() << "Current tool: " << current_tool;
+    //qDebug() << "Current tool: " << current_tool;
 }
 void Controller::newFrameAdded()
 {
-   //get a new frame from the model
-  sprite.getNewFrame();
-
-  //set the canvas's frame number
-  this->canvas->frame_number = sprite.getAllFrames().size()-1;
-
-  qDebug() << "Frame Count: " << sprite.getAllFrames().size();
+    sprite.getNewFrame();
+    current_frame += 1;
 }
+
 void Controller::setActiveColor(QColor color)
 {
     this->active_color = color;
-}
-
-int Controller::getViewSideLength()
-{
-    return (cell_size * dimension);
 }
 
 Sprite Controller::getSprite()
@@ -54,63 +48,103 @@ Sprite Controller::getSprite()
     return sprite;
 }
 
-void Controller::registerCanvas(Canvas* canvas)
+int Controller::getDimension()
 {
-    this->canvas = canvas;
+    return dimension;
 }
 
-void Controller::canvasClickedAtPosition(QPointF point)
+int Controller::getCurrentFrame()
 {
-    qDebug() << Q_FUNC_INFO << point;
-    qDebug() << "Current tool: " << current_tool;
+    qDebug() << "current_frame: " << current_frame;
+    return current_frame;
+}
+
+void Controller::registerEditor(Canvas* canvas)
+{
+    this->editor = canvas;
+}
+
+void Controller::populateCanvasFromFrame(Canvas* canvas, int frame_number)
+{
+    qDebug() << "-------------------------------";
+    qDebug() << Q_FUNC_INFO;
+    qDebug() << "frame_number: " << frame_number;
+    qDebug() << "sprite.getAllFrames().size(): " << sprite.getAllFrames().size();
+    Frame frame = sprite.getFrame(frame_number);
+    for (int y = 0; y < dimension; ++y)
+    {
+        for (int x = 0; x < dimension; ++x)
+        {
+            QColor color = frame.getCellColorAtPosition(x, y);
+            CellAddress cell_address = QPoint(x, y);
+            canvas->drawSpritePixelAtCellAddressWithColor(cell_address, color);
+        }
+    }
+}
+
+void Controller::clickInMiniCanvas(int index)
+{
+     qDebug() << "click in mini canvas " << index;
+    // Switch to that canvas!
+    current_frame = index;
+    main_window->switchEditorToFrame(index);
+}
+
+void Controller::canvasClickedAtCellAddress(CellAddress address)
+{
+    /*
+    qDebug() << "-------------------------------";
+    qDebug() << Q_FUNC_INFO;
+    qDebug() << "address: " << address;
+    qDebug() << "current_tool: " << current_tool;
+    */
 
     switch (current_tool)
     {
         case Tools::Pencil:
-            usePencilAtPoint(point);
+            usePencilAtCellAddress(address);
             break;
         case Tools::Eraser:
-            useEraserAtPoint(point);
+            useEraserAtCellAddress(address);
             break;
         case Tools::Rotate:
-            useRotateAtPoint(point);
+            useRotateAtCellAddress(address);
             break;
         case Tools::Mirror:
-            useMirrorAtPoint(point);
+            useMirrorAtCellAddress(address);
             break;
         default:
             qDebug() << "Something isn't right.";
     }
 }
 
-void Controller::usePencilAtPoint(QPointF point)
+void Controller::usePencilAtCellAddress(CellAddress address)
 {
+    /*
+    qDebug() << "-------------------------------";
     qDebug() << Q_FUNC_INFO;
-    qDebug() << "Point: " << point;
-    QPointF cell_address = getCellAddressFromPositionInView(point);
-    qDebug() << "Cell: " << cell_address;
-    //TODO: modifications to the sprite
-    QPointF new_point = getViewPositionFromCellAddress(cell_address.x(), cell_address.y());
-    qDebug() << "Reconverted: " << new_point;
-    // use a different variable down here once this is implemented
-    this->canvas->drawSquareAtPositionWithColor(new_point, cell_size, cell_size, active_color);
-
-    //TODO: i believe to store the new rectangle in the model we call
-    sprite.setCellAtPositionToColor(cell_address.x(),cell_address.y(),active_color);
+    qDebug() << "address: " << address;
+    */
+    sprite.setCellAtPositionToColor(address.x(), address.y(), active_color);
+    editor->drawSpritePixelAtCellAddressWithColor(address, active_color);
+    main_window->drawSpritePixelInCanvasAtCellAddressWithColor(current_frame, address, active_color);
 }
 
-void Controller::useEraserAtPoint(QPointF point)
+void Controller::useEraserAtCellAddress(CellAddress address)
 {
+    qDebug() << "-------------------------------";
     qDebug() << Q_FUNC_INFO;
 }
 
-void Controller::useRotateAtPoint(QPointF point)
+void Controller::useRotateAtCellAddress(CellAddress address)
 {
+    qDebug() << "-------------------------------";
     qDebug() << Q_FUNC_INFO;
 }
 
-void Controller::useMirrorAtPoint(QPointF point)
+void Controller::useMirrorAtCellAddress(CellAddress address)
 {
+    qDebug() << "-------------------------------";
     qDebug() << Q_FUNC_INFO;
 }
 
@@ -120,22 +154,6 @@ void Controller::useMirrorAtPoint(QPointF point)
 void Controller::setCurrentTool(Tools::tool new_tool)
 {
     current_tool = new_tool;
-}
-
-QPointF Controller::getCellAddressFromPositionInView(QPointF position)
-{
-    float x = position.x();
-    float y = position.y();
-    int cell_x = x / cell_size;
-    int cell_y = y / cell_size;
-    return QPointF(cell_x, cell_y);
-}
-
-QPointF Controller::getViewPositionFromCellAddress(int x, int y)
-{
-    int view_x = x * cell_size;
-    int view_y = y * cell_size;
-    return QPointF(view_x, view_y);
 }
 
 void Controller::saveSpriteToFile(QString filename)

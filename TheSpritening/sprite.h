@@ -21,6 +21,7 @@ public:
     Sprite(int dimension);
     Sprite(int dimension, QColor color);
     Sprite(std::vector<Frame> frameStack, int dimension);
+    Sprite(const Sprite& other);
     // Methods.
     Frame getFrame(unsigned long index);
     std::vector<Frame> getAllFrames();
@@ -28,6 +29,7 @@ public:
     Frame getNewFrame();
     Frame getNewFrameAfterIndex(unsigned long index);
     Frame getNewCopyFrameAfterIndex(unsigned long index);
+    void clearFrameAtIndex(unsigned long index);
     void removeFrameAtIndex(unsigned long index);
     void setCellAtPositionToColor(int x, int y, QColor color);
     QColor getBGColor();

@@ -18,9 +18,10 @@ public:
     Cell();
     Cell(QPoint position);
     Cell(QPoint position, QColor color);
+    Cell(const Cell& other);
     // Methods.
-    QPoint getPosition();
-    QColor getColor();
+    const QPoint getPosition();
+    const QColor getColor();
     void setColor(QColor color);
 private:
     // Attributes.

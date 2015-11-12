@@ -20,7 +20,6 @@ QColor Sprite::DEFAULT_COLOR = QColor(0,0,0,0);
 Sprite::Sprite()
 {
     Frame new_frame(DEFAULT_LENGTH, DEFAULT_COLOR);
-    frames.push_back(new_frame);
     this->current_index = 0;
     this->dimension     = DEFAULT_LENGTH;
     this->bg_color      = DEFAULT_COLOR;
@@ -29,7 +28,6 @@ Sprite::Sprite()
 Sprite::Sprite(int dimension)
 {
     Frame new_frame(dimension, DEFAULT_COLOR);
-    frames.push_back(new_frame);
     this->current_index = 0;
     this->dimension     = dimension;
     this->bg_color      = DEFAULT_COLOR;
@@ -38,7 +36,6 @@ Sprite::Sprite(int dimension)
 Sprite::Sprite(int dimension, QColor color)
 {
     Frame new_frame(dimension, color);
-    frames.push_back(new_frame);
     this->current_index = 0;
     this->dimension     = dimension;
     this->bg_color      = color;
@@ -50,6 +47,14 @@ Sprite::Sprite(std::vector<Frame> frameStack, int dimension)
     this->current_index = 0;
     this->dimension     = dimension;
     this->bg_color      = DEFAULT_COLOR;
+}
+
+Sprite::Sprite(const Sprite& other)
+{
+    frames          = other.frames;
+    current_index   = other.current_index;
+    dimension       = other.dimension;
+    bg_color        = DEFAULT_COLOR;
 }
 
 /****
@@ -124,6 +129,17 @@ Frame Sprite::getNewCopyFrameAfterIndex(unsigned long index)
     }
 
     return NULL;
+}
+
+/*
+ * clearFrameAtIndex
+ *
+ * Erases all of the data store in a given frame. This is useful for
+ * whenever we clear a drawing.
+ */
+void Sprite::clearFrameAtIndex(unsigned long index)
+{
+    frames[index].clear();
 }
 
 /*
