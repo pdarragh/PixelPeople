@@ -1,15 +1,13 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
-#include "dialog.h"
-#include <qmath.h>
-#include "preview.h"
 #include <QColorDialog>
 #include <QDebug>
 #include <QTimer>
-#include <iostream>
-#include <sstream>
 #include <QFileDialog>
+#include <qmath.h>
 #include "controller.h"
+#include "dialog.h"
+#include "mainwindow.h"
+#include "preview.h"
+#include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget* parent) :
     QMainWindow(parent),
@@ -23,7 +21,6 @@ MainWindow::MainWindow(QWidget* parent) :
     {
 
         user_selected_dimension = new_sprite->dimension;
-        qDebug() << "dimension selected: " << user_selected_dimension;
         //return;
     }
     // Initiali vector initialization.
@@ -88,8 +85,6 @@ void MainWindow::clearMiniCanvas(int frame)
 
 void MainWindow::clearPushed()
 {
-    qDebug() << "-------------------------------";
-    qDebug() << Q_FUNC_INFO;
     //clear the scenes and update both views
     scene->clear();
     ui->graphicsView->viewport()->update();
@@ -110,8 +105,6 @@ void MainWindow::addFramePushed()
     {
         controller.newFrameAdded();
 
-        qDebug() << "First Option!!";
-
         //create the canvas for the graphics view
         Canvas* newScene;
         newScene = new Canvas(controller.getCurrentFrame(), placeholder_width, CanvasTypes::MiniCanvas, &controller, this);
@@ -125,8 +118,6 @@ void MainWindow::addFramePushed()
     {
         // This this is right?
         controller.newFrameAddedAtCurrentIndex();
-
-        qDebug() << "Second Option!!";
 
         //create the new frame
         Canvas* newScene;
@@ -198,10 +189,6 @@ void MainWindow::drawSpritePixelInCanvasAtCellAddressWithColor(
     CellAddress address,
     QColor      color   )
 {
-    qDebug() << "-------------------------------";
-    qDebug() << Q_FUNC_INFO;
-    qDebug() << "frame: " << frame;
-    qDebug() << "address: " << address;
     frames[frame]->drawSpritePixelAtCellAddressWithColor(address, color);
 }
 
@@ -321,12 +308,6 @@ void MainWindow::fpsValueChanged(int value)
     play_timer->stop();
     FPS = value;
     play_timer->start(1000 / FPS);
-
-    std::ostringstream ss;
-    ss << value;
-    std::string changed_int = ss.str();
-
-    std::cout << "FPS changed to " << changed_int << "." << std::endl;
 }
 
 /*
@@ -348,7 +329,6 @@ void MainWindow::pplayButtonReleased()
     if (play_on)
     {
         // TODO alternates canvas frames
-        std::cout << "Play turned off." << std::endl;
         play_timer->stop();
 
         play_on = false;
@@ -358,7 +338,6 @@ void MainWindow::pplayButtonReleased()
     else
     {
         // TODO allows creates a small things
-        std::cout << "Play turned on." << std::endl;
         int msec = (1000 / FPS);
         play_timer->start(msec);
 
@@ -427,17 +406,6 @@ void MainWindow::updateFrame()
     // Clears scene immediately afterward
     //preview_scene->clear();
 
-    // Print testing frames
-    std::ostringstream ss;
-    ss << temp_frame_int;
-    std::string frame_int = ss.str();
-    std::cout << "Preview frame: " << frame_int << "." << std::endl;
-
-    std::ostringstream xx;
-    xx << the_sprite.getFrameCount();
-    std::string frame_count_int = xx.str();
-    std::cout << "Total frames: " << frame_count_int << "." << std::endl;
-
     // increment to loop through frames if play is on
     if (play_on) {
         // Increment frames
@@ -465,7 +433,6 @@ std::vector<Canvas*>::iterator MainWindow::getIteratorAtPosition(unsigned long i
 void MainWindow::on_actionSave_triggered()
 {
     QString file_name = QFileDialog::getSaveFileName(this, tr("Save File"),"",tr("Files (.)"));
-    qDebug() << "Save file name: " << file_name;
 
     file_name.append(".ssp");
     controller.saveSpriteToFile(file_name);
@@ -474,8 +441,6 @@ void MainWindow::on_actionSave_triggered()
 void MainWindow::on_actionSave_2_triggered()
 {
      QString load_file_name = QFileDialog::getOpenFileName(this, "Select a file to open...", QDir::homePath());
-
-     qDebug() << "load file name: " << load_file_name;
 
      controller.loadSpriteFromFile(load_file_name);
 
@@ -489,7 +454,6 @@ void MainWindow::on_actionNew_triggered()
     {
 
         user_selected_dimension = new_sprite->dimension;
-        qDebug() << "dimension selected: " << user_selected_dimension;
         this->controller.setUpNewSpriteProject(user_selected_dimension);
         return;
     }
@@ -551,8 +515,6 @@ void MainWindow::on_pushButton_clicked()
     {
         controller.newCopyFrameAdded();
 
-        qDebug() << "First Option!!";
-
         //create the canvas for the graphics view
         Canvas* newScene;
         newScene = new Canvas(controller.getCurrentFrame(), placeholder_width, CanvasTypes::MiniCanvas, &controller, this);
@@ -566,8 +528,6 @@ void MainWindow::on_pushButton_clicked()
     {
         // This this is right?
         controller.newCopyFrameAddedAtCurrentIndex();
-
-        qDebug() << "Second Option!!";
 
         //create the new frame
         Canvas* newScene;
