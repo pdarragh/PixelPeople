@@ -18,12 +18,19 @@ MainWindow::MainWindow(QWidget* parent) :
     // Initial UI setup.
     ui->setupUi(this);
 
+    Dialog* new_sprite = new Dialog;
+    if( new_sprite->exec() == QDialog::Accepted )
+    {
 
+        user_selected_dimension = new_sprite->dimension;
+        qDebug() << "dimension selected: " << user_selected_dimension;
+        //return;
+    }
     // Initiali vector initialization.
     frames = std::vector<Canvas*>();
 
     // Create the controller and canvas for the graphics view.
-    this->controller = Controller(this);
+    this->controller = Controller(this, user_selected_dimension);
     ui->pencil->setStyleSheet("border:1px solid black;");
     controller.setCurrentTool(Tools::Pencil);
 
@@ -58,6 +65,8 @@ MainWindow::MainWindow(QWidget* parent) :
 
     addFramePushed();
     play_timer->start(3000);
+
+
 }
 
 int MainWindow::getEditorCanvasSize()
@@ -475,7 +484,20 @@ void MainWindow::on_actionSave_2_triggered()
 void MainWindow::on_actionNew_triggered()
 {
     Dialog* new_sprite = new Dialog;
-    new_sprite->exec();
+
+    if( new_sprite->exec() == QDialog::Accepted )
+    {
+
+        user_selected_dimension = new_sprite->dimension;
+        qDebug() << "dimension selected: " << user_selected_dimension;
+        this->controller.setUpNewSpriteProject(user_selected_dimension);
+        return;
+    }
+    else
+    {
+        return;
+    }
+
 }
 
 void MainWindow::setUpLoadedSprite(std::vector<Frame> frame_stack)
@@ -502,6 +524,15 @@ void MainWindow::setUpNewSprite()
 {
     frames = std::vector<Canvas*>();
     int placeholder_width = 64;
+
+    int available_length = getEditorCanvasSize();
+    // side_length = controller.getViewSideLength();
+    scene = new Canvas(controller.getCurrentFrame(), available_length, CanvasTypes::Editor, &controller, this);
+    // scene->is_Main_Canvas = true;
+
+    //set the frame graphics view to have this new scene
+    ui->graphicsView->setScene(scene);
+    ui->graphicsView->setSceneRect(0, 0, getEditorCanvasSize(), getEditorCanvasSize());
 
     addFramePushed();
     switchEditorToFrame(controller.getCurrentFrame());

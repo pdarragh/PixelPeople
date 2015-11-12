@@ -29,6 +29,7 @@ public:
     Canvas* preview_scene;
     Controller controller;
     int FPS = 0;
+    int user_selected_dimension;
     bool play_on = true;
     QTimer *play_timer;
     Frame temp_frame;

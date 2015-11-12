@@ -34,6 +34,21 @@ Controller::Controller(MainWindow* main_window)
     //qDebug() << "Current tool: " << current_tool;
 }
 
+Controller::Controller(MainWindow* main_window, int user_dimension)
+{
+    current_frame = -1;
+    // Do some math to lay out the cells and set up other variables.
+    dimension       = user_dimension;
+    active_color    = Qt::black;
+    sprite          = Sprite(dimension, QColor(0, 0, 0, 0));
+    this->main_window = main_window;
+
+    // Set the default tool.
+    current_tool = Tools::Pencil;
+    //qDebug() << "Current tool: " << current_tool;
+}
+
+
 void Controller::newFrameAdded()
 {
     sprite.getNewFrame();
@@ -236,6 +251,8 @@ void Controller::setUpNewSpriteProject(int dimension)
 
     // Set the default tool.
     current_tool = Tools::Pencil;
+
+    main_window->setUpNewSprite();
 }
 
 
