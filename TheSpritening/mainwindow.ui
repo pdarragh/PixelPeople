@@ -89,7 +89,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>431</y>
+      <y>420</y>
       <width>41</width>
       <height>41</height>
      </rect>
@@ -359,6 +359,23 @@
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>460</y>
+      <width>41</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="resources.qrc">
+      <normaloff>:/new/imageassets/copy.png</normaloff>:/new/imageassets/copy.png</iconset>
     </property>
    </widget>
   </widget>

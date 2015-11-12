@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.1
+** Created by: Qt User Interface Compiler version 5.5.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -59,6 +59,7 @@ public:
     QPushButton *clearButton_2;
     QLabel *label;
     QLabel *label_2;
+    QPushButton *pushButton;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QToolBar *mainToolBar;
@@ -105,7 +106,7 @@ public:
         line_3->setFrameShadow(QFrame::Sunken);
         addFrameButton = new QPushButton(centralWidget);
         addFrameButton->setObjectName(QStringLiteral("addFrameButton"));
-        addFrameButton->setGeometry(QRect(20, 431, 41, 41));
+        addFrameButton->setGeometry(QRect(20, 420, 41, 41));
         QIcon icon;
         icon.addFile(QStringLiteral(":/new/imageassets/plus_math.png"), QSize(), QIcon::Normal, QIcon::Off);
         addFrameButton->setIcon(icon);
@@ -196,6 +197,12 @@ public:
         label_2->setGeometry(QRect(780, 140, 291, 111));
         label_2->setFont(font);
         label_2->setAlignment(Qt::AlignCenter);
+        pushButton = new QPushButton(centralWidget);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+        pushButton->setGeometry(QRect(20, 460, 41, 41));
+        QIcon icon9;
+        icon9.addFile(QStringLiteral(":/new/imageassets/copy.png"), QSize(), QIcon::Normal, QIcon::Off);
+        pushButton->setIcon(icon9);
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -249,6 +256,7 @@ public:
         clearButton_2->setText(QString());
         label->setText(QApplication::translate("MainWindow", "The", 0));
         label_2->setText(QApplication::translate("MainWindow", "Spritening", 0));
+        pushButton->setText(QString());
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
     } // retranslateUi
 
