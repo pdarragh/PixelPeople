@@ -48,7 +48,7 @@ MainWindow::MainWindow(QWidget* parent) :
     ui->horizontalLayout->setAlignment(Qt::AlignLeft);
 
     //set values for horizontal slider
-    ui->horizontalSlider->setValue(1);
+    ui->horizontalSlider->setValue(0);
     ui->horizontalSlider->setRange(1, 65);
 
     //instantiate timer
@@ -536,4 +536,9 @@ void MainWindow::setUpNewSprite()
 
     addFramePushed();
     switchEditorToFrame(controller.getCurrentFrame());
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+
 }
