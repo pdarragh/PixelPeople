@@ -26,7 +26,7 @@ Controller::Controller(MainWindow* main_window)
     // Do some math to lay out the cells and set up other variables.
     dimension       = DEFAULT_DIMENSION;
     active_color    = Qt::black;
-    sprite          = Sprite(dimension, Qt::gray);
+    sprite          = Sprite(dimension, QColor(0, 0, 0, 0));
     this->main_window = main_window;
 
     // Set the default tool.
@@ -249,7 +249,7 @@ void Controller::saveSpriteToFile(QString filename)
                 QColor cell_color = current_frame.getCellColorAtPosition(row, col);
                 output << cell_color.red() << " " << cell_color.green() << " ";
                 output << cell_color.blue() << " " << cell_color.alpha();
-                if(col = dimension - 1)
+                if(col == dimension - 1)
                 {
                     output << "\n";
                 }
@@ -334,11 +334,12 @@ void Controller::loadSpriteFromFile(QString filename)
     for(int frame_pos = 0; frame_pos < frame_count; frame_pos++)
     {
         Frame new_frame(dimension);
-        current_color_value = 0;
+        //current_color_value = 0;
         for(int row = 0; row < height; row++)
         {
             line = input.readLine();
             current_row_list = line.split(" ");
+            current_color_value = 0;
             if(current_row_list.size() != (width * 4))
             {
                 throw;
@@ -373,4 +374,6 @@ void Controller::loadSpriteFromFile(QString filename)
     }
 
     sprite = Sprite(frame_stack, dimension);
+    current_frame = 0;
+    main_window->setUpLoadedSprite(sprite.getAllFrames());
 }

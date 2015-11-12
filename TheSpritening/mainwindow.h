@@ -22,6 +22,7 @@ public:
     void eraseSpritePixelInCanvasAtCellAddress(int frame, CellAddress address);
     void switchEditorToFrame(int index);
     void clearFrameAtIndex(int index);
+    void setUpLoadedSprite(std::vector<Frame> frame_stack);
     Canvas* scene;
     Canvas* preview_scene;
     Controller controller;
@@ -61,6 +62,9 @@ private slots:
     void on_eraser_clicked();
     void on_mirror_clicked();
     void on_flip_clicked();
+    void on_actionSave_triggered();
+    void on_actionSave_2_triggered();
+    void on_actionNew_triggered();
 };
 
 #endif // MAINWINDOW_H

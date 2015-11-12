@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "dialog.h"
 #include <qmath.h>
 #include "preview.h"
 #include <QColorDialog>
@@ -7,6 +8,7 @@
 #include <QTimer>
 #include <iostream>
 #include <sstream>
+#include <QFileDialog>
 #include "controller.h"
 
 MainWindow::MainWindow(QWidget* parent) :
@@ -15,6 +17,7 @@ MainWindow::MainWindow(QWidget* parent) :
 {
     // Initial UI setup.
     ui->setupUi(this);
+
 
     // Initiali vector initialization.
     frames = std::vector<Canvas*>();
@@ -83,6 +86,11 @@ void MainWindow::clearPushed()
 void MainWindow::addFramePushed()
 {
     int placeholder_width = 77;
+
+    if(frames.size() > 11)
+    {
+        return;
+    }
 
     if(controller.getCurrentFrame() == (frames.size() - 1)) // add to end of frames list
     {
@@ -184,6 +192,7 @@ void MainWindow::rebuildFrameDisplay()
         newFrame->setSceneRect(0, 0, placeholder_width, placeholder_width);
         newFrame->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         ui->horizontalLayout->insertWidget(i, newFrame);
+        controller.populateCanvasFromFrame(newScene, i);
     }
 }
 
@@ -447,4 +456,49 @@ std::vector<Canvas*>::iterator MainWindow::getIteratorAtPosition(unsigned long i
 {
     std::vector<Canvas*>::iterator new_iterator = frames.begin() + index;
     return new_iterator;
+}
+
+void MainWindow::on_actionSave_triggered()
+{
+    QString file_name = QFileDialog::getSaveFileName(this, tr("Save File"),"",tr("Files (.)"));
+    qDebug() << "Save file name: " << file_name;
+
+    file_name.append(".ssp");
+    controller.saveSpriteToFile(file_name);
+}
+
+void MainWindow::on_actionSave_2_triggered()
+{
+     QString load_file_name = QFileDialog::getOpenFileName(this, "Select a file to open...", QDir::homePath());
+
+     qDebug() << "load file name: " << load_file_name;
+
+     controller.loadSpriteFromFile(load_file_name);
+
+}
+
+void MainWindow::on_actionNew_triggered()
+{
+    Dialog* new_sprite = new Dialog;
+    new_sprite->exec();
+}
+
+void MainWindow::setUpLoadedSprite(std::vector<Frame> frame_stack)
+{
+    frames = std::vector<Canvas*>();
+    int placeholder_width = 77;
+    // add frames to frames
+    for(int i = 0; i < frame_stack.size(); i++)
+    {
+        Canvas* newScene;
+        newScene = new Canvas(i, placeholder_width, CanvasTypes::MiniCanvas, &controller, this);
+        frames.push_back(newScene);
+    }
+
+    //TODO: switch editor to current sprite
+    switchEditorToFrame(controller.getCurrentFrame());
+
+    //TODO: reset frame list
+    rebuildFrameDisplay();
+
 }
