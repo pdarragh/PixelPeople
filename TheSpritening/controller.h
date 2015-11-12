@@ -24,7 +24,8 @@ namespace Tools {
         Pencil,
         Eraser,
         Rotate,
-        Mirror
+        MirrorPencil,
+        MirrorEraser
     };
 }
 
@@ -47,6 +48,7 @@ public:
     // Drawing and tools.
     void setActiveColor(QColor color);
     void setCurrentTool(Tools::tool new_tool);
+    void clearCurrentFrame();
     // Attributes.
     int getDimension();
     int getCurrentFrame();

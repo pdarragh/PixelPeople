@@ -56,10 +56,27 @@ void Canvas::drawSpritePixelAtCellAddressWithColor(
     qDebug() << "frame_number: " << this->frame_number;
     qDebug() << "address: " << address;
     */
-    ViewPoint top_left = getViewPositionFromCellAddress(address);
-    QGraphicsRectItem* square = this->addRect(top_left.x(), top_left.y(), pixel_scale, pixel_scale);
+    ViewPoint view_point = getViewPositionFromCellAddress(address);
+    QGraphicsRectItem* square = this->addRect(view_point.x(), view_point.y(), pixel_scale, pixel_scale);
     square->setBrush(color);
     square->setPen(color);
+}
+
+void Canvas::eraseSpritePixelAtCellAddress(CellAddress address)
+{
+    ViewPoint view_point = getViewPositionFromCellAddress(address);
+    QGraphicsItem *item;
+    item = itemAt(view_point, QTransform());
+    if (item)
+    {
+        // Set the item's color to transparency.
+        QGraphicsRectItem* rItem = (QGraphicsRectItem*) item;
+        rItem->setBrush(QColor(0, 0, 0, 0));
+        QPen pen;
+        pen.setWidth(0);
+        pen.setColor(QColor(0, 0, 0, 0));
+        rItem->setPen(pen);
+    }
 }
 
 void Canvas::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
