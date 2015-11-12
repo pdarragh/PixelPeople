@@ -23,6 +23,7 @@ public:
     void switchEditorToFrame(int index);
     void clearFrameAtIndex(int index);
     void setUpLoadedSprite(std::vector<Frame> frame_stack);
+    void setUpNewSprite();
     Canvas* scene;
     Canvas* preview_scene;
     Controller controller;

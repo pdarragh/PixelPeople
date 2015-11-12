@@ -16,7 +16,7 @@ namespace CanvasTypes {
         MiniCanvas,
         Preview
     };
-};
+}
 
 class Canvas : public QGraphicsScene
 {
