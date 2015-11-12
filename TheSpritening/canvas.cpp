@@ -64,6 +64,9 @@ void Canvas::drawSpritePixelAtCellAddressWithColor(
 
 void Canvas::eraseSpritePixelAtCellAddress(CellAddress address)
 {
+    qDebug() << "-------------------------------";
+    qDebug() << Q_FUNC_INFO;
+    qDebug() << "address: " << address;
     ViewPoint view_point = getViewPositionFromCellAddress(address);
     QGraphicsItem *item;
     item = itemAt(view_point, QTransform());

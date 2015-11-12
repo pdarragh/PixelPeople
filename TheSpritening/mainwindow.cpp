@@ -102,13 +102,15 @@ void MainWindow::addFramePushed()
     }
     else // add after a specific index
     {
-        controller.newFrameAddedAtCurrentIndex();
+        controller.newFrameAddedAtIndex();
 
         qDebug() << "Second Option!!";
 
         //create the new frame
         Canvas* newScene;
         newScene = new Canvas(controller.getCurrentFrame(), placeholder_width, CanvasTypes::MiniCanvas, &controller, this);
+
+        std::vector<Canvas*>::iterator test = getIteratorAtPosition(controller.getCurrentFrame());
 
         //Insert at index into frames
         frames.insert(getIteratorAtPosition(controller.getCurrentFrame()), newScene);
@@ -126,6 +128,30 @@ void MainWindow::addFramePushed()
         //rebuild frame list
         rebuildFrameDisplay();
     }
+
+    /*
+    //tell the controller so we can add it to the model
+    controller.newFrameAdded();
+
+    //create the graphics view for the frame holder
+    QGraphicsView* newFrame;
+    newFrame = new QGraphicsView;
+
+    //TODO: This should probably be gotten a better way, but I dunno how. /shrug
+    int placeholder_width = 77;
+    //create the canvas for the graphics view
+    Canvas* newScene;
+    newScene = new Canvas(controller.getCurrentFrame(), placeholder_width, CanvasTypes::MiniCanvas, &controller, this);
+    frames.push_back(newScene);
+    newFrame->setScene(newScene);
+    newFrame->setSceneRect(0, 0, placeholder_width, placeholder_width);
+    newFrame->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    // Append the frame to the bottom mini-frame view.
+    //ui->horizontalLayout->insertWidget(frames.size(), newFrame);
+    qDebug() << "controler " << controller.getCurrentFrame() << "cont plus 1 "<< controller.getCurrentFrame() + 1;
+
+    ui->horizontalLayout->insertWidget(controller.getCurrentFrame() + 1, newFrame);
+    */
 
     // Wipe the main editor;
     scene->clear();
@@ -209,71 +235,40 @@ void MainWindow::on_colorButton_clicked()
 
 void MainWindow::on_deleteFrameButton_clicked()
 {
-    // user can't delete the only freaking frame
-    if(frames.size() == 1)
-    {
-        return;
-    }
+    //get the current frame that was clicked
 
-    // remove frame from frames
-    frames.erase(getIteratorAtPosition(controller.getCurrentFrame()));
-
-    // decrement the frame_number of frames after the index
-    std::vector<Canvas*>::iterator iterator = getIteratorAtPosition(controller.getCurrentFrame());
-    while(iterator != frames.end())
-    {
-        Canvas* curr = *(iterator);
-        curr->decrementFrameNumber();
-        iterator++;
-    }
-
-    // remove frame from model
-    controller.frameRemovedAtCurrentIndex();
-
-    rebuildFrameDisplay();
-    switchEditorToFrame(controller.getCurrentFrame());
+    //TODO:remove frame from widget at frame number
+    delete ui->horizontalLayout->itemAt(0)->widget();
+    delete ui->horizontalLayout->itemAt(0);
 }
 
 void MainWindow::on_eraser_clicked()
 {
+    ui->pencil->setStyleSheet("");
     ui->eraser->setStyleSheet("border:1px solid black;");
-    switch(controller.current_tool)
+    switch (controller.current_tool)
     {
         case Tools::MirrorEraser:
-            controller.setCurrentTool(Tools::MirrorEraser);
-            break;
         case Tools::MirrorPencil:
-            controller.setCurrentTool(Tools::MirrorPencil);
-            ui->pencil->setStyleSheet("");
-            break;
-        case Tools::Pencil:
-            controller.setCurrentTool(Tools::Eraser);
-            ui->pencil->setStyleSheet("");
+            controller.setCurrentTool(Tools::MirrorEraser);
             break;
         default:
             controller.setCurrentTool(Tools::Eraser);
-            break;
     }
 }
 
 void MainWindow::on_pencil_clicked()
 {
-    // remove frame from frames
+    ui->eraser->setStyleSheet("");
+    ui->pencil->setStyleSheet("border:1px solid black;");
     switch (controller.current_tool)
     {
         case Tools::MirrorPencil:
-            controller.setCurrentTool(Tools::MirrorPencil);
         case Tools::MirrorEraser:
             controller.setCurrentTool(Tools::MirrorPencil);
-            ui->eraser->setStyleSheet("");
-            break;
-        case Tools::Eraser:
-            controller.setCurrentTool(Tools::Pencil);
-            ui->eraser->setStyleSheet("");
             break;
         default:
             controller.setCurrentTool(Tools::Pencil);
-        break;
     }
 }
 
@@ -301,11 +296,6 @@ void MainWindow::on_flip_clicked()
             qDebug() << "Something isn't right.";
     }
 
-    // remove frame from model
-    controller.frameRemovedAtCurrentIndex();
-
-    rebuildFrameDisplay();
-    switchEditorToFrame(controller.getCurrentFrame());
 }
 
 void MainWindow::fpsValueChanged(int value)
