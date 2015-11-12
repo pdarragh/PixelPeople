@@ -40,10 +40,26 @@ void Controller::newFrameAdded()
     current_frame += 1;
 }
 
-void Controller::newFrameAddedAtIndex()
+void Controller::newFrameAddedAtCurrentIndex()
 {
     current_frame += 1;
     sprite.getNewFrameAfterIndex(current_frame);
+}
+
+void Controller::frameRemovedAtCurrentIndex()
+{
+    // remove frame from model
+    sprite.removeFrameAtIndex(current_frame);
+
+    // figure out where to go after deletion
+    if(current_frame == (sprite.getFrameCount() - 1)) // end of list
+    {
+        current_frame = sprite.getFrameCount() - 1;
+    }
+    else // middle of list
+    {
+        current_frame++;
+    }
 }
 
 void Controller::setActiveColor(QColor color)
@@ -101,6 +117,25 @@ void Controller::clickInMiniCanvas(int index)
 void Controller::clearCurrentFrame()
 {
     sprite.clearFrameAtIndex(current_frame);
+}
+
+void Controller::flipCurrentFrame()
+{
+    qDebug() << "-------------------------------";
+    qDebug() << Q_FUNC_INFO;
+    Frame duplicate = sprite.getFrame(current_frame);
+    sprite.clearFrameAtIndex(current_frame);
+    for (int y = 0; y < dimension; ++y)
+    {
+        for (int x = 0; x < dimension; ++x)
+        {
+            QColor color = duplicate.getCellColorAtPosition(x, y);
+            CellAddress address = CellAddress(dimension - x - 1, y);
+            sprite.setCellAtPositionToColor(address.x(), address.y(), color);
+            editor->drawSpritePixelAtCellAddressWithColor(address, color);
+            main_window->drawSpritePixelInCanvasAtCellAddressWithColor(current_frame, address, color);
+        }
+    }
 }
 
 void Controller::canvasClickedAtCellAddress(CellAddress address)
@@ -164,7 +199,7 @@ void Controller::useMirrorAtCellAddress(CellAddress address)
     qDebug() << "-------------------------------";
     qDebug() << Q_FUNC_INFO;
 
-    CellAddress flipped = CellAddress((dimension - address.x()), address.y());
+    CellAddress flipped = CellAddress((dimension - address.x() - 1), address.y());
     if (current_tool == Tools::MirrorPencil)
     {
         usePencilAtCellAddress(address);

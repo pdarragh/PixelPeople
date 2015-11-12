@@ -35,6 +35,11 @@ void Canvas::incrementFrameNumber()
     frame_number++;
 }
 
+void Canvas::decrementFrameNumber()
+{
+    frame_number--;
+}
+
 void Canvas::setPixelScaleFromSideLength(float side_length)
 {
     pixel_scale = side_length / this->controller->getDimension();
@@ -59,6 +64,9 @@ void Canvas::drawSpritePixelAtCellAddressWithColor(
 
 void Canvas::eraseSpritePixelAtCellAddress(CellAddress address)
 {
+    qDebug() << "-------------------------------";
+    qDebug() << Q_FUNC_INFO;
+    qDebug() << "address: " << address;
     ViewPoint view_point = getViewPositionFromCellAddress(address);
     QGraphicsItem *item;
     item = itemAt(view_point, QTransform());

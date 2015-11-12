@@ -27,7 +27,7 @@ namespace Tools {
         MirrorPencil,
         MirrorEraser
     };
-};
+}
 
 class Controller
 {
@@ -42,14 +42,19 @@ public:
     void populateCanvasFromFrame(Canvas* canvas, int frame_number);
     // Mini canvases.
     void newFrameAdded();
-    void newFrameAddedAtIndex();
+    void newFrameAddedAtCurrentIndex();
+    void frameRemovedAtCurrentIndex();
     Sprite getSprite();
     // Drawing and tools.
     void setActiveColor(QColor color);
     void setCurrentTool(Tools::tool new_tool);
     void clearCurrentFrame();
+
     void loadSpriteFromFile(QString filename);
      void saveSpriteToFile(QString filename);
+
+    void flipCurrentFrame();
+
     // Attributes.
     int getDimension();
     int getCurrentFrame();

@@ -26,7 +26,7 @@ public:
     Canvas* scene;
     Canvas* preview_scene;
     Controller controller;
-    int FPS = 3;
+    int FPS = 0;
     bool play_on = true;
     QTimer *play_timer;
     Frame temp_frame;
@@ -60,6 +60,7 @@ private slots:
     void on_clearButton_2_clicked();
     void on_pencil_clicked();
     void on_eraser_clicked();
+    void on_mirror_clicked();
     void on_flip_clicked();
     void on_actionSave_triggered();
     void on_actionSave_2_triggered();
