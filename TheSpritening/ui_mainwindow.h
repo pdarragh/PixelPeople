@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.1
+** Created by: Qt User Interface Compiler version 5.5.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -17,6 +17,7 @@
 #include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
@@ -56,6 +57,8 @@ public:
     QWidget *horizontalLayoutWidget;
     QHBoxLayout *horizontalLayout;
     QPushButton *clearButton_2;
+    QLabel *label;
+    QLabel *label_2;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QToolBar *mainToolBar;
@@ -180,6 +183,19 @@ public:
         QIcon icon8;
         icon8.addFile(QStringLiteral(":/new/imageassets/delete_sign.png"), QSize(), QIcon::Normal, QIcon::Off);
         clearButton_2->setIcon(icon8);
+        label = new QLabel(centralWidget);
+        label->setObjectName(QStringLiteral("label"));
+        label->setGeometry(QRect(780, 50, 271, 111));
+        QFont font;
+        font.setFamily(QStringLiteral("Futura"));
+        font.setPointSize(64);
+        label->setFont(font);
+        label->setAlignment(Qt::AlignCenter);
+        label_2 = new QLabel(centralWidget);
+        label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setGeometry(QRect(780, 140, 291, 111));
+        label_2->setFont(font);
+        label_2->setAlignment(Qt::AlignCenter);
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -231,6 +247,8 @@ public:
         clearButton_2->setToolTip(QApplication::translate("MainWindow", "Clear the canvas", 0));
 #endif // QT_NO_TOOLTIP
         clearButton_2->setText(QString());
+        label->setText(QApplication::translate("MainWindow", "The", 0));
+        label_2->setText(QApplication::translate("MainWindow", "Spritening", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
     } // retranslateUi
 
