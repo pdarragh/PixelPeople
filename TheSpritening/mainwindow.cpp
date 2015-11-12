@@ -208,7 +208,9 @@ void MainWindow::drawSpritePixelInCanvasAtCellAddressWithColor(
     qDebug() << Q_FUNC_INFO;
     qDebug() << "frame: " << frame;
     qDebug() << "address: " << address;
-    frames[frame]->drawSpritePixelAtCellAddressWithColor(address, color);
+    //if (!play_on) {
+        frames[frame]->drawSpritePixelAtCellAddressWithColor(address, color);
+    //}
 }
 
 void MainWindow::eraseSpritePixelInCanvasAtCellAddress(
