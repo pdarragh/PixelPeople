@@ -19,9 +19,9 @@ class preview : public QDialog
 public:
     explicit preview(QWidget *parent = 0);
     ~preview();
-    QTimer *full_timer = new QTimer(this);
+    QTimer *full_timer;
     void setController(Controller* controller);
-    //void setFrames(std::vector<Frame>);
+    void setFPS(int value);
 private:
     Ui::preview *ui;
     Frame temp_frame;
@@ -29,7 +29,6 @@ private:
     Canvas* full_scene;
     Controller* the_controller;
     Sprite the_sprite;
-    //std::vector<Frame> the_frames;
 
 public slots:
     void updateFullPreview();

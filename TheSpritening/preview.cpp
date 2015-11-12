@@ -11,11 +11,8 @@ preview::preview(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    full_timer->setInterval(3000);
-
+    full_timer = new QTimer(this);
     connect(full_timer, SIGNAL(timeout()), this, SLOT(updateFullPreview()));
-
-    full_timer->start();
 }
 
 preview::~preview()
@@ -32,6 +29,16 @@ void preview::setController(Controller* controller)
     ui->graphicsView->resize(the_sprite.getDimension(), the_sprite.getDimension());
     ui->graphicsView->setMinimumSize(the_sprite.getDimension(), the_sprite.getDimension());
     this->adjustSize();
+}
+
+void preview::setFPS(int value)
+{
+    //FPS = value;
+    //int msec = (1000 / value);
+    //int fps = value;
+    //full_timer->setInterval(1000 / fps);
+    full_timer->setInterval(1000 / 3);
+    full_timer->start();
 }
 
 
@@ -62,6 +69,11 @@ void preview::updateFullPreview()
 
     // Increment frames
     temp_frame_int += 1;
+
+    // Make sure that if you reach the end, you go back to the beginning
+    if (temp_frame_int == the_sprite.getFrameCount()) {
+        temp_frame_int = 0;
+    }
 
     std::cout << "Timeout" << std::endl;
 }

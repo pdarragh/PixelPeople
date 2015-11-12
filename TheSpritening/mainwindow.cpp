@@ -41,14 +41,6 @@ MainWindow::MainWindow(QWidget* parent) :
 
     //instantiate timer
     play_timer = new QTimer(this);
-
-    //set icon for play/pause
-    QIcon *pplayIcon = new QIcon();
-    pplayIcon->addPixmap(QPixmap(":/new/imageassets/play.png"),QIcon::Normal,QIcon::On);
-    pplayIcon->addPixmap(QPixmap(":/new/imageassets/pause.png"),QIcon::Normal,QIcon::Off);
-    ui->playPause->setIcon(*pplayIcon);
-    ui->playPause->setCheckable(true);
-
     //connect the clear button and the add frame button
     connect(ui->clearButton, SIGNAL(clicked()), this, SLOT(clearPushed()));
     connect(ui->addFrameButton, SIGNAL(clicked()), this, SLOT(addFramePushed()));
@@ -196,6 +188,7 @@ void MainWindow::on_preview_released()
 {
     preview full_preview;
     full_preview.setModal(true);
+    full_preview.setFPS(this->FPS);
     full_preview.setController(&controller);
     //full_preview.setFrames(&controller.sprite.getAllFrames());
     full_preview.exec();
@@ -261,6 +254,13 @@ void MainWindow::fpsValueChanged(int value)
  */
 void MainWindow::pplayButtonReleased()
 {
+    //set icon for play/pause
+    QIcon *pplayIcon = new QIcon();
+    pplayIcon->addPixmap(QPixmap(":/new/imageassets/play.png"),QIcon::Normal,QIcon::On);
+    pplayIcon->addPixmap(QPixmap(":/new/imageassets/pause.png"),QIcon::Normal,QIcon::Off);
+    ui->playPause->setIcon(*pplayIcon);
+    ui->playPause->setCheckable(true);
+
     // If play_on is true, pressing the button turns it off
     if (play_on)
     {
