@@ -15,6 +15,7 @@ public:
     // Constructor
     explicit Canvas(int frame_number, int side_length, bool is_edit_canvas, Controller* controller, QObject *parent = 0);
     // Modifier
+    void incrementFrameNumber();
     void setPixelScaleFromSideLength(float side_length);
     // Clear the scene
     void clear();

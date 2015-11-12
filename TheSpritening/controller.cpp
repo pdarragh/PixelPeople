@@ -30,7 +30,7 @@ Controller::Controller(MainWindow* main_window)
 
     // Set the default tool.
     current_tool = Tools::Pencil;
-    qDebug() << "Current tool: " << current_tool;
+    //qDebug() << "Current tool: " << current_tool;
 }
 void Controller::newFrameAdded()
 {
@@ -84,7 +84,7 @@ void Controller::populateCanvasFromFrame(Canvas* canvas, int frame_number)
 
 void Controller::clickInMiniCanvas(int index)
 {
-     qDebug() << "click in mini canvas" << index;
+     qDebug() << "click in mini canvas " << index;
     // Switch to that canvas!
     current_frame = index;
     main_window->switchEditorToFrame(index);
@@ -92,10 +92,12 @@ void Controller::clickInMiniCanvas(int index)
 
 void Controller::canvasClickedAtCellAddress(CellAddress address)
 {
+    /*
     qDebug() << "-------------------------------";
     qDebug() << Q_FUNC_INFO;
     qDebug() << "address: " << address;
     qDebug() << "current_tool: " << current_tool;
+    */
 
     switch (current_tool)
     {
@@ -118,9 +120,11 @@ void Controller::canvasClickedAtCellAddress(CellAddress address)
 
 void Controller::usePencilAtCellAddress(CellAddress address)
 {
+    /*
     qDebug() << "-------------------------------";
     qDebug() << Q_FUNC_INFO;
     qDebug() << "address: " << address;
+    */
     sprite.setCellAtPositionToColor(address.x(), address.y(), active_color);
     editor->drawSpritePixelAtCellAddressWithColor(address, active_color);
     main_window->drawSpritePixelInCanvasAtCellAddressWithColor(current_frame, address, active_color);

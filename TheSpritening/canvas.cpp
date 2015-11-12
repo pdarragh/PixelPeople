@@ -30,6 +30,11 @@ Canvas::Canvas(
     qDebug() << "pixel_scale: " << pixel_scale;
 }
 
+void Canvas::incrementFrameNumber()
+{
+    frame_number++;
+}
+
 void Canvas::setPixelScaleFromSideLength(float side_length)
 {
     pixel_scale = side_length / this->controller->getDimension();
@@ -40,10 +45,12 @@ void Canvas::drawSpritePixelAtCellAddressWithColor(
     CellAddress address,
     QColor      color   )
 {
+    /*
     qDebug() << "-------------------------------";
     qDebug() << Q_FUNC_INFO;
     qDebug() << "frame_number: " << this->frame_number;
     qDebug() << "address: " << address;
+    */
     ViewPoint top_left = getViewPositionFromCellAddress(address);
     QGraphicsRectItem* square = this->addRect(top_left.x(), top_left.y(), pixel_scale, pixel_scale);
     square->setBrush(color);
@@ -52,9 +59,11 @@ void Canvas::drawSpritePixelAtCellAddressWithColor(
 
 void Canvas::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
+    /*
     qDebug() << "-------------------------------";
     qDebug() << Q_FUNC_INFO;
     qDebug() << "frame_number: " << frame_number;
+    */
     if (!is_edit_canvas)
     {
         // Any canvas other than the main editor will switch the main view to

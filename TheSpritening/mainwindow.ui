@@ -34,7 +34,7 @@
     <property name="geometry">
      <rect>
       <x>220</x>
-      <y>280</y>
+      <y>250</y>
       <width>61</width>
       <height>61</height>
      </rect>
@@ -296,6 +296,26 @@
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout"/>
+   </widget>
+   <widget class="QPushButton" name="clearButton_2">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>310</y>
+      <width>61</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Clear the canvas</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="resources.qrc">
+      <normaloff>:/new/imageassets/delete_sign.png</normaloff>:/new/imageassets/delete_sign.png</iconset>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">

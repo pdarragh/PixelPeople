@@ -22,7 +22,7 @@ public:
     void switchEditorToFrame(int index);
     void clearFrameAtIndex(int index);
     Canvas* scene;
-    //Canvas* preview_scene;
+    Canvas* preview_scene;
     Controller controller;
     int FPS = 3;
     bool play_on = true;
@@ -34,6 +34,8 @@ public:
 
 private:
     int getEditorCanvasSize();
+    std::vector<Canvas*>::iterator getIteratorAtPosition(unsigned long index);
+    void rebuildFrameDisplay();
     Ui::MainWindow *ui;
     int dimension;
     int side_length;
@@ -53,6 +55,7 @@ private slots:
     void pbackButtonReleased();
     void pskipButtonReleased();
     void updateFrame();
+    void on_clearButton_2_clicked();
 };
 
 #endif // MAINWINDOW_H

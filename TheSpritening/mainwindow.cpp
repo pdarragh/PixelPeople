@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget* parent) :
     // Create the main editor Canvas.
     int available_length = getEditorCanvasSize();
     // side_length = controller.getViewSideLength();
-    scene = new Canvas(controller.getCurrentFrame(), available_length, true, &controller, this);
+    scene = new Canvas(controller.getCurrentFrame(), available_length, CanvasType::Editor, &controller, this);
     // scene->is_Main_Canvas = true;
 
     //set the frame graphics view to have this new scene
@@ -47,7 +47,7 @@ MainWindow::MainWindow(QWidget* parent) :
     connect(ui->addFrameButton, SIGNAL(clicked()), this, SLOT(addFramePushed()));
     connect(ui->playPause, SIGNAL(released()), this, SLOT(pplayButtonReleased()));
     connect(ui->backward, SIGNAL(released()), this, SLOT(pbackButtonReleased()));
-    connect(ui->forward, SIGNAL(released), this, SLOT(pskipButtonReleased()));
+    connect(ui->forward, SIGNAL(released()), this, SLOT(pskipButtonReleased()));
     connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(fpsValueChanged(int)));
     connect(play_timer, SIGNAL(timeout()), this, SLOT(updateFrame()));
     connect(ui->preview, SIGNAL(released()), this, SLOT(on_preview_released()));
@@ -81,7 +81,53 @@ void MainWindow::clearPushed()
 
 void MainWindow::addFramePushed()
 {
+    int placeholder_width = 77;
 
+    if(controller.getCurrentFrame() == (frames.size() - 1)) // add to end of frames list
+    {
+        controller.newFrameAdded();
+
+        qDebug() << "First Option!!";
+
+        //create the canvas for the graphics view
+        Canvas* newScene;
+        newScene = new Canvas(controller.getCurrentFrame(), placeholder_width, CanvasType::MiniCanvas, &controller, this);
+        frames.push_back(newScene);
+
+        // rebuild frame list
+        rebuildFrameDisplay();
+
+    }
+    else // add after a specific index
+    {
+        controller.newFrameAdded();
+
+        qDebug() << "Second Option!!";
+
+        //create the new frame
+        Canvas* newScene;
+        newScene = new Canvas(controller.getCurrentFrame(), placeholder_width, false, &controller, this);
+
+        std::vector<Canvas*>::iterator test = getIteratorAtPosition(controller.getCurrentFrame());
+
+        //Insert at index into frames
+        frames.insert(getIteratorAtPosition(controller.getCurrentFrame()), newScene);
+
+        //increment frame_number in canvisi
+        std::vector<Canvas*>::iterator iterator = getIteratorAtPosition(controller.getCurrentFrame());
+        while(iterator != frames.end())
+        {
+            Canvas* curr = *iterator;
+            curr->incrementFrameNumber();
+            //(*iterator)->incrementFrameNumber();
+            iterator++;
+        }
+
+        //rebuild frame list
+        rebuildFrameDisplay();
+    }
+
+    /*
     //tell the controller so we can add it to the model
     controller.newFrameAdded();
 
@@ -103,7 +149,7 @@ void MainWindow::addFramePushed()
     qDebug() << "controler " << controller.getCurrentFrame() << "cont plus 1 "<< controller.getCurrentFrame() + 1;
 
     ui->horizontalLayout->insertWidget(controller.getCurrentFrame() + 1, newFrame);
-
+    */
 
     // Wipe the main editor;
     scene->clear();
@@ -112,6 +158,31 @@ void MainWindow::addFramePushed()
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::rebuildFrameDisplay()
+{
+    // delete all the things
+    QLayoutItem* child;
+    while((child = ui->horizontalLayout->takeAt(0)) != 0)
+    {
+        delete child->widget();
+        delete child;
+    }
+
+    int placeholder_width = 77;
+
+    for(int i = 0; i < frames.size(); i++)
+    {
+        QGraphicsView* newFrame = new QGraphicsView;
+
+        Canvas* newScene = frames[i];
+        //newScene = new Canvas(i, placeholder_width, false, &controller, this);
+        newFrame->setScene(newScene);
+        newFrame->setSceneRect(0, 0, placeholder_width, placeholder_width);
+        newFrame->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        ui->horizontalLayout->insertWidget(i, newFrame);
+    }
 }
 
 void MainWindow::on_preview_released()
@@ -223,9 +294,11 @@ void MainWindow::pbackButtonReleased()
 {
     if (!play_on)
     {
-        if (temp_frame_int != 0) {
-            temp_frame_int -= 1;
+        if (temp_frame_int > 0) {
+            temp_frame_int = temp_frame_int - 1;
         }
+
+        updateFrame();
     }
 }
 
@@ -239,9 +312,11 @@ void MainWindow::pskipButtonReleased()
 {
     if (!play_on)
     {
-        if (temp_frame_int != controller.getSprite().getFrameCount() - 1) {
-            temp_frame_int += 1;
+        if (temp_frame_int < (controller.getSprite().getFrameCount() - 1)) {
+            temp_frame_int = temp_frame_int + 1;
         }
+
+        updateFrame();
     }
 }
 
@@ -249,24 +324,24 @@ void MainWindow::updateFrame()
 {
     Sprite the_sprite = controller.getSprite();
 
-    if (temp_frame_int == the_sprite.getFrameCount()) {
-        temp_frame_int = 0;
-    }
-
-    // Updates to the current frame
+    // Stores some frame's index number inside of temp_frame
     temp_frame = the_sprite.getFrame(temp_frame_int);
+
+    // Stores contentsRect() inside of preview_content for later size calculations
     QRect preview_content = ui->graphicsView_2->contentsRect();
     //int length_ = std::min(preview_content.width(), preview_content.height());
     int preview_width = 140;
-    Canvas* preview_scene = new Canvas(0, preview_width, false, &controller, this);
-    preview_scene->setPixelScaleFromSideLength(140);
-    //preview_scene->is_Main_Canvas = false;
+    preview_scene = new Canvas(temp_frame_int, preview_width, CanvasType::Preview, &controller, this);
 
-    // Sets the graphicsView_2 to display this new scene
+    // Double checks that the Pixel size is set correctly
+    preview_scene->setPixelScaleFromSideLength(140);
+
+    // Sets graphicsView_2 to display the correct scene
     ui->graphicsView_2->setScene(preview_scene);
     ui->graphicsView_2->setSceneRect(0, 0, 140, 140);
     ui->graphicsView_2->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
+    // Clears scene immediately afterward
     preview_scene->clear();
 
 
@@ -281,6 +356,27 @@ void MainWindow::updateFrame()
     std::string frame_count_int = xx.str();
     std::cout << "Total frames: " << frame_count_int << "." << std::endl;
 
+
+    // increment to loop through frames if play is on
+    if (play_on) {
     // Increment frames
     temp_frame_int += 1;
+    }
+
+    // Make sure that if you reach the end, you go back to the beginning
+    if (temp_frame_int == the_sprite.getFrameCount()) {
+        temp_frame_int = 0;
+    }
+}
+
+void MainWindow::on_clearButton_2_clicked()
+{
+    on_deleteFrameButton_clicked();
+}
+
+
+std::vector<Canvas*>::iterator MainWindow::getIteratorAtPosition(unsigned long index)
+{
+    std::vector<Canvas*>::iterator new_iterator = frames.begin() + index;
+    return new_iterator;
 }
