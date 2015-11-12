@@ -248,6 +248,8 @@ void Controller::setUpNewSpriteProject(int dimension)
 
     // Set the default tool.
     current_tool = Tools::Pencil;
+
+    main_window->setUpNewSprite();
 }
 
 

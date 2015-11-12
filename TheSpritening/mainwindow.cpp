@@ -521,6 +521,15 @@ void MainWindow::setUpNewSprite()
     frames = std::vector<Canvas*>();
     int placeholder_width = 77;
 
+    int available_length = getEditorCanvasSize();
+    // side_length = controller.getViewSideLength();
+    scene = new Canvas(controller.getCurrentFrame(), available_length, CanvasTypes::Editor, &controller, this);
+    // scene->is_Main_Canvas = true;
+
+    //set the frame graphics view to have this new scene
+    ui->graphicsView->setScene(scene);
+    ui->graphicsView->setSceneRect(0, 0, getEditorCanvasSize(), getEditorCanvasSize());
+
     addFramePushed();
     switchEditorToFrame(controller.getCurrentFrame());
 }
