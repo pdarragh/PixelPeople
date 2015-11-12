@@ -21,7 +21,7 @@ Controller::Controller()
 
 Controller::Controller(MainWindow* main_window)
 {
-    current_frame = 0;
+    current_frame = -1;
     // Do some math to lay out the cells and set up other variables.
     dimension       = DEFAULT_DIMENSION;
     active_color    = Qt::black;
@@ -55,6 +55,7 @@ int Controller::getDimension()
 
 int Controller::getCurrentFrame()
 {
+    qDebug() << "current_frame: " << current_frame;
     return current_frame;
 }
 
@@ -83,6 +84,7 @@ void Controller::populateCanvasFromFrame(Canvas* canvas, int frame_number)
 
 void Controller::clickInMiniCanvas(int index)
 {
+     qDebug() << "click in mini canvas" << index;
     // Switch to that canvas!
     current_frame = index;
     main_window->switchEditorToFrame(index);
@@ -121,7 +123,7 @@ void Controller::usePencilAtCellAddress(CellAddress address)
     qDebug() << "address: " << address;
     sprite.setCellAtPositionToColor(address.x(), address.y(), active_color);
     editor->drawSpritePixelAtCellAddressWithColor(address, active_color);
-    main_window->drawSpritePixelInCanvasAtCellAddressWithColor(current_frame - 1, address, active_color);
+    main_window->drawSpritePixelInCanvasAtCellAddressWithColor(current_frame, address, active_color);
 }
 
 void Controller::useEraserAtCellAddress(CellAddress address)

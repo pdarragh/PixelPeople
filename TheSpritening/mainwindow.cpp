@@ -64,6 +64,10 @@ void MainWindow::clearPushed()
 
 void MainWindow::addFramePushed()
 {
+
+    //tell the controller so we can add it to the model
+    controller.newFrameAdded();
+
     //create the graphics view for the frame holder
     QGraphicsView* newFrame;
     newFrame = new QGraphicsView;
@@ -78,10 +82,11 @@ void MainWindow::addFramePushed()
     newFrame->setSceneRect(0, 0, placeholder_width, placeholder_width);
     newFrame->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     // Append the frame to the bottom mini-frame view.
+      //ui->horizontalLayout->insertWidget(frames.size(), newFrame);
+    qDebug() << "controler " << controller.getCurrentFrame() << "cont plus 1 "<< controller.getCurrentFrame() + 1;
+
     ui->horizontalLayout->insertWidget(controller.getCurrentFrame() + 1, newFrame);
 
-    //tell the controller so we can add it to the model
-    controller.newFrameAdded();
 
     // Wipe the main editor;
     scene->clear();
@@ -131,6 +136,8 @@ void MainWindow::on_colorButton_clicked()
 
 void MainWindow::on_deleteFrameButton_clicked()
 {
+    //get the current frame that was clicked
+
     //TODO:remove frame from widget at frame number
     delete ui->horizontalLayout->itemAt(0)->widget();
     delete ui->horizontalLayout->itemAt(0);

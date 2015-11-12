@@ -15,7 +15,9 @@ Canvas::Canvas(
 {
     qDebug() << "-------------------------------";
     qDebug() << Q_FUNC_INFO;
+    qDebug() << "FUCKING FRAME: " << frame_number;
     this->frame_number = frame_number;
+    qDebug() << "FUCKING this->FRAME: " << this->frame_number;
     this->setBackgroundBrush(Qt::gray);
     this->setSceneRect(0, 0, side_length, side_length);
     this->controller = controller;
@@ -40,7 +42,7 @@ void Canvas::drawSpritePixelAtCellAddressWithColor(
 {
     qDebug() << "-------------------------------";
     qDebug() << Q_FUNC_INFO;
-    qDebug() << "frame_number: " << frame_number;
+    qDebug() << "frame_number: " << this->frame_number;
     qDebug() << "address: " << address;
     ViewPoint top_left = getViewPositionFromCellAddress(address);
     QGraphicsRectItem* square = this->addRect(top_left.x(), top_left.y(), pixel_scale, pixel_scale);
