@@ -56,10 +56,22 @@ void Canvas::drawSpritePixelAtCellAddressWithColor(
     qDebug() << "frame_number: " << this->frame_number;
     qDebug() << "address: " << address;
     */
+    int scale;
+    if (pixel_scale == float(int(pixel_scale)))
+    {
+        scale = pixel_scale;
+    }
+    else
+    {
+        scale = int(pixel_scale);
+    }
+    QPen pen;
+    pen.setWidth(0);
+    pen.setColor(color);
     ViewPoint view_point = getViewPositionFromCellAddress(address);
-    QGraphicsRectItem* square = this->addRect(view_point.x(), view_point.y(), pixel_scale, pixel_scale);
+    QGraphicsRectItem* square = this->addRect(view_point.x(), view_point.y(), scale, scale);
     square->setBrush(color);
-    square->setPen(color);
+    square->setPen(pen);
 }
 
 void Canvas::eraseSpritePixelAtCellAddress(CellAddress address)

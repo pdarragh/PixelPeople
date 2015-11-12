@@ -477,7 +477,7 @@ void MainWindow::on_actionNew_triggered()
 void MainWindow::setUpLoadedSprite(std::vector<Frame> frame_stack)
 {
     frames = std::vector<Canvas*>();
-    int placeholder_width = 77;
+    int placeholder_width = 64;
     // add frames to frames
     for(int i = 0; i < frame_stack.size(); i++)
     {
@@ -497,7 +497,7 @@ void MainWindow::setUpLoadedSprite(std::vector<Frame> frame_stack)
 void MainWindow::setUpNewSprite()
 {
     frames = std::vector<Canvas*>();
-    int placeholder_width = 77;
+    int placeholder_width = 64;
 
     addFramePushed();
     switchEditorToFrame(controller.getCurrentFrame());

@@ -176,6 +176,7 @@ void Controller::usePencilAtCellAddress(CellAddress address)
     qDebug() << Q_FUNC_INFO;
     qDebug() << "address: " << address;
     */
+    useEraserAtCellAddress(address);
     sprite.setCellAtPositionToColor(address.x(), address.y(), active_color);
     editor->drawSpritePixelAtCellAddressWithColor(address, active_color);
     main_window->drawSpritePixelInCanvasAtCellAddressWithColor(current_frame, address, active_color);

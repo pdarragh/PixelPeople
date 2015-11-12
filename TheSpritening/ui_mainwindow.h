@@ -84,7 +84,7 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         graphicsView = new QGraphicsView(centralWidget);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
-        graphicsView->setGeometry(QRect(350, 10, 380, 380));
+        graphicsView->setGeometry(QRect(350, 10, 386, 386));
         clearButton = new QPushButton(centralWidget);
         clearButton->setObjectName(QStringLiteral("clearButton"));
         clearButton->setGeometry(QRect(220, 250, 61, 61));
