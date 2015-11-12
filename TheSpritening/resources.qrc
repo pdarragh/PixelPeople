@@ -10,5 +10,6 @@
         <file>plus_math.png</file>
         <file>rotate_right.png</file>
         <file>pause.png</file>
+        <file>copy.png</file>
     </qresource>
 </RCC>
