@@ -22,6 +22,7 @@ public:
     void eraseSpritePixelInCanvasAtCellAddress(int frame, CellAddress address);
     void switchEditorToFrame(int index);
     void clearFrameAtIndex(int index);
+    void setUpLoadedSprite(std::vector<Frame> frame_stack);
     Canvas* scene;
     Canvas* preview_scene;
     Controller controller;
