@@ -164,7 +164,7 @@ void Controller::useMirrorAtCellAddress(CellAddress address)
     qDebug() << "-------------------------------";
     qDebug() << Q_FUNC_INFO;
 
-    CellAddress flipped = CellAddress((dimension - address.x()), address.y());
+    CellAddress flipped = CellAddress((dimension - address.x() - 1), address.y());
     if (current_tool == Tools::MirrorPencil)
     {
         usePencilAtCellAddress(address);

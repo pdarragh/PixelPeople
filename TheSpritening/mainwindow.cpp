@@ -244,43 +244,31 @@ void MainWindow::on_deleteFrameButton_clicked()
 
 void MainWindow::on_eraser_clicked()
 {
+    ui->pencil->setStyleSheet("");
     ui->eraser->setStyleSheet("border:1px solid black;");
     switch (controller.current_tool)
     {
         case Tools::MirrorEraser:
-            controller.setCurrentTool(Tools::MirrorEraser);
         case Tools::MirrorPencil:
             controller.setCurrentTool(Tools::MirrorEraser);
-            ui->pencil->setStyleSheet("");
-            break;
-        case Tools::Pencil:
-            controller.setCurrentTool(Tools::Eraser);
-            ui->pencil->setStyleSheet("");
             break;
         default:
             controller.setCurrentTool(Tools::Eraser);
-        break;
     }
 }
 
 void MainWindow::on_pencil_clicked()
 {
+    ui->eraser->setStyleSheet("");
     ui->pencil->setStyleSheet("border:1px solid black;");
     switch (controller.current_tool)
     {
         case Tools::MirrorPencil:
-            controller.setCurrentTool(Tools::MirrorPencil);
         case Tools::MirrorEraser:
             controller.setCurrentTool(Tools::MirrorPencil);
-            ui->eraser->setStyleSheet("");
-            break;
-        case Tools::Eraser:
-            controller.setCurrentTool(Tools::Pencil);
-            ui->eraser->setStyleSheet("");
             break;
         default:
             controller.setCurrentTool(Tools::Pencil);
-        break;
     }
 }
 
