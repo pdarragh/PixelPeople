@@ -190,7 +190,7 @@ void MainWindow::rebuildFrameDisplay()
 void MainWindow::on_preview_released()
 {
     preview full_preview;
-    full_preview.setFPS(this->FPS);
+    full_preview.setFPS(FPS);
     full_preview.setController(&controller);
     full_preview.setModal(true);
     //full_preview.setFrames(&controller.sprite.getAllFrames());
