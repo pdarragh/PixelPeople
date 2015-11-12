@@ -42,11 +42,12 @@ public:
     void setCurrentTool(Tools::tool new_tool);
     Canvas* frame_canvas;
     Canvas* canvas;
+    void useRotate();
 private:
     // Tool methods.
     void usePencilAtPoint(QPointF point);
     void useEraserAtPoint(QPointF point);
-    void useRotateAtPoint(QPointF point);
+
     void useMirrorAtPoint(QPointF point);
     // For doing math on the canvas.
     static int DEFAULT_DIMENSION;

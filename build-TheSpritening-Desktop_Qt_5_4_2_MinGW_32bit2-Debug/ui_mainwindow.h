@@ -81,7 +81,7 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         graphicsView = new QGraphicsView(centralWidget);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
-        graphicsView->setGeometry(QRect(350, 10, 751, 381));
+        graphicsView->setGeometry(QRect(350, 10, 380, 380));
         clearButton = new QPushButton(centralWidget);
         clearButton->setObjectName(QStringLiteral("clearButton"));
         clearButton->setGeometry(QRect(220, 280, 61, 61));
@@ -117,7 +117,6 @@ public:
         pencil = new QPushButton(centralWidget);
         pencil->setObjectName(QStringLiteral("pencil"));
         pencil->setGeometry(QRect(160, 250, 61, 61));
-        pencil->setStyleSheet(QStringLiteral("border:1px solid black;"));
         QIcon icon1;
         icon1.addFile(QStringLiteral(":/new/imageassets/pencil.png"), QSize(), QIcon::Normal, QIcon::Off);
         pencil->setIcon(icon1);

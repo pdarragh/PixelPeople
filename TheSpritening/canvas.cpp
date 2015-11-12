@@ -24,25 +24,57 @@ void Canvas::drawSquareAtPositionWithColor(
     int     height,
     QColor  color   )
 {
-    //erase any item already at this point
-    eraseSquareAtPosition(point);
+    //get any item at this location
+    QGraphicsItem *item;
+    item = itemAt(point,QTransform()); //Get the item at the position
+    if (item)
+    {
+      qDebug() << "pos of point" << item->scenePos();
+        //set the item's color to the new color
+       QGraphicsRectItem* rItem = (QGraphicsRectItem*) item;
+       rItem->setBrush(color);
+       QPen pen;
+       pen.setWidth(0);
+       pen.setColor(color);
+       rItem->setPen(pen);
+       return;
+    }
     // Create the rectangle to draw.
+    QPen pen;
+    pen.setWidth(0);
+    pen.setColor(color);
     QGraphicsRectItem* square = this->addRect(point.x(), point.y(), width, height);
     // Fill the rectangle with colors !
     square->setBrush(color);
-    square->setPen(color);
+    square->setPen(pen);
 }
 
 //method that takes a qpoint dimension and color and erases
 void Canvas::eraseSquareAtPosition( QPointF point )
 {
+    //QGraphicsItem *item;
+    //item = itemAt(point,QTransform()); //Get the item at the position
+    //if (item)
+    //{
+    //    delete item;
+    //}
+
+    //get any item at this location
     QGraphicsItem *item;
     item = itemAt(point,QTransform()); //Get the item at the position
     if (item)
     {
-        delete item;
+      //set the item's color to 0,0,0,0
+       QGraphicsRectItem* rItem = (QGraphicsRectItem*) item;
+       rItem->setBrush(QColor(0,0,0,0));
+       QPen pen;
+       pen.setWidth(0);
+       pen.setColor(QColor(0,0,0,0));
+       rItem->setPen(pen);
+       return;
     }
 }
+
 
 void Canvas::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {

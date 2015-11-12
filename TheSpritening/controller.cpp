@@ -9,6 +9,7 @@
 #include <QFile>
 #include "controller.h"
 #include "canvas.h"
+#include <QGraphicsItem>
 
 int Controller::DEFAULT_DIMENSION = 16;
 
@@ -73,7 +74,7 @@ void Controller::canvasClickedAtPosition(QPointF point)
             useEraserAtPoint(point);
             break;
         case Tools::Rotate:
-            useRotateAtPoint(point);
+            useRotate();
             break;
         case Tools::MirrorPencil:
             useMirrorAtPoint(point);
@@ -119,23 +120,46 @@ void Controller::useEraserAtPoint(QPointF point)
     qDebug() << Q_FUNC_INFO;
 }
 
-void Controller::useRotateAtPoint(QPointF point)
+void Controller::useRotate()
 {
+    qDebug() << "inside rotate";
+    //QPointF original;
+    //QList <QGraphicsItem*> itemList1 = canvas->items();
+    //foreach(QGraphicsItem *item, itemList1)
+    //{
+    //    original = item->pos();
+    //    useEraserAtPoint(original);
+    //    qDebug() << "inside rotate";
+    //    //usePencilAtPoint(QPointF(dimension*cell_size - original.y(),original.x()));
+    //}
+
+    QList <QGraphicsItem*> itemList = canvas->items();
+    foreach(QGraphicsItem *item, itemList)
+    {
+        QPointF original = QPointF(item->x(),item->y());
+         qDebug() << "Rotating point: " << original << "  " << item->pos();
+        useEraserAtPoint(original);
+        usePencilAtPoint(QPointF(dimension*cell_size - original.y(),original.x()));
+        //delete itemList.first();
+        //itemList = canvas->items();
+    }
+
     qDebug() << Q_FUNC_INFO;
 }
 
 void Controller::useMirrorAtPoint(QPointF point)
 {
-    int x = (dimension * cell_size) - point.x();
+    //calculate the horizontally flipped x value
+    int x_flipped = (dimension * cell_size) - point.x();
     if (current_tool == Tools::MirrorPencil)
     {
         usePencilAtPoint(point);
-        usePencilAtPoint(QPointF(x,point.y()));
+        usePencilAtPoint(QPointF(x_flipped,point.y()));
     }
     else
     {
         useEraserAtPoint(point);
-        useEraserAtPoint(QPointF(x,point.y()));
+        useEraserAtPoint(QPointF(x_flipped,point.y()));
     }
 
     qDebug() << Q_FUNC_INFO;
