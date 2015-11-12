@@ -101,3 +101,14 @@ QColor Frame::getCellColorAtPosition(
 {
     return this->cells[y][x].getColor();
 }
+
+void Frame::clear()
+{
+    for (CELL_ROW row : cells)
+    {
+        for (Cell cell : row)
+        {
+            cell.setColor(QColor(0, 0, 0, 0));
+        }
+    }
+}

@@ -132,6 +132,17 @@ Frame Sprite::getNewCopyFrameAfterIndex(unsigned long index)
 }
 
 /*
+ * clearFrameAtIndex
+ *
+ * Erases all of the data store in a given frame. This is useful for
+ * whenever we clear a drawing.
+ */
+void Sprite::clearFrameAtIndex(unsigned long index)
+{
+    frames[index].clear();
+}
+
+/*
  * removeFrameAtIndex
  *
  * We'll need to check to make sure the index is in bounds.

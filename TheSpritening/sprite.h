@@ -29,6 +29,7 @@ public:
     Frame getNewFrame();
     Frame getNewFrameAfterIndex(unsigned long index);
     Frame getNewCopyFrameAfterIndex(unsigned long index);
+    void clearFrameAtIndex(unsigned long index);
     void removeFrameAtIndex(unsigned long index);
     void setCellAtPositionToColor(int x, int y, QColor color);
     QColor getBGColor();
