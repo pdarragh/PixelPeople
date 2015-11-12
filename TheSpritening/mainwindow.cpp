@@ -273,30 +273,34 @@ void MainWindow::on_pencil_clicked()
     }
 }
 
-void MainWindow::on_flip_clicked()
+void MainWindow::on_mirror_clicked()
 {
     switch (controller.current_tool)
     {
         case Tools::Pencil:
             controller.setCurrentTool(Tools::MirrorPencil);
-            ui->flip->setStyleSheet("border:1px solid black;");
+            ui->mirror->setStyleSheet("border:1px solid black;");
             break;
         case Tools::Eraser:
             controller.setCurrentTool(Tools::MirrorEraser);
-            ui->flip->setStyleSheet("border:1px solid black;");
+            ui->mirror->setStyleSheet("border:1px solid black;");
             break;
         case Tools::MirrorPencil:
             controller.setCurrentTool(Tools::Pencil);
-            ui->flip->setStyleSheet("");
+            ui->mirror->setStyleSheet("");
             break;
         case Tools::MirrorEraser:
             controller.setCurrentTool(Tools::Eraser);
-            ui->flip->setStyleSheet("");
+            ui->mirror->setStyleSheet("");
             break;
         default:
             qDebug() << "Something isn't right.";
     }
+}
 
+void MainWindow::on_flip_clicked()
+{
+    controller.flipCurrentFrame();
 }
 
 void MainWindow::fpsValueChanged(int value)

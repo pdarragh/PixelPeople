@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.0
+** Created by: Qt User Interface Compiler version 5.5.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -46,8 +46,8 @@ public:
     QFrame *line_4;
     QPushButton *pencil;
     QPushButton *eraser;
+    QPushButton *mirror;
     QPushButton *flip;
-    QPushButton *pushButton_7;
     QSlider *horizontalSlider;
     QPushButton *preview;
     QPushButton *backward;
@@ -129,18 +129,18 @@ public:
         QIcon icon2;
         icon2.addFile(QStringLiteral(":/new/imageassets/erase.png"), QSize(), QIcon::Normal, QIcon::Off);
         eraser->setIcon(icon2);
-        flip = new QPushButton(centralWidget);
-        flip->setObjectName(QStringLiteral("flip"));
-        flip->setGeometry(QRect(100, 310, 61, 61));
+        mirror = new QPushButton(centralWidget);
+        mirror->setObjectName(QStringLiteral("mirror"));
+        mirror->setGeometry(QRect(100, 310, 61, 61));
         QIcon icon3;
         icon3.addFile(QStringLiteral(":/new/imageassets/last_quarter.png"), QSize(), QIcon::Normal, QIcon::Off);
-        flip->setIcon(icon3);
-        pushButton_7 = new QPushButton(centralWidget);
-        pushButton_7->setObjectName(QStringLiteral("pushButton_7"));
-        pushButton_7->setGeometry(QRect(160, 310, 61, 61));
+        mirror->setIcon(icon3);
+        flip = new QPushButton(centralWidget);
+        flip->setObjectName(QStringLiteral("flip"));
+        flip->setGeometry(QRect(160, 310, 61, 61));
         QIcon icon4;
         icon4.addFile(QStringLiteral(":/new/imageassets/rotate_right.png"), QSize(), QIcon::Normal, QIcon::Off);
-        pushButton_7->setIcon(icon4);
+        flip->setIcon(icon4);
         horizontalSlider = new QSlider(centralWidget);
         horizontalSlider->setObjectName(QStringLiteral("horizontalSlider"));
         horizontalSlider->setGeometry(QRect(100, 170, 160, 22));
@@ -237,8 +237,8 @@ public:
         colorButton->setText(QApplication::translate("MainWindow", "Color", 0));
         pencil->setText(QString());
         eraser->setText(QString());
+        mirror->setText(QString());
         flip->setText(QString());
-        pushButton_7->setText(QString());
         preview->setText(QApplication::translate("MainWindow", "View Full Preview", 0));
         backward->setText(QString());
         playPause->setText(QString());

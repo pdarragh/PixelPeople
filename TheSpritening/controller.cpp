@@ -119,6 +119,25 @@ void Controller::clearCurrentFrame()
     sprite.clearFrameAtIndex(current_frame);
 }
 
+void Controller::flipCurrentFrame()
+{
+    qDebug() << "-------------------------------";
+    qDebug() << Q_FUNC_INFO;
+    Frame duplicate = sprite.getFrame(current_frame);
+    sprite.clearFrameAtIndex(current_frame);
+    for (int y = 0; y < dimension; ++y)
+    {
+        for (int x = 0; x < dimension; ++x)
+        {
+            QColor color = duplicate.getCellColorAtPosition(x, y);
+            CellAddress address = CellAddress(dimension - x - 1, y);
+            sprite.setCellAtPositionToColor(address.x(), address.y(), color);
+            editor->drawSpritePixelAtCellAddressWithColor(address, color);
+            main_window->drawSpritePixelInCanvasAtCellAddressWithColor(current_frame, address, color);
+        }
+    }
+}
+
 void Controller::canvasClickedAtCellAddress(CellAddress address)
 {
     /*

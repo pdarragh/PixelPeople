@@ -49,6 +49,7 @@ public:
     void setActiveColor(QColor color);
     void setCurrentTool(Tools::tool new_tool);
     void clearCurrentFrame();
+    void flipCurrentFrame();
     // Attributes.
     int getDimension();
     int getCurrentFrame();

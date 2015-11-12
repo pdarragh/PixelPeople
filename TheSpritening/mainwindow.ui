@@ -165,7 +165,7 @@
       <normaloff>:/new/imageassets/erase.png</normaloff>:/new/imageassets/erase.png</iconset>
     </property>
    </widget>
-   <widget class="QPushButton" name="flip">
+   <widget class="QPushButton" name="mirror">
     <property name="geometry">
      <rect>
       <x>100</x>
@@ -182,7 +182,7 @@
       <normaloff>:/new/imageassets/last_quarter.png</normaloff>:/new/imageassets/last_quarter.png</iconset>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_7">
+   <widget class="QPushButton" name="flip">
     <property name="geometry">
      <rect>
       <x>160</x>
