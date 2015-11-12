@@ -480,7 +480,19 @@ void MainWindow::on_actionSave_2_triggered()
 void MainWindow::on_actionNew_triggered()
 {
     Dialog* new_sprite = new Dialog;
-    new_sprite->exec();
+
+    if( new_sprite->exec() == QDialog::Accepted )
+    {
+
+        user_selected_dimension = new_sprite->dimension;
+        qDebug() << "dimension selected: " << user_selected_dimension;
+        return;
+    }
+    else
+    {
+        return;
+    }
+
 }
 
 void MainWindow::setUpLoadedSprite(std::vector<Frame> frame_stack)
