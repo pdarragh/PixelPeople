@@ -6,12 +6,12 @@
 #include "qmath.h"
 
 Canvas::Canvas(
-    int         frame_number,
-    int         side_length,
-    bool        is_edit_canvas,
-    Controller* controller,
-    QObject     *parent
-    ) : QGraphicsScene(parent)
+    int                 frame_number,
+    int                 side_length,
+    CanvasTypes::type   canvas_type,
+    Controller*         controller,
+    QObject             *parent     )
+    : QGraphicsScene(parent)
 {
     qDebug() << "-------------------------------";
     qDebug() << Q_FUNC_INFO;
@@ -21,8 +21,8 @@ Canvas::Canvas(
     this->setBackgroundBrush(Qt::gray);
     this->setSceneRect(0, 0, side_length, side_length);
     this->controller = controller;
-    this->is_edit_canvas = is_edit_canvas;
-    if (is_edit_canvas)
+    this->canvas_type = canvas_type;
+    if (canvas_type == CanvasTypes::Editor)
     {
         this->controller->registerEditor(this);
     }
@@ -55,11 +55,16 @@ void Canvas::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
     qDebug() << "-------------------------------";
     qDebug() << Q_FUNC_INFO;
     qDebug() << "frame_number: " << frame_number;
-    if (!is_edit_canvas)
+    if (canvas_type == CanvasTypes::MiniCanvas)
     {
         // Any canvas other than the main editor will switch the main view to
         // that canvas.
         controller->clickInMiniCanvas(frame_number);
+        return;
+    }
+    else if (canvas_type == CanvasTypes::Preview)
+    {
+        // The preview canvases should not register anything on mouse press.
         return;
     }
     // Grab the position of the click event.

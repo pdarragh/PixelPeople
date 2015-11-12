@@ -9,11 +9,20 @@
 #include <QPainter>
 #include "controller.h"
 
+// Tools
+namespace CanvasTypes {
+    enum type {
+        Editor,
+        MiniCanvas,
+        Preview
+    };
+};
+
 class Canvas : public QGraphicsScene
 {
 public:
     // Constructor
-    explicit Canvas(int frame_number, int side_length, bool is_edit_canvas, Controller* controller, QObject *parent = 0);
+    explicit Canvas(int frame_number, int side_length, CanvasTypes::type canvas_type, Controller* controller, QObject *parent = 0);
     // Modifier
     void setPixelScaleFromSideLength(float side_length);
     // Clear the scene
@@ -33,7 +42,7 @@ public slots:
 
 private:
     // Attributes
-    bool is_edit_canvas;
+    CanvasTypes::type canvas_type;
     int frame_number;
     float pixel_scale;
     QColor color;

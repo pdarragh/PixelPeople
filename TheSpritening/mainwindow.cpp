@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget* parent) :
     // Create the main editor Canvas.
     int available_length = getEditorCanvasSize();
     // side_length = controller.getViewSideLength();
-    scene = new Canvas(controller.getCurrentFrame(), available_length, true, &controller, this);
+    scene = new Canvas(controller.getCurrentFrame(), available_length, CanvasTypes::Editor, &controller, this);
     // scene->is_Main_Canvas = true;
 
     //set the frame graphics view to have this new scene
@@ -93,7 +93,7 @@ void MainWindow::addFramePushed()
     int placeholder_width = 77;
     //create the canvas for the graphics view
     Canvas* newScene;
-    newScene = new Canvas(controller.getCurrentFrame(), placeholder_width, false, &controller, this);
+    newScene = new Canvas(controller.getCurrentFrame(), placeholder_width, CanvasTypes::MiniCanvas, &controller, this);
     frames.push_back(newScene);
     newFrame->setScene(newScene);
     newFrame->setSceneRect(0, 0, placeholder_width, placeholder_width);
@@ -260,7 +260,7 @@ void MainWindow::updateFrame()
     QRect preview_content = ui->graphicsView_2->contentsRect();
     //int length_ = std::min(preview_content.width(), preview_content.height());
     int preview_width = 140;
-    preview_scene = new Canvas(temp_frame_int, preview_width, false, &controller, this);
+    preview_scene = new Canvas(temp_frame_int, preview_width, CanvasTypes::Preview, &controller, this);
 
     // Double checks that the Pixel size is set correctly
     preview_scene->setPixelScaleFromSideLength(140);
