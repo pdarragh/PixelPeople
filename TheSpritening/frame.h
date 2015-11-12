@@ -23,6 +23,7 @@ public:
     Frame();
     Frame(int length);
     Frame(int length, QColor color);
+    Frame(const Frame& other);
     // Methods.
     CELL_MATRIX getCells();
     void setCellAtPositionToColor(int x, int y, QColor color);

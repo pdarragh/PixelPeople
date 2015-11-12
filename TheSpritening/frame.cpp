@@ -35,6 +35,19 @@ Frame::Frame(
     init(length, color);
 }
 
+Frame::Frame(const Frame& other)
+{
+    int length = other.cells.size();
+    init(length, QColor(0, 0, 0, 0));
+    for (int y = 0; y < length; ++y)
+    {
+        for (int x = 0; x < length; ++x)
+        {
+            cells[y][x] = other.cells[y][x];
+        }
+    }
+}
+
 /****
  * Private constructor helper method.
  */
