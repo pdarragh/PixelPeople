@@ -81,6 +81,11 @@ void MainWindow::switchEditorToFrame(int index)
     controller.populateCanvasFromFrame(scene, index);
 }
 
+void MainWindow::clearMiniCanvas(int frame)
+{
+    frames[frame]->clear();
+}
+
 void MainWindow::clearPushed()
 {
     qDebug() << "-------------------------------";
@@ -182,10 +187,9 @@ void MainWindow::rebuildFrameDisplay()
 void MainWindow::on_preview_released()
 {
     preview full_preview;
-    full_preview.setFPS(this->FPS);
+    full_preview.setFPS(FPS);
     full_preview.setController(&controller);
     full_preview.setModal(true);
-    //full_preview.setFrames(&controller.sprite.getAllFrames());
     full_preview.exec();
 }
 
@@ -335,8 +339,8 @@ void MainWindow::pplayButtonReleased()
 {
     //set icon for play/pause
     QIcon *pplayIcon = new QIcon();
-    pplayIcon->addPixmap(QPixmap(":/new/imageassets/play.png"),QIcon::Normal,QIcon::On);
-    pplayIcon->addPixmap(QPixmap(":/new/imageassets/pause.png"),QIcon::Normal,QIcon::Off);
+    pplayIcon->addPixmap(QPixmap(":/new/imageassets/pause.png"),QIcon::Normal,QIcon::On);
+    pplayIcon->addPixmap(QPixmap(":/new/imageassets/play.png"),QIcon::Normal,QIcon::Off);
     ui->playPause->setIcon(*pplayIcon);
     ui->playPause->setCheckable(true);
 
@@ -499,7 +503,7 @@ void MainWindow::on_actionNew_triggered()
 void MainWindow::setUpLoadedSprite(std::vector<Frame> frame_stack)
 {
     frames = std::vector<Canvas*>();
-    int placeholder_width = 77;
+    int placeholder_width = 64;
     // add frames to frames
     for(int i = 0; i < frame_stack.size(); i++)
     {
@@ -519,7 +523,7 @@ void MainWindow::setUpLoadedSprite(std::vector<Frame> frame_stack)
 void MainWindow::setUpNewSprite()
 {
     frames = std::vector<Canvas*>();
-    int placeholder_width = 77;
+    int placeholder_width = 64;
 
     int available_length = getEditorCanvasSize();
     // side_length = controller.getViewSideLength();

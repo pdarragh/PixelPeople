@@ -142,6 +142,8 @@ void Controller::flipCurrentFrame()
     qDebug() << Q_FUNC_INFO;
     Frame duplicate = sprite.getFrame(current_frame);
     sprite.clearFrameAtIndex(current_frame);
+    editor->clear();
+    main_window->clearMiniCanvas(current_frame);
     for (int y = 0; y < dimension; ++y)
     {
         for (int x = 0; x < dimension; ++x)
@@ -191,6 +193,7 @@ void Controller::usePencilAtCellAddress(CellAddress address)
     qDebug() << Q_FUNC_INFO;
     qDebug() << "address: " << address;
     */
+    useEraserAtCellAddress(address);
     sprite.setCellAtPositionToColor(address.x(), address.y(), active_color);
     editor->drawSpritePixelAtCellAddressWithColor(address, active_color);
     main_window->drawSpritePixelInCanvasAtCellAddressWithColor(current_frame, address, active_color);

@@ -84,7 +84,7 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         graphicsView = new QGraphicsView(centralWidget);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
-        graphicsView->setGeometry(QRect(350, 10, 380, 380));
+        graphicsView->setGeometry(QRect(350, 10, 386, 386));
         clearButton = new QPushButton(centralWidget);
         clearButton->setObjectName(QStringLiteral("clearButton"));
         clearButton->setGeometry(QRect(220, 250, 61, 61));
@@ -158,7 +158,7 @@ public:
         playPause->setObjectName(QStringLiteral("playPause"));
         playPause->setGeometry(QRect(150, 200, 31, 32));
         QIcon icon6;
-        icon6.addFile(QStringLiteral(":/new/imageassets/play.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon6.addFile(QStringLiteral(":/new/imageassets/pause.png"), QSize(), QIcon::Normal, QIcon::Off);
         playPause->setIcon(icon6);
         forward = new QPushButton(centralWidget);
         forward->setObjectName(QStringLiteral("forward"));
