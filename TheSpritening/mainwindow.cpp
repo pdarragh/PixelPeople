@@ -91,7 +91,7 @@ void MainWindow::addFramePushed()
 
         //create the canvas for the graphics view
         Canvas* newScene;
-        newScene = new Canvas(controller.getCurrentFrame(), placeholder_width, CanvasType::MiniCanvas, &controller, this);
+        newScene = new Canvas(controller.getCurrentFrame(), placeholder_width, CanvasTypes::MiniCanvas, &controller, this);
         frames.push_back(newScene);
 
         // rebuild frame list
@@ -106,7 +106,7 @@ void MainWindow::addFramePushed()
 
         //create the new frame
         Canvas* newScene;
-        newScene = new Canvas(controller.getCurrentFrame(), placeholder_width, false, &controller, this);
+        newScene = new Canvas(controller.getCurrentFrame(), placeholder_width, CanvasTypes::MiniCanvas, &controller, this);
 
         std::vector<Canvas*>::iterator test = getIteratorAtPosition(controller.getCurrentFrame());
 

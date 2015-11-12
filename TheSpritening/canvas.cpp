@@ -63,6 +63,7 @@ void Canvas::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
     qDebug() << "-------------------------------";
     qDebug() << Q_FUNC_INFO;
     qDebug() << "frame_number: " << frame_number;
+    */
     if (canvas_type == CanvasTypes::MiniCanvas)
     {
         // Any canvas other than the main editor will switch the main view to
