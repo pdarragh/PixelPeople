@@ -44,6 +44,8 @@ public:
     // Mini canvases.
     void newFrameAdded();
     void newFrameAddedAtCurrentIndex();
+    void newCopyFrameAdded();
+    void newCopyFrameAddedAtCurrentIndex();
     void frameRemovedAtCurrentIndex();
     Sprite getSprite();
     // Drawing and tools.

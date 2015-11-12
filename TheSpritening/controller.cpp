@@ -61,6 +61,18 @@ void Controller::newFrameAddedAtCurrentIndex()
     sprite.getNewFrameAfterIndex(current_frame);
 }
 
+void Controller::newCopyFrameAdded()
+{
+    sprite.getNewCopyFrame();
+    current_frame += 1;
+}
+
+void Controller::newCopyFrameAddedAtCurrentIndex()
+{
+    current_frame += 1;
+    sprite.getNewCopyFrameAfterIndex(current_frame);
+}
+
 void Controller::frameRemovedAtCurrentIndex()
 {
     // remove frame from model

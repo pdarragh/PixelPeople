@@ -110,6 +110,16 @@ Frame Sprite::getNewFrameAfterIndex(unsigned long index)
     return NULL;
 }
 
+
+Frame Sprite::getNewCopyFrame()
+{
+    Frame new_frame(frames[frames.size() - 1]);
+    frames.push_back(new_frame);
+    this->current_index = frames.size() - 1;
+    return frames[this->current_index];
+}
+
+
 /*
  * getNewCopyFrameAfterIndex
  *
@@ -121,8 +131,8 @@ Frame Sprite::getNewCopyFrameAfterIndex(unsigned long index)
 {
     if(index <= frames.size() - 1)
     {
-        Frame new_frame(frames[index]);
-        index++;
+        Frame new_frame(frames[index - 1]);
+        //index++;
         frames.insert(getIteratorAtPosition(index), new_frame);
         this->current_index = index;
         return frames[this->current_index];
