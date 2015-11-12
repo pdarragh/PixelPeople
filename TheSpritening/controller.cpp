@@ -299,11 +299,12 @@ void Controller::loadSpriteFromFile(QString filename)
     for(int frame_pos = 0; frame_pos < frame_count; frame_pos++)
     {
         Frame new_frame(dimension);
-        current_color_value = 0;
+        //current_color_value = 0;
         for(int row = 0; row < height; row++)
         {
             line = input.readLine();
             current_row_list = line.split(" ");
+            current_color_value = 0;
             if(current_row_list.size() != (width * 4))
             {
                 throw;
@@ -338,4 +339,6 @@ void Controller::loadSpriteFromFile(QString filename)
     }
 
     sprite = Sprite(frame_stack, dimension);
+    current_frame = 0;
+    main_window->setUpLoadedSprite(sprite.getAllFrames());
 }

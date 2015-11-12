@@ -186,6 +186,7 @@ void MainWindow::rebuildFrameDisplay()
         newFrame->setSceneRect(0, 0, placeholder_width, placeholder_width);
         newFrame->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         ui->horizontalLayout->insertWidget(i, newFrame);
+        controller.populateCanvasFromFrame(newScene, i);
     }
 }
 
@@ -475,6 +476,25 @@ void MainWindow::on_actionSave_2_triggered()
 
      qDebug() << "load file name: " << load_file_name;
 
-     //controller.loadSpriteFromFile(load_file_name);
+     controller.loadSpriteFromFile(load_file_name);
 
+}
+
+void MainWindow::setUpLoadedSprite(std::vector<Frame> frame_stack)
+{
+    frames = std::vector<Canvas*>();
+    int placeholder_width = 77;
+    // add frames to frames
+    for(int i = 0; i < frame_stack.size(); i++)
+    {
+        Canvas* newScene;
+        newScene = new Canvas(i, placeholder_width, CanvasTypes::MiniCanvas, &controller, this);
+        frames.push_back(newScene);
+    }
+
+    //TODO: switch editor to current sprite
+    switchEditorToFrame(controller.getCurrentFrame());
+
+    //TODO: reset frame list
+    rebuildFrameDisplay();
 }
