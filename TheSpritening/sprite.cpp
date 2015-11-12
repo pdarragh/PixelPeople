@@ -49,6 +49,14 @@ Sprite::Sprite(std::vector<Frame> frameStack, int dimension)
     this->bg_color      = DEFAULT_COLOR;
 }
 
+Sprite::Sprite(const Sprite& other)
+{
+    frames          = other.frames;
+    current_index   = other.current_index;
+    dimension       = other.dimension;
+    bg_color        = DEFAULT_COLOR;
+}
+
 /****
  * Public Methods
  */

@@ -21,6 +21,7 @@ public:
     Sprite(int dimension);
     Sprite(int dimension, QColor color);
     Sprite(std::vector<Frame> frameStack, int dimension);
+    Sprite(const Sprite& other);
     // Methods.
     Frame getFrame(unsigned long index);
     std::vector<Frame> getAllFrames();
