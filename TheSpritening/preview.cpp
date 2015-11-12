@@ -34,10 +34,6 @@ void preview::setController(Controller* controller)
     this->adjustSize();
 }
 
-/*void preview::setFrames(std::vector<Frame> allFrames)
-{
-    the_frames = allFrames;
-}*/
 
 void preview::updateFullPreview()
 {
@@ -50,6 +46,8 @@ void preview::updateFullPreview()
     // Sets the graphicsView_2 to display this new scene
     ui->graphicsView->setScene(full_scene);
     ui->graphicsView->setSceneRect(0, 0, full_content.width(), full_content.height());
+    ui->graphicsView->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    the_controller->populateCanvasFromFrame(full_scene, temp_frame_int);
 
     // Print testing frames
     std::ostringstream ss;

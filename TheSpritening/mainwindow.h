@@ -24,7 +24,7 @@ public:
     Canvas* scene;
     Canvas* preview_scene;
     Controller controller;
-    int FPS = 3;
+    int FPS = 0;
     bool play_on = true;
     QTimer *play_timer;
     Frame temp_frame;
