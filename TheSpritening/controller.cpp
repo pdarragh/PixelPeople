@@ -7,6 +7,7 @@
 
 #include <QDebug>
 #include <QFile>
+#include <QGraphicsItem>
 #include "controller.h"
 #include "canvas.h"
 #include "mainwindow.h"
@@ -97,6 +98,11 @@ void Controller::clickInMiniCanvas(int index)
     main_window->switchEditorToFrame(index);
 }
 
+void Controller::clearCurrentFrame()
+{
+    sprite.clearFrameAtIndex(current_frame);
+}
+
 void Controller::canvasClickedAtCellAddress(CellAddress address)
 {
     /*
@@ -117,7 +123,8 @@ void Controller::canvasClickedAtCellAddress(CellAddress address)
         case Tools::Rotate:
             useRotateAtCellAddress(address);
             break;
-        case Tools::Mirror:
+        case Tools::MirrorPencil:
+        case Tools::MirrorEraser:
             useMirrorAtCellAddress(address);
             break;
         default:
@@ -139,8 +146,11 @@ void Controller::usePencilAtCellAddress(CellAddress address)
 
 void Controller::useEraserAtCellAddress(CellAddress address)
 {
-    qDebug() << "-------------------------------";
-    qDebug() << Q_FUNC_INFO;
+    // qDebug() << "-------------------------------";
+    // qDebug() << Q_FUNC_INFO;
+    sprite.setCellAtPositionToColor(address.x(), address.y(), QColor(0, 0, 0, 0));
+    editor->eraseSpritePixelAtCellAddress(address);
+    main_window->eraseSpritePixelInCanvasAtCellAddress(current_frame, address);
 }
 
 void Controller::useRotateAtCellAddress(CellAddress address)
@@ -153,6 +163,18 @@ void Controller::useMirrorAtCellAddress(CellAddress address)
 {
     qDebug() << "-------------------------------";
     qDebug() << Q_FUNC_INFO;
+
+    CellAddress flipped = CellAddress((dimension - address.x()), address.y());
+    if (current_tool == Tools::MirrorPencil)
+    {
+        usePencilAtCellAddress(address);
+        usePencilAtCellAddress(flipped);
+    }
+    else if (current_tool == Tools::MirrorEraser)
+    {
+        useEraserAtCellAddress(address);
+        useEraserAtCellAddress(flipped);
+    }
 }
 
 // Call this like this:

@@ -33,6 +33,7 @@ public:
     ViewPoint getViewPositionFromCellAddress(CellAddress address);
     // Drawing
     void drawSpritePixelAtCellAddressWithColor(CellAddress address, QColor color);
+    void eraseSpritePixelAtCellAddress(CellAddress address);
     // Registering mouse clicks
     virtual void mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent);
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent * mouseEvent);

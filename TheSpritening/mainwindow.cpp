@@ -21,6 +21,8 @@ MainWindow::MainWindow(QWidget* parent) :
 
     // Create the controller and canvas for the graphics view.
     this->controller = Controller(this);
+    ui->pencil->setStyleSheet("border:1px solid black;");
+    controller.setCurrentTool(Tools::Pencil);
 
     // Create the main editor Canvas.
     int available_length = getEditorCanvasSize();
@@ -75,8 +77,8 @@ void MainWindow::clearPushed()
     //clear the scenes and update both views
     scene->clear();
     ui->graphicsView->viewport()->update();
-   // ui->graphicsView1->viewport()->update();
-    frames[controller.getCurrentFrame() - 1]->clear();
+    frames[controller.getCurrentFrame()]->clear();
+    controller.clearCurrentFrame();
 }
 
 void MainWindow::addFramePushed()
@@ -206,6 +208,13 @@ void MainWindow::drawSpritePixelInCanvasAtCellAddressWithColor(
     frames[frame]->drawSpritePixelAtCellAddressWithColor(address, color);
 }
 
+void MainWindow::eraseSpritePixelInCanvasAtCellAddress(
+    int         frame,
+    CellAddress address )
+{
+    frames[frame]->eraseSpritePixelAtCellAddress(address);
+}
+
 void MainWindow::on_colorButton_clicked()
 {
     QColor color = QColorDialog::getColor();
@@ -231,6 +240,74 @@ void MainWindow::on_deleteFrameButton_clicked()
     //TODO:remove frame from widget at frame number
     delete ui->horizontalLayout->itemAt(0)->widget();
     delete ui->horizontalLayout->itemAt(0);
+}
+
+void MainWindow::on_eraser_clicked()
+{
+    ui->eraser->setStyleSheet("border:1px solid black;");
+    switch (controller.current_tool)
+    {
+        case Tools::MirrorEraser:
+            controller.setCurrentTool(Tools::MirrorEraser);
+        case Tools::MirrorPencil:
+            controller.setCurrentTool(Tools::MirrorEraser);
+            ui->pencil->setStyleSheet("");
+            break;
+        case Tools::Pencil:
+            controller.setCurrentTool(Tools::Eraser);
+            ui->pencil->setStyleSheet("");
+            break;
+        default:
+            controller.setCurrentTool(Tools::Eraser);
+        break;
+    }
+}
+
+void MainWindow::on_pencil_clicked()
+{
+    ui->pencil->setStyleSheet("border:1px solid black;");
+    switch (controller.current_tool)
+    {
+        case Tools::MirrorPencil:
+            controller.setCurrentTool(Tools::MirrorPencil);
+        case Tools::MirrorEraser:
+            controller.setCurrentTool(Tools::MirrorPencil);
+            ui->eraser->setStyleSheet("");
+            break;
+        case Tools::Eraser:
+            controller.setCurrentTool(Tools::Pencil);
+            ui->eraser->setStyleSheet("");
+            break;
+        default:
+            controller.setCurrentTool(Tools::Pencil);
+        break;
+    }
+}
+
+void MainWindow::on_flip_clicked()
+{
+    switch (controller.current_tool)
+    {
+        case Tools::Pencil:
+            controller.setCurrentTool(Tools::MirrorPencil);
+            ui->flip->setStyleSheet("border:1px solid black;");
+            break;
+        case Tools::Eraser:
+            controller.setCurrentTool(Tools::MirrorEraser);
+            ui->flip->setStyleSheet("border:1px solid black;");
+            break;
+        case Tools::MirrorPencil:
+            controller.setCurrentTool(Tools::Pencil);
+            ui->flip->setStyleSheet("");
+            break;
+        case Tools::MirrorEraser:
+            controller.setCurrentTool(Tools::Eraser);
+            ui->flip->setStyleSheet("");
+            break;
+        default:
+            qDebug() << "Something isn't right.";
+    }
+
 }
 
 void MainWindow::fpsValueChanged(int value)
