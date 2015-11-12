@@ -4,6 +4,9 @@
 #include "preview.h"
 #include <QColorDialog>
 #include <QDebug>
+#include <QTimer>
+#include <iostream>
+#include <sstream>
 #include "controller.h"
 
 MainWindow::MainWindow(QWidget* parent) :
@@ -32,11 +35,24 @@ MainWindow::MainWindow(QWidget* parent) :
     //set the alignment for the frame holder
     ui->horizontalLayout->setAlignment(Qt::AlignLeft);
 
+    //set values for horizontal slider
+    ui->horizontalSlider->setValue(3);
+    ui->horizontalSlider->setRange(1, 65);
+
+    //instantiate timer
+    play_timer = new QTimer(this);
+
     //connect the clear button and the add frame button
     connect(ui->clearButton, SIGNAL(clicked()), this, SLOT(clearPushed()));
     connect(ui->addFrameButton, SIGNAL(clicked()), this, SLOT(addFramePushed()));
+    connect(ui->playPause, SIGNAL(released()), this, SLOT(pplayButtonReleased));
+    connect(ui->backward, SIGNAL(released()), this, SLOT(pbackButtonReleased));
+    connect(ui->forward, SIGNAL(released), this, SLOT(pskipButtonReleased));
+    connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(fpsValueChanged(int)));
+    connect(play_timer, SIGNAL(timeout()), this, SLOT(updateFrame()));
 
     addFramePushed();
+    play_timer->start(3000);
 }
 
 int MainWindow::getEditorCanvasSize()
@@ -82,7 +98,7 @@ void MainWindow::addFramePushed()
     newFrame->setSceneRect(0, 0, placeholder_width, placeholder_width);
     newFrame->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     // Append the frame to the bottom mini-frame view.
-      //ui->horizontalLayout->insertWidget(frames.size(), newFrame);
+    //ui->horizontalLayout->insertWidget(frames.size(), newFrame);
     qDebug() << "controler " << controller.getCurrentFrame() << "cont plus 1 "<< controller.getCurrentFrame() + 1;
 
     ui->horizontalLayout->insertWidget(controller.getCurrentFrame() + 1, newFrame);
@@ -141,4 +157,122 @@ void MainWindow::on_deleteFrameButton_clicked()
     //TODO:remove frame from widget at frame number
     delete ui->horizontalLayout->itemAt(0)->widget();
     delete ui->horizontalLayout->itemAt(0);
+}
+
+
+void MainWindow::fpsValueChanged(int value)
+{
+    play_timer->stop();
+    FPS = value;
+    play_timer->start(1000 / FPS);
+
+    std::ostringstream ss;
+    ss << value;
+    std::string changed_int = ss.str();
+
+    std::cout << "FPS changed to " << changed_int << "." << std::endl;
+}
+
+/*
+ * pplayButtonReleased
+ *
+ * If play_on is true, the QTimer is started and its interval set to the
+ * current fps value.
+ */
+void MainWindow::pplayButtonReleased()
+{
+    QIcon *pplayIcon = new QIcon();
+    //pplayIcon->addPixmap(QPixmap("new/imageassets/play.png"),QIcon::Normal,QIcon::On);
+    pplayIcon->addPixmap(QPixmap(":/new/imageassets/play.png"),QIcon::Normal,QIcon::On);
+    //pplayIcon->addPixmap(QPixmap("new/imageassets/pause.png"),QIcon::Normal,QIcon::Off);
+    pplayIcon->addPixmap(QPixmap(":/new/imageassets/pause.png"),QIcon::Normal,QIcon::Off);
+    ui->playPause->setIcon(*pplayIcon);
+    ui->playPause->setCheckable(true);
+
+    // If play_on is true, pressing the button turns it off
+    if (play_on)
+    {
+        // TODO alternates canvas frames
+        std::cout << "Play turned off." << std::endl;
+        play_timer->stop();
+
+        play_on = false;
+    }
+
+    // If play_on is false, pressing the button turns it off
+    else
+    {
+        // TODO allows creates a small things
+        std::cout << "Play turned on." << std::endl;
+        int msec = 1000 / FPS;
+        play_timer->start(msec);
+
+        play_on = true;
+    }
+}
+
+/*
+ * pbackButtonReleased
+ *
+ * If the tmp frame on display is the first frame, does nothing.
+ * Otherwise, goes back one frame.
+ */
+void MainWindow::pbackButtonReleased()
+{
+    if (!play_on)
+    {
+        if (temp_frame_int != 0) {
+            temp_frame_int -= 1;
+        }
+    }
+}
+
+/*
+ * pskipButtonReleased
+ *
+ * If the tmp frame on display is the last frame, does nothing.
+ * Otherwise, goes forward one frame.
+ */
+void MainWindow::pskipButtonReleased()
+{
+    if (!play_on)
+    {
+        if (temp_frame_int != controller.getSprite().getFrameCount() - 1) {
+            temp_frame_int += 1;
+        }
+    }
+}
+
+void MainWindow::updateFrame()
+{
+    Sprite the_sprite = controller.getSprite();
+
+    if (temp_frame_int == the_sprite.getFrameCount()) {
+        temp_frame_int = 1;
+    }
+
+    // Updates to the current frame
+    temp_frame = the_sprite.getFrame(temp_frame_int);
+    QRect preview_content = ui->graphicsView_2->contentsRect();
+    int length_ = std::min(preview_content.width(), preview_content.height());
+    preview_scene = new Canvas(temp_frame_int, length_, false, &controller, this);
+    //preview_scene->is_Main_Canvas = false;
+
+    // Sets the graphicsView_2 to display this new scene
+    ui->graphicsView_2->setScene(preview_scene);
+    ui->graphicsView_2->setSceneRect(0, 0, preview_content.width(), preview_content.height());
+
+    // Print testing frames
+    std::ostringstream ss;
+    ss << temp_frame_int;
+    std::string frame_int = ss.str();
+    std::cout << "Preview frame: " << frame_int << "." << std::endl;
+
+    std::ostringstream xx;
+    xx << the_sprite.getFrameCount();
+    std::string frame_count_int = xx.str();
+    std::cout << "Total frames: " << frame_count_int << "." << std::endl;
+
+    // Increment frames
+    temp_frame_int += 1;
 }
